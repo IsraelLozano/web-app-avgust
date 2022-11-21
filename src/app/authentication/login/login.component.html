@@ -1,0 +1,102 @@
+<!-- <span> Iniciando... </span> -->
+
+<!-- style="background-image: url(assets/images/background/login-register.jpg)" -->
+<div
+  class="login-register"
+  style="
+    background-image: url(https://tipsco.s3.amazonaws.com/media/product_gallery/48390eb1a3634339b1e2aa93bf2e2cc4.jpg);
+  "
+>
+  <div class="login-register-box">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="text-center">
+            <img alt="homepage" src="assets/images/logo-pie-1.png" height="50px" width="200px" />
+            <br />
+            <br />
+            <h4 class="m-t-0">Iniciar sesión</h4>
+          </div>
+
+          <div fxLayout="row wrap">
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field>
+                <mat-select [formControl]="form.controls['pais']" placeholder="Seleccione Pais">
+                  <mat-option *ngFor="let item of listPais" [value]="item.IdPais">
+                    {{ item.NomPais }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <small
+                *ngIf="form.controls['pais'].hasError('required') && form.controls['pais'].touched"
+                class="text-danger support-text"
+                >pais es Requerido</small
+              >
+            </div>
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field>
+                <input matInput placeholder="Usuario" [formControl]="form.controls['uname']" />
+              </mat-form-field>
+              <small
+                *ngIf="
+                  form.controls['uname'].hasError('required') && form.controls['uname'].touched
+                "
+                class="text-danger support-text"
+                >usuario es Requerido</small
+              >
+            </div>
+
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field>
+                <input
+                  matInput
+                  type="password"
+                  placeholder="Contraseña"
+                  [formControl]="form.controls['password']"
+                />
+              </mat-form-field>
+              <small
+                *ngIf="
+                  form.controls['password'].hasError('required') &&
+                  form.controls['password'].touched
+                "
+                class="text-danger support-text"
+                >Contraseña es requerida.</small
+              >
+            </div>
+
+            <!-- <div fxFlex.gt-sm="50" fxFlex.gt-xs="50">
+              <mat-checkbox color="warn">Recordarme</mat-checkbox>
+            </div> -->
+
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="50">
+              <!-- [routerLink]="['/authentication/forgot']" -->
+              <a href="#" class="link">¿Olvidó su contraseña?</a>
+            </div>
+
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <button
+                mat-raised-button
+                color="primary"
+                class="btn-block btn-lg m-t-20 m-b-20"
+                type="submit"
+                [disabled]="!form.valid"
+              >
+                Iniciar Sesión
+              </button>
+            </div>
+
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="text-center">
+              <!-- <span
+                >No tienes activada tu cuenta?
+                <a [routerLink]="['/authentication/register']" class="text-info link"
+                  >Activar mi cuenta</a
+                >
+              </span> -->
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

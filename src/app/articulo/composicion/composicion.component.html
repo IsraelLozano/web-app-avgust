@@ -1,0 +1,16 @@
+<div fxLayout="row wrap" class="align-items-center">
+  <div fxFlex.gt-md="100" class="text-right">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      class="m-r-5"
+      style="margin: 5px 40px 5px 30px; min-width: 110px"
+    >
+      <mat-icon class="mat-18">add</mat-icon>
+      Nuevo item
+    </button>
+  </div>
+</div>
+
+<app-grilla-composicion [setListArticulo]="this?.articulo?.Composicions"></app-grilla-composicion>

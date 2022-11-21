@@ -1,0 +1,194 @@
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Registro de articulos</mat-card-title>
+        <!-- <mat-card-subtitle
+          >use this class <code>.row</code> to the fxLayout="row" and <code>p-10</code> to the
+          fxFlex div</mat-card-subtitle
+        > -->
+        <!-- ============================================================== -->
+        <!-- column -->
+        <!-- ============================================================== -->
+        <!-- <form class="basic-form" [formGroup]="this.form" (ngSubmit)="this.send()"> -->
+        <div *ngIf="this.articuloFull">
+          <mat-tab-group>
+            <mat-tab label="Articulo">
+              <mat-card-content>
+                <form class="basic-form" [formGroup]="this.form" (ngSubmit)="this.send()">
+                  <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+                    <!-- column -->
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <mat-select
+                          formControlName="idPais"
+                          placeholder="Seleccione Pais"
+                          [value]="this?.particuloFull?.articulo?.IdPais"
+                        >
+                          <mat-option
+                            *ngFor="let item of articuloFull?.paises"
+                            [value]="item.IdPais"
+                          >
+                            {{item.NomPais}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <!-- column -->
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <input
+                          type="text"
+                          matInput
+                          placeholder="Nombre Comercial"
+                          formControlName="nombreComercial"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <!-- column -->
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <mat-select
+                          formControlName="idTitularRegistro"
+                          placeholder="Seleccione el Titular"
+                          [value]="this?.particuloFull?.articulo?.IdTitularRegistro"
+                        >
+                          <mat-option
+                            *ngFor="let item of articuloFull?.titulares"
+                            [value]="item.IdTitularRegistro"
+                          >
+                            {{item.NomTitularRegistro}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+                    <!-- column -->
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <mat-select
+                          formControlName="idGrupoQuimico"
+                          placeholder="Seleccione Grupo Quimico"
+                          [value]="this?.particuloFull?.articulo?.IdGrupoQuimico"
+                        >
+                          <mat-option
+                            *ngFor="let item of articuloFull?.cboGrupoQuimico"
+                            [value]="item.IdGrupoQuimico"
+                          >
+                            {{item.NomGrupoQuimico}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <input
+                          type="text"
+                          matInput
+                          placeholder="Nro Registro"
+                          formControlName="nroRegistro"
+                        />
+                      </mat-form-field>
+                    </div>
+
+                    <!-- column -->
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <mat-select
+                          formControlName="idTipoProducto"
+                          placeholder="Seleccione Tipo Producto"
+                          [value]="this?.particuloFull?.articulo?.IdTipoProducto"
+                        >
+                          <mat-option
+                            *ngFor="let item of articuloFull?.tiposProductos"
+                            [value]="item.IdTipoProducto1"
+                          >
+                            {{item.NomTipoProducto}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+                    <!--column-->
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <mat-select
+                          formControlName="idFormulador"
+                          placeholder="Seleccione Formulador"
+                          [value]="this?.particuloFull?.articulo?.IdFormulador"
+                        >
+                          <mat-option
+                            *ngFor="let item of articuloFull?.formuladores"
+                            [value]="item.IdFormulador"
+                          >
+                            {{item.NomFormulador}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+                    <!-- <div class="m-t-20">
+                        <button mat-raised-button class="m-r-5" color="primary">Chat</button>
+                        <button mat-raised-button color="accent">Follow</button>
+                      </div> -->
+                  </div>
+
+                  <div align="center">
+                    <button
+                      mat-raised-button
+                      style="margin: 5px 40px 5px 30px; min-width: 205px"
+                      color="accent"
+                      type="button"
+                      class="m-r-5"
+                      [routerLink]="['/articulo/list-articulo']"
+                    >
+                      <mat-icon class="mat-18">arrow_back</mat-icon>
+                      Regresar
+                    </button>
+
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="submit"
+                      class="m-r-5"
+                      style="margin: 5px 40px 5px 30px; min-width: 205px"
+                      [disabled]="!this.form.valid"
+                    >
+                      <mat-icon class="mat-18">save</mat-icon>
+                      Grabar
+                    </button>
+                  </div>
+                </form>
+              </mat-card-content>
+            </mat-tab>
+
+            <div *ngIf="this.idSeleccionado!==0">
+              <mat-tab label="Composicion">
+                <mat-card-content>
+                  <app-composicion [data]="this.articuloFull.articulo"></app-composicion>
+                </mat-card-content>
+              </mat-tab>
+              <mat-tab label="Caracteristicas">
+                <mat-card-content>
+                  <app-caracteristica [data]="this.articuloFull.articulo"></app-caracteristica>
+                </mat-card-content>
+              </mat-tab>
+              <mat-tab label="Usos">
+                <mat-card-content>
+                  <app-usos [data]="this.articuloFull.articulo"></app-usos>
+                </mat-card-content>
+              </mat-tab>
+              <mat-tab label="Documentos">
+                <mat-card-content>
+                  <app-documentos [data]="this.articuloFull.articulo"></app-documentos>
+                </mat-card-content>
+              </mat-tab>
+            </div>
+          </mat-tab-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

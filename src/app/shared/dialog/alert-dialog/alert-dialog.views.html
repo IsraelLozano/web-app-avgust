@@ -1,0 +1,27 @@
+<h2 mat-dialog-title *ngIf="data.title" class="titulo-alert">
+  <strong> {{data.title}} </strong>
+</h2>
+<mat-dialog-content class="content-dialog">
+  <!--    <span [innerHTML]="data.message"></span>-->
+  <span *ngIf="data.message" style="white-space: pre-line">{{data.message}}</span>
+  <!--  <br>-->
+  <!--  <br>-->
+  <!-- <span *ngIf="data.validations" >{{data.validations[0]?.message ?? ''}}</span
+  > -->
+  <ul *ngIf="data.validations && data.validations.length > 0" style="text-align: left">
+    <li style="white-space: pre-line" *ngFor="let validation of data.validations">
+      {{validation.code}}: {{validation.message}}
+    </li>
+  </ul>
+</mat-dialog-content>
+<div mat-dialog-actions align="center">
+  <app-button-dialog
+    [variant]="data.button!.variant"
+    [icon]="data.button!.icon"
+    [label]="data.button!.text"
+    [color]="data.button!.color"
+    [mat-dialog-close]="true"
+    mat-dialog-close
+  >
+  </app-button-dialog>
+</div>

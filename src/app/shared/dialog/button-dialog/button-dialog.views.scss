@@ -1,0 +1,18 @@
+:host {
+  pointer-events: none;
+}
+
+:host ::ng-deep button span {
+  pointer-events: none;
+}
+
+button {
+  pointer-events: auto;
+}
+
+button:disabled {
+  cursor: not-allowed !important;
+}
+:host[label] button.rectangle {
+  min-width: 100px;
+}

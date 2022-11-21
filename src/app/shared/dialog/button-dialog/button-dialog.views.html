@@ -1,0 +1,102 @@
+<!-- <ng-template #template> -->
+<button
+  *ngIf="variant === 'basic' || !variant"
+  [color]="color"
+  [type]="type"
+  [class]="'rounded-0 rectangle '+class"
+  [disabled]="disabled"
+  [matTooltip]="tooltip"
+  mat-button
+  (click)="onClick($event)"
+>
+  <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  {{label}}
+</button>
+<button
+  *ngIf="variant === 'raised'"
+  [color]="color"
+  [type]="type"
+  [class]="'rounded-0 rectangle '+class"
+  [disabled]="disabled"
+  [matTooltip]="tooltip"
+  mat-button
+  mat-raised-button
+  (click)="onClick($event)"
+>
+  <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  {{label}}
+</button>
+<button
+  *ngIf="variant === 'stroked'"
+  [color]="color"
+  [type]="type"
+  [class]="'rounded-0 rectangle '+class"
+  [disabled]="disabled"
+  [matTooltip]="tooltip"
+  mat-button
+  mat-stroked-button
+  (click)="onClick($event)"
+>
+  <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  {{label}}
+</button>
+<button
+  *ngIf="variant === 'flat'"
+  [color]="color"
+  [type]="type"
+  [class]="'rounded-0 rectangle '+class"
+  [disabled]="disabled"
+  [matTooltip]="tooltip"
+  mat-button
+  mat-flat-button
+  (click)="onClick($event)"
+>
+  <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  {{label}}
+</button>
+<button
+  *ngIf="variant === 'icon'"
+  [color]="color"
+  [type]="type"
+  [class]="class"
+  [disabled]="disabled"
+  [matTooltip]="tooltip"
+  style="width: 40px"
+  mat-button
+  mat-icon-button
+  (click)="onClick($event)"
+>
+  <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  {{label}}
+</button>
+<button
+  *ngIf="variant === 'fab'"
+  [color]="color"
+  [type]="type"
+  [class]="class"
+  [disabled]="disabled"
+  [matTooltip]="tooltip"
+  style="width: 56px"
+  mat-button
+  mat-fab
+  (click)="onClick($event)"
+>
+  <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  {{label}}
+</button>
+<button
+  *ngIf="variant === 'mini-fab'"
+  [color]="color"
+  [type]="type"
+  [class]="class"
+  [disabled]="disabled"
+  [matTooltip]="tooltip"
+  style="width: 40px"
+  mat-button
+  mat-mini-fab
+  (click)="onClick($event)"
+>
+  <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  {{label}}
+</button>
+<!-- </ng-template> -->

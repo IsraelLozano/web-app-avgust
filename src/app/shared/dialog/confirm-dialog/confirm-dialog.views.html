@@ -1,0 +1,26 @@
+<h2 mat-dialog-title *ngIf="data.title" class="titulo-confirm">{{data.title}}</h2>
+<div mat-dialog-content class="content-dialog">
+  <span [innerHTML]="data.message" class="message-confirm"></span>
+</div>
+<div mat-dialog-actions align="center">
+  <app-button-dialog
+    class="button-aceptar-dialog-confirm"
+    [variant]="data.buttonOk!.variant"
+    [icon]="data.buttonOk!.icon"
+    [label]="data.buttonOk!.text"
+    [color]="data.buttonOk!.color!"
+    [mat-dialog-close]="true"
+  >
+    <!-- [mat-dialog-close]="true" -->
+  </app-button-dialog>
+  <app-button-dialog
+    class="button-cancelar-dialog-confirm"
+    [variant]="data.buttonCancel!.variant"
+    [icon]="data.buttonCancel?.icon"
+    [label]="data.buttonCancel?.text"
+    [color]="data.buttonCancel?.color"
+    [mat-dialog-close]="false"
+  >
+    <!-- [mat-dialog-close]="false" -->
+  </app-button-dialog>
+</div>

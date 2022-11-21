@@ -1,0 +1,53 @@
+<!-- style="background-image: url(assets/images/background/login-register.jpg)" -->
+<div class="login-register">
+  <div class="login-register-box">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="text-center">
+            <img alt="homepage" src="assets/images/logo-minedu.png" height="50px" width="200px" />
+            <h4 class="m-t-0">Recuperar contraseña</h4>
+          </div>
+          <p class="text-center font-14">
+            Ingrese su correo electrónico y le enviaremos el enlace de restablecimiento de
+            contraseña.
+          </p>
+
+          <div fxLayout="column" fxLayoutAlign="space-around">
+            <div class="pb-1">
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  placeholder="correo electrónico"
+                  type="email"
+                  [formControl]="form.controls['email']"
+                />
+              </mat-form-field>
+              <small
+                *ngIf="
+                  form.controls['email'].hasError('required') && form.controls['email'].touched
+                "
+                class="text-danger support-text"
+                >Su correo es obligatorio</small
+              >
+              <small
+                *ngIf="form.controls['email'].errors?.email && form.controls['email'].touched"
+                class="text-danger support-text"
+                >correo no valido</small
+              >
+            </div>
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="btn-block btn-lg m-t-20"
+              [disabled]="!form.valid"
+            >
+              Enviar
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
