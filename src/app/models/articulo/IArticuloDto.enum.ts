@@ -49,6 +49,15 @@ export interface GetDocumentoDto {
   IdTipoDocumentoNavigation: TiposDocumento;
 }
 
+export interface GetDocumentoDtoModal {
+  IdArticulo: number;
+  IdItem: number;
+  IdTipoDocumento: number;
+  Fecha: Date;
+  NomDocumento: string;
+  cboDocumentos: TiposDocumento[];
+}
+
 export interface GetUsoDto {
   IdArticulo: number;
   IdItem: number;
@@ -60,15 +69,37 @@ export interface GetUsoDto {
   IdNomCientificoPlagaNavigation: TiposPlagas;
 }
 
+export interface GetUsoDtoModal {
+  IdArticulo: number;
+  IdItem: number;
+  IdCultivo: number;
+  NombreCientificoCultivo: string;
+  IdNomCientificoPlaga: number;
+  Dosis: string;
+  cboPlagas: TiposPlagas[];
+  cboCultivos: TiposCultivo[];
+}
+
 export interface GetCaracteristicaDto {
   IdArticulo: number;
   IdItem: number;
   IdAplicacion: number;
   IdClase: number;
   IdToxicologica: number;
-  IdAplicacionNavigation: CboAplicacione;
-  IdClaseNavigation: CboClase;
-  IdToxicologicaNavigation: CboToxicologica;
+  IdAplicacionNavigation?: CboAplicacione;
+  IdClaseNavigation?: CboClase;
+  IdToxicologicaNavigation?: CboToxicologica;
+}
+
+export interface GetCaracteristicaDtoModal {
+  IdArticulo: number;
+  IdItem: number;
+  IdAplicacion: number;
+  IdClase: number;
+  IdToxicologica: number;
+  CboApp?: CboAplicacione[];
+  cboCla?: CboClase[];
+  cbpToxico?: CboToxicologica[];
 }
 
 export interface IdGrupoQuimicoNavigation {

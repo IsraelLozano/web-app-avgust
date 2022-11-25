@@ -22,7 +22,7 @@ export class GrillaUsoViews implements OnInit {
   @Output() onGetSeleccionado = new EventEmitter<any>();
   @Output() onDeleteSeleccionado = new EventEmitter<any>();
 
-  displayedColumns: string[] = ['Iditem', 'cultivo', 'nombre', 'dosis', 'action'];
+  displayedColumns: string[] = ['Iditem', 'cultivo', 'plaga', 'nombre', 'dosis', 'action'];
 
   @Input() set setListArticulo(value: GetUsoDto[]) {
     this.lista = new MatTableDataSource(value);
@@ -41,11 +41,11 @@ export class GrillaUsoViews implements OnInit {
   //   this.cursosList.sort = this.sort;
   // }
 
-  getCurso(row: GetArticuloDto) {
+  getCurso(row: GetUsoDto) {
     this.onGetSeleccionado.emit(row);
   }
 
-  deleteInvoice(row: GetArticuloDto) {
+  deleteInvoice(row: GetUsoDto) {
     this.onDeleteSeleccionado.emit(row);
   }
 }

@@ -32,6 +32,11 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./articulo/estudiante.module').then((m) => m.EstudianteModule),
         // canActivate: [AuthGuardService],
       },
+      {
+        path: 'seguridad',
+        loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+        // canActivate: [AuthGuardService],
+      },
 
       {
         path: 'reporte',

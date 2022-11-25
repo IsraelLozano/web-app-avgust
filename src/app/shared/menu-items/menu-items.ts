@@ -50,8 +50,8 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'av_timer',
     children: [
-      { state: 'test', name: 'Registro de Usuario', type: 'link' },
-      { state: 'test', name: 'Perfil de usuario', type: 'link' },
+      { state: 'list-user', name: 'Registro de Usuario', type: 'link' },
+      // { state: 'test', name: 'Perfil de usuario', type: 'link' },
     ],
   },
   {

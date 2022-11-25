@@ -31,7 +31,7 @@ export class HttpUtil {
     switch (error.status) {
       case 404: {
         const errorAlert: AlertOptions = {
-          title: 'Not Found',
+          title: 'Información',
           message: error.error,
           button: { icon: 'check', text: 'Cerrar' },
         };
@@ -58,7 +58,7 @@ export class HttpUtil {
       case 500: {
         const errorServer = error.error as ErrorServer;
         const Error500: AlertOptions = {
-          title: 'Error 500',
+          title: 'Error Interno',
           message: `${errorServer.Message} \n Path: ${errorServer.path} \n Method: ${errorServer.method}`,
           button: {
             icon: 'error_circle_rounded',

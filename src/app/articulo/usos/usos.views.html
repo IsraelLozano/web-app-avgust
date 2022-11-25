@@ -6,6 +6,7 @@
       type="submit"
       class="m-r-5"
       style="margin: 5px 40px 5px 30px; min-width: 110px"
+      (click)="this.getModal()"
     >
       <mat-icon class="mat-18">add</mat-icon>
       Nuevo item
@@ -13,4 +14,8 @@
   </div>
 </div>
 
-<app-grilla-uso [setListArticulo]="this?.articulo?.Usos"></app-grilla-uso>
+<app-grilla-uso
+  [setListArticulo]="this?.articulo?.Usos"
+  (onGetSeleccionado)="this.onGetEdit($event)"
+  (onDeleteSeleccionado)="this.onDelete($event)"
+></app-grilla-uso>

@@ -37,11 +37,11 @@ export class GrillaCaracteristicaViews implements OnInit {
   //   this.cursosList.sort = this.sort;
   // }
 
-  getCurso(row: GetArticuloDto) {
+  getCurso(row: GetCaracteristicaDto) {
     this.onGetSeleccionado.emit(row);
   }
 
-  deleteInvoice(row: GetArticuloDto) {
+  deleteInvoice(row: GetCaracteristicaDto) {
     this.onDeleteSeleccionado.emit(row);
   }
 }

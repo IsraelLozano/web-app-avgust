@@ -1,0 +1,39 @@
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row wrap" class="align-items-center">
+          <div fxFlex.gt-md="50" fxFlex.gt-lg="50" fxFlex="100">
+            <mat-form-field>
+              <input matInput placeholder="Buscar Usuarios" />
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-md="50" class="text-right">
+            <button
+              mat-raised-button
+              color="primary"
+              routerLinkActive="router-link-active"
+              (click)="this.getModal()"
+            >
+              Nuevo Usuario
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-subtitle>Lista de articulos:</mat-card-subtitle>
+        <app-grilla-user
+          [setListArticulo]="this.listUser"
+          (onGetCursoSeleccionado)="onGetArticulo($event)"
+        ></app-grilla-user>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

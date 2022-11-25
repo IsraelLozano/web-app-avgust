@@ -1,1 +1,61 @@
-<p>modal-documentos works!</p>
+<h2 mat-dialog-title>Agregar Documento</h2>
+
+<form class="basic-form" [formGroup]="this.form" (ngSubmit)="this.doAction()">
+  <mat-dialog-content>
+    <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+      <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <input
+            type="number"
+            matInput
+            placeholder="Item"
+            formControlName="idItem"
+            readonly="true"
+          />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" formControlName="fecha" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <mat-select
+            formControlName="idTipoDocumento"
+            placeholder="Seleccione el tipo documento"
+            [ngModel]="this?.idArticulo?.IdTipoDocumento"
+            required
+          >
+            <mat-option
+              *ngFor="let item of this?.idArticulo?.cboDocumentos"
+              [value]="item.IdTipoDocumento"
+            >
+              {{item.Nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Nombre del Documento"
+            formControlName="nomDocumento"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions align="end">
+    <button type="submit" mat-button color="warn" [disabled]="!this.form.valid">Aceptar</button>
+    <button mat-button matDialogClose (click)="closeDialog()" mat-flat-button>Cancelar</button>
+  </div>
+</form>

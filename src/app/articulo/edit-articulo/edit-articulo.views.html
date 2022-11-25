@@ -157,7 +157,7 @@
                       [disabled]="!this.form.valid"
                     >
                       <mat-icon class="mat-18">save</mat-icon>
-                      Grabar
+                      Actualizar
                     </button>
                   </div>
                 </form>
@@ -172,17 +172,17 @@
               </mat-tab>
               <mat-tab label="Caracteristicas">
                 <mat-card-content>
-                  <app-caracteristica [data]="this.articuloFull.articulo"></app-caracteristica>
+                  <app-caracteristica [data]="this.articuloFull"></app-caracteristica>
                 </mat-card-content>
               </mat-tab>
               <mat-tab label="Usos">
                 <mat-card-content>
-                  <app-usos [data]="this.articuloFull.articulo"></app-usos>
+                  <app-usos [data]="this.articuloFull"></app-usos>
                 </mat-card-content>
               </mat-tab>
               <mat-tab label="Documentos">
                 <mat-card-content>
-                  <app-documentos [data]="this.articuloFull.articulo"></app-documentos>
+                  <app-documentos [data]="this.articuloFull"></app-documentos>
                 </mat-card-content>
               </mat-tab>
             </div>

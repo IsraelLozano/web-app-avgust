@@ -4,6 +4,7 @@ import { Observable, map, catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SessionService } from '../libs/services/session.service';
 import { IPaisDto } from '../models/Maestras/IMaestraDto';
+import { AddOrEditUserDto, IUsersDto } from '../models/seguridad/IUsersDto';
 import { DialogService } from '../shared/dialog/dialog.service';
 import { GetDataUserDto } from '../shared/menu-items/GetDtoUser';
 import { GenericRepositoryService } from './generic-repository.service';
@@ -33,6 +34,17 @@ export class UsuarioService extends GenericRepositoryService {
   GetListPaises() {
     return this.get<IPaisDto[]>(`${this.urlAddressSeguridad}${this.controller}/getpais`);
   }
+  GetUsers() {
+    return this.get<IUsersDto[]>(`${this.urlAddressSeguridad}${this.controller}/users`);
+  }
+
+  AddOrEditUser(model: AddOrEditUserDto) {
+    return this.post<AddOrEditUserDto[]>(
+      `${this.urlAddressSeguridad}${this.controller}/CreateOrUpdateUsuario`,
+      model,
+    );
+  }
+
   // GetUserByUserName(): Observable<GetDataUserDto> {
   //   return this.get<GetDataUserDto>(`${this.urlAddressSeguridad}${this.controller}/getaccess`).pipe(
   //     map((resp: any) => {

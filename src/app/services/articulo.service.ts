@@ -2,8 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SessionService } from '../libs/services/session.service';
-import { AddArticuloDto } from '../models/articulo/AddArticuloDto';
-import { GetArticuloDto, GetArticuloForEditDto } from '../models/articulo/IArticuloDto.enum';
+import {
+  AddArticuloDto,
+  AddCaracteristicaDto,
+  AddComposicionDto,
+  AddDocumentoDto,
+  AddUsoDto,
+} from '../models/articulo/AddArticuloDto';
+import {
+  GetArticuloDto,
+  GetArticuloForEditDto,
+  GetCaracteristicaDto,
+  GetComposicionDto,
+  GetDocumentoDto,
+  GetUsoDto,
+} from '../models/articulo/IArticuloDto.enum';
 import { DialogService } from '../shared/dialog/dialog.service';
 import { GetDataUserDto } from '../shared/menu-items/GetDtoUser';
 import { GenericRepositoryService } from './generic-repository.service';
@@ -42,6 +55,87 @@ export class ArticuloService extends GenericRepositoryService {
     return this.post<AddArticuloDto>(
       `${this.urlAddress}${this.controller}/CreateOrUpdateArticulo`,
       request,
+    );
+  }
+
+  AddOrEditComposicion(request: AddComposicionDto) {
+    return this.post<AddComposicionDto>(
+      `${this.urlAddress}${this.controller}/CreateOrUpdateComposicion`,
+      request,
+    );
+  }
+
+  GetComposicionesByArticulo(idArticulo: number) {
+    return this.get<GetComposicionDto[]>(
+      `${this.urlAddress}${this.controller}/${idArticulo}/composiciones`,
+    );
+  }
+
+  // DeleteComposicionById(idArticulo: number, item: number) {
+  //   return this.delete<void>(`${this.urlAddress}${this.controller}`, idArticulo);
+  // }
+
+  DeleteComposicionById(idArticulo: number, item: number) {
+    return this.get<boolean>(
+      `${this.urlAddress}${this.controller}/deleteComposicion/${idArticulo}/${item}`,
+    );
+  }
+
+  /**Metodos para caracterisicas */
+
+  AddOrEditCaracteristica(request: AddCaracteristicaDto) {
+    return this.post<AddCaracteristicaDto>(
+      `${this.urlAddress}${this.controller}/CreateOrUpdateCaracteristica`,
+      request,
+    );
+  }
+
+  GetCaracteristicaByArticulo(idArticulo: number) {
+    return this.get<GetCaracteristicaDto[]>(
+      `${this.urlAddress}${this.controller}/${idArticulo}/caracteristicas`,
+    );
+  }
+
+  DeleteCaracteristicaById(idArticulo: number, item: number) {
+    return this.get<boolean>(
+      `${this.urlAddress}${this.controller}/deleteCaracteristica/${idArticulo}/${item}`,
+    );
+  }
+
+  /**Metodos para Documento */
+
+  AddOrEditDocumento(request: AddDocumentoDto) {
+    return this.post<AddDocumentoDto>(
+      `${this.urlAddress}${this.controller}/CreateOrUpdateDocumento`,
+      request,
+    );
+  }
+
+  GetDocumentoByArticulo(idArticulo: number) {
+    return this.get<GetDocumentoDto[]>(
+      `${this.urlAddress}${this.controller}/${idArticulo}/documentos`,
+    );
+  }
+
+  DeleteDocumentoById(idArticulo: number, item: number) {
+    return this.get<boolean>(
+      `${this.urlAddress}${this.controller}/deleteDocumento/${idArticulo}/${item}`,
+    );
+  }
+
+  /**Metodos para Usos */
+
+  AddOrEditUso(request: AddUsoDto) {
+    return this.post<AddUsoDto>(`${this.urlAddress}${this.controller}/CreateOrUpdateUso`, request);
+  }
+
+  GetUsoByArticulo(idArticulo: number) {
+    return this.get<GetUsoDto[]>(`${this.urlAddress}${this.controller}/${idArticulo}/usos`);
+  }
+
+  DeleteUsoById(idArticulo: number, item: number) {
+    return this.get<boolean>(
+      `${this.urlAddress}${this.controller}/deleteUso/${idArticulo}/${item}`,
     );
   }
 }

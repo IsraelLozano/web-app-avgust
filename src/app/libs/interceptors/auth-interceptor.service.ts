@@ -25,10 +25,13 @@ export class AuthInterceptorService implements HttpInterceptor {
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.startsWith(Constants.apiRoot) || req.url.startsWith(Constants.apiRootSeguridad)) {
+      const headers = new HttpHeaders()
+        .set('Access-Control-Allow-Origin', '*')
+        .set('Access-Control-Allow-Credentials', 'true');
+      // .set('Authorization', `Bearer ${token}`);
+      const authRequest = req.clone({ headers });
       return from(
         this._authservice.getAccessToken().then((token: any) => {
-          const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-          const authRequest = req.clone({ headers });
           return next
             .handle(authRequest)
             .pipe(
@@ -37,7 +40,11 @@ export class AuthInterceptorService implements HttpInterceptor {
                   this._router.navigate(['/unauthorized']);
                 } else {
                   const errores = HttpUtil.getServerErrorMessage(err);
-                  this.dialogService.error(errores);
+                  this.dialogService.info({
+                    message: errores.message,
+                    title: 'Información',
+                    button: { text: 'Cerrar' },
+                  });
                 }
                 throw 'error in a request: ' + err.status;
               }),

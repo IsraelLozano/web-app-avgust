@@ -14,9 +14,9 @@ export class DialogService {
   private setAlertDefaults(options: AlertOptions) {
     const defaultOpt: ButtonOptions = {
       text: 'CERRAR',
-      color: 'primary',
+      color: 'accent',
       variant: 'raised',
-      icon: 'close',
+      icon: 'highlight_off',
     };
     options.message = options.message ?? 'El proceso se completó satisfactoriamente';
     options.button = { ...defaultOpt, ...options.button };

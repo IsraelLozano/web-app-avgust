@@ -24,7 +24,7 @@ export class GenericRepositoryService {
     return this.httpClient.put<T>(url, request).pipe(HttpUtil.handleMap, HttpUtil.handleError);
   }
 
-  protected delete<T>(url: string, request: any): Observable<T> {
+  protected delete<T>(url: string, request?: any): Observable<T> {
     return this.httpClient
       .request<T>('delete', url, { body: request })
       .pipe(HttpUtil.handleMap, HttpUtil.handleError);
