@@ -15,6 +15,8 @@ import {
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { ModalCaracteristicaViews } from '../caracteristica/modal-caracteristica/modal-caracteristica.views';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-documentos',
@@ -24,12 +26,15 @@ import { ModalCaracteristicaViews } from '../caracteristica/modal-caracteristica
 export class DocumentosViews {
   articulo!: GetArticuloDto;
   articuloFull!: GetArticuloForEditDto;
+  message!: string;
+  progress!: number;
 
   constructor(
     private dialog: MatDialog,
     private _dialogService: DialogService,
     private _articuloService: ArticuloService,
     private _router: Router,
+    private fileService: FileService,
   ) {}
 
   @Input() set data(value: GetArticuloForEditDto) {
@@ -46,7 +51,7 @@ export class DocumentosViews {
       NomDocumento: '',
       cboDocumentos: this.articuloFull.tiposDocumentos,
     };
-    const dialogRef = this.dialog.open(ModalDocumentosViews, { data: valores });
+    const dialogRef = this.dialog.open(ModalDocumentosViews, { data: valores, width: '800px' });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
@@ -179,4 +184,32 @@ export class DocumentosViews {
         }
       });
   }
+
+  onDownload(value: string) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    this.fileService
+      .download(value)
+      .pipe(finalize(() => loading.close()))
+      .subscribe((event: any) => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'descarga realizada';
+          this.downloadFile(event, value);
+        }
+      });
+  }
+
+  private downloadFile = (data: HttpResponse<Blob> | any, fileName: string) => {
+    const downloadedFile = new Blob([data.body], { type: data?.body.type });
+    const a = document.createElement('a');
+    a.setAttribute('style', 'display:none;');
+    document.body.appendChild(a);
+    a.download = fileName;
+    a.href = URL.createObjectURL(downloadedFile);
+    a.target = '_blank';
+    a.click();
+    document.body.removeChild(a);
+  };
 }

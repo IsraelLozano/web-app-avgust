@@ -21,6 +21,7 @@ export class GrillaDocumentoViews implements OnInit {
 
   @Output() onGetSeleccionado = new EventEmitter<any>();
   @Output() onDeleteSeleccionado = new EventEmitter<any>();
+  @Output() onDownload = new EventEmitter<string>();
 
   displayedColumns: string[] = ['Iditem', 'tipoDoc', 'fecha', 'nombre', 'action'];
 
@@ -47,5 +48,9 @@ export class GrillaDocumentoViews implements OnInit {
 
   deleteInvoice(row: GetArticuloDto) {
     this.onDeleteSeleccionado.emit(row);
+  }
+
+  dowload(fileName: string) {
+    this.onDownload.emit(fileName);
   }
 }

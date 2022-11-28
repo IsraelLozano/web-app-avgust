@@ -28,9 +28,10 @@ import { GrillaDocumentoViews } from './documentos/grilla-documento/grilla-docum
 import { ModalDocumentosViews } from './documentos/modal-documentos/modal-documentos.views';
 import { GrillaUsoViews } from './usos/grilla-uso/grilla-uso.views';
 import { ModalUsosViews } from './usos/modal-usos/modal-usos.views';
+import { UploadViews } from './documentos/upload/upload.views';
 
 @NgModule({
-  declarations: [MainArticuloViews, GrillaArticuloViews, EditArticuloViews, ComposicionComponent, CaracteristicaComponent, UsosViews, DocumentosViews, GrillaCaracteristicaViews, ModalCaracteristicaViews, GrillaComposicionViews, ModalComposicionViews, GrillaDocumentoViews, ModalDocumentosViews, GrillaUsoViews, ModalUsosViews],
+  declarations: [MainArticuloViews, GrillaArticuloViews, EditArticuloViews, ComposicionComponent, CaracteristicaComponent, UsosViews, DocumentosViews, GrillaCaracteristicaViews, ModalCaracteristicaViews, GrillaComposicionViews, ModalComposicionViews, GrillaDocumentoViews, ModalDocumentosViews, GrillaUsoViews, ModalUsosViews, UploadViews],
   imports: [
     ComponentModule,
     DemoMaterialModule,

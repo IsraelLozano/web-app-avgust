@@ -31,7 +31,7 @@ mat-elevation-z8
       <td mat-cell *matCellDef="let element" class="text-center">
         <button
           mat-icon-button
-          matTooltip="Clic aquí para seleccionar el curso"
+          matTooltip="Clic aquí para editar el documento"
           color="primary"
           (click)="getCurso(element)"
         >
@@ -41,11 +41,25 @@ mat-elevation-z8
 
         <button
           mat-icon-button
-          matTooltip="Clic aquí para anular el curso seleccionado"
+          matTooltip="Clic aquí para anular el documento"
           color="warn"
           (click)="deleteInvoice(element)"
         >
           <mat-icon>delete_outline</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          matTooltip="Clic aquí para descargar el documento"
+          color="info"
+          (click)="dowload(element.NomDocumento)"
+        >
+          <mat-icon>download</mat-icon>
+          <!-- <span class="download" *ngIf="progress > 0">
+            {{progress}}%
+          </span>
+          <span class="download">
+            {{message}}
+          </span> -->
         </button>
       </td>
     </ng-container>

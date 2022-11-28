@@ -37,7 +37,9 @@ mat-elevation-z8
     <ng-container matColumnDef="pais">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>pais</th>
       <td mat-cell *matCellDef="let element">
-        <!-- {{element.pais}} -->
+        <ul>
+          <li *ngFor="let p of element?.UsuarioPais">{{p?.IdPaisNavigation?.NomPais}}</li>
+        </ul>
       </td>
     </ng-container>
 
@@ -71,7 +73,7 @@ mat-elevation-z8
           mat-icon-button
           matTooltip="Clic aquí asignar Pais"
           color="success"
-          (click)="onSelectPais(element)"
+          (click)="selectPais(element)"
         >
           <mat-icon>emoji_flags</mat-icon>
         </button>

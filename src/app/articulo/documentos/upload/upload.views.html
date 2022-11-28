@@ -1,0 +1,29 @@
+<!-- <button mat-raised-button color="primary" class="m-l-15 input-file-button">
+  <input type="file" (change)="selectFile($event)" #fileInput />
+</button>
+(click)="file.click()
+-->
+
+<button mat-raised-button color="primary" class="m-l-5 input-file-button">
+  <input type="file" #file placeholder="Elegir archivo" (change)="uploadFile(file.files)" />
+</button>
+
+<div class="col-md-4">
+  <span class="upload" *ngIf="progress > 0"> {{progress}}% </span>
+  <span class="upload" *ngIf="message"> {{message}} </span>
+</div>
+
+<!-- <div class="m-l-15 input-file-button">
+  <div class="col-md-3">
+    <input
+      type="file"
+      #file
+      placeholder="Choose file"
+      (change)="uploadFile(file.files)"
+      style="display: none"
+      multiple
+    />
+
+  </div>
+
+</div> -->

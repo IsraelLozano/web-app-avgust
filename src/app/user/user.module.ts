@@ -17,9 +17,11 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { QuillModule } from 'ngx-quill';
+import { ModalUsuarioPaisViews } from './modal-usuario-pais/modal-usuario-pais.views';
+import { GrillaUserPaisViews } from './modal-usuario-pais/grilla-user-pais/grilla-user-pais.views';
 
 @NgModule({
-  declarations: [GrillaUserViews, ModalUserViews, UserViews],
+  declarations: [GrillaUserViews, ModalUserViews, UserViews, ModalUsuarioPaisViews, GrillaUserPaisViews],
   imports: [
     ComponentModule,
     DemoMaterialModule,

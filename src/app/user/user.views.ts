@@ -1,3 +1,4 @@
+import { ModalUsuarioPaisViews } from './modal-usuario-pais/modal-usuario-pais.views';
 import { ModalUserViews } from './modal-user/modal-user.views';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,6 +34,49 @@ export class UserViews implements OnInit {
       .subscribe((resp) => {
         this.listUser = resp;
       });
+  }
+
+  onSelectPais(row: IUsersDto) {
+    const dialogRef = this.dialog.open(ModalUsuarioPaisViews, { data: row.IdUsuario });
+
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp?.event == 'Agregar') {
+        this._dialogService
+          .confirm({
+            title: 'Confirmación',
+            message: '¿Desea grabar la asignación?',
+            buttonOk: {
+              text: 'ACEPTAR',
+            },
+            buttonCancel: {
+              text: 'CANCELAR',
+            },
+          })
+          .subscribe((result: boolean | undefined) => {
+            if (result) {
+              // Grabando
+              const loading = this.dialog.open(LoadingViews, { disableClose: true });
+              this._userService
+                .AddOrEditUsuarioPais(resp.dataReturn)
+                .pipe(finalize(() => loading.close()))
+                .subscribe((resultado) => {
+                  if (resultado) {
+                    this._dialogService.info({
+                      title: 'Confirmación',
+                      message: 'La información fue actualizada correctamente.',
+                      button: {
+                        text: 'CERRAR',
+                      },
+                    });
+                    this._userService.GetUsers().subscribe((resp) => {
+                      this.listUser = resp;
+                    });
+                  }
+                });
+            }
+          });
+      }
+    });
   }
 
   getModal() {

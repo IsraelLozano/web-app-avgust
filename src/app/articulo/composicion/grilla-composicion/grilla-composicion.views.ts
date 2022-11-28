@@ -10,7 +10,6 @@ import { GetComposicionDto, GetArticuloDto } from 'src/app/models/articulo/IArti
   styles: [],
 })
 export class GrillaComposicionViews implements OnInit {
-  allComplete: boolean = false;
   lista!: MatTableDataSource<GetComposicionDto>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

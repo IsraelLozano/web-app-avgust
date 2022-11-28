@@ -42,14 +42,16 @@
       </div>
 
       <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
-        <mat-form-field>
-          <input
+        <!-- <mat-form-field> -->
+        <!-- <input
             type="text"
             matInput
             placeholder="Nombre del Documento"
             formControlName="nomDocumento"
-          />
-        </mat-form-field>
+          /> -->
+
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+        <!-- </mat-form-field> -->
       </div>
     </div>
   </mat-dialog-content>

@@ -17,6 +17,7 @@ export class GrillaUserViews implements OnInit {
 
   @Output() onGetCursoSeleccionado = new EventEmitter<any>();
   @Output() onDeleteCursoSeleccionado = new EventEmitter<any>();
+  @Output() onSelectPais = new EventEmitter<any>();
 
   displayedColumns: string[] = [
     'IdUsuario',
@@ -53,5 +54,9 @@ export class GrillaUserViews implements OnInit {
 
   deleteInvoice(row: IUsersDto) {
     this.onDeleteCursoSeleccionado.emit(row);
+  }
+
+  selectPais(row: IUsersDto) {
+    this.onSelectPais.emit(row);
   }
 }
