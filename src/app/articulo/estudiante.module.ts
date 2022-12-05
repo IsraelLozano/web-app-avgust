@@ -29,9 +29,29 @@ import { ModalDocumentosViews } from './documentos/modal-documentos/modal-docume
 import { GrillaUsoViews } from './usos/grilla-uso/grilla-uso.views';
 import { ModalUsosViews } from './usos/modal-usos/modal-usos.views';
 import { UploadViews } from './documentos/upload/upload.views';
-
+import { ModalViewPdfViews } from './documentos/modal-view-pdf/modal-view-pdf.views';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'; // <-- Import PdfJsViewerModule module
 @NgModule({
-  declarations: [MainArticuloViews, GrillaArticuloViews, EditArticuloViews, ComposicionComponent, CaracteristicaComponent, UsosViews, DocumentosViews, GrillaCaracteristicaViews, ModalCaracteristicaViews, GrillaComposicionViews, ModalComposicionViews, GrillaDocumentoViews, ModalDocumentosViews, GrillaUsoViews, ModalUsosViews, UploadViews],
+  declarations: [
+    MainArticuloViews,
+    GrillaArticuloViews,
+    EditArticuloViews,
+    ComposicionComponent,
+    CaracteristicaComponent,
+    UsosViews,
+    DocumentosViews,
+    GrillaCaracteristicaViews,
+    ModalCaracteristicaViews,
+    GrillaComposicionViews,
+    ModalComposicionViews,
+    GrillaDocumentoViews,
+    ModalDocumentosViews,
+    GrillaUsoViews,
+    ModalUsosViews,
+    UploadViews,
+    ModalViewPdfViews,
+  ],
   imports: [
     ComponentModule,
     DemoMaterialModule,
@@ -50,7 +70,8 @@ import { UploadViews } from './documentos/upload/upload.views';
     DragDropModule,
     NgxPaginationModule,
     CommonModule,
-
+    PdfViewerModule,
+    PdfJsViewerModule,
     //Aplicación
     EstudianteRoutes,
   ],

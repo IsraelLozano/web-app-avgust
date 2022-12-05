@@ -17,6 +17,7 @@ import {
   GetDocumentoDto,
   GetUsoDto,
 } from '../models/articulo/IArticuloDto.enum';
+import { GetPdfDto } from '../models/reporte/IReporte';
 import { DialogService } from '../shared/dialog/dialog.service';
 import { GetDataUserDto } from '../shared/menu-items/GetDtoUser';
 import { GenericRepositoryService } from './generic-repository.service';
@@ -43,8 +44,10 @@ export class ArticuloService extends GenericRepositoryService {
     this.controller = articulo;
   }
 
-  GetListArticulos() {
-    return this.get<GetArticuloDto[]>(`${this.urlAddress}${this.controller}/GetListArticulo`);
+  GetListArticulos(idUsuario: number) {
+    return this.get<GetArticuloDto[]>(
+      `${this.urlAddress}${this.controller}/GetListArticulo/${idUsuario}`,
+    );
   }
 
   GetArticuloForEdit(id: number) {
@@ -114,6 +117,12 @@ export class ArticuloService extends GenericRepositoryService {
   GetDocumentoByArticulo(idArticulo: number) {
     return this.get<GetDocumentoDto[]>(
       `${this.urlAddress}${this.controller}/${idArticulo}/documentos`,
+    );
+  }
+
+  GetDocumentoPdfByArticulo(idArticulo: number, item: number) {
+    return this.get<GetPdfDto>(
+      `${this.urlAddress}${this.controller}/${idArticulo}/viewPdf/${item}`,
     );
   }
 

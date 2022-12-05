@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { LoadingViews } from 'src/app/libs/components/loading/loading.views';
 import { AddArticuloDto } from 'src/app/models/articulo/AddArticuloDto';
@@ -35,6 +35,7 @@ export class EditArticuloViews implements OnInit {
     private _articuloService: ArticuloService,
     private dialog: MatDialog,
     private _dialogService: DialogService,
+    private _router: Router,
   ) {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.idSeleccionado = id;
@@ -89,7 +90,7 @@ export class EditArticuloViews implements OnInit {
         .subscribe((result: boolean | undefined) => {
           if (result) {
             const articuloDto = this.form.value as AddArticuloDto;
-            articuloDto.idArticulo = this.idSeleccionado;
+            articuloDto.IdArticulo = this.idSeleccionado;
 
             // Grabando
             const loading = this.dialog.open(LoadingViews, { disableClose: true });
@@ -98,13 +99,15 @@ export class EditArticuloViews implements OnInit {
               .pipe(finalize(() => loading.close()))
               .subscribe((resultado) => {
                 if (resultado) {
-                  this.idSeleccionado = resultado.idArticulo;
+                  this.idSeleccionado = resultado.IdArticulo;
                   this._dialogService.info({
                     message: 'La información fue grabada correctamente.',
                     button: {
                       text: 'CERRAR',
                     },
                   });
+                  this.articuloFull.articulo.IdArticulo = this.idSeleccionado;
+                  this._router.navigate(['/articulo/articulo/' + this.idSeleccionado]);
                 }
               });
           }

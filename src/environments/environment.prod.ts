@@ -12,6 +12,8 @@ export const environment = {
       seguridad: 'security',
       prematricula: 'prematricula',
       reporte: 'reporte',
+      file: 'file',
+      maestra: 'maestra',
     },
   },
 };

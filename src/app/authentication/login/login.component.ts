@@ -63,6 +63,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.router.navigate(['/home/portalacademico']);
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    const { uname, password, pais } = this.form.value;
+    this._usuarioService
+      .GetLoginOAUth(uname, password, pais)
+      .pipe(finalize(() => loading.close()))
+      .subscribe(
+        (resp) => {
+          if (resp.IdUsuario > 0) {
+            this.router.navigate(['/home/portalacademico']);
+          }
+        },
+        (err) => {
+          console.log(err);
+        },
+      );
   }
 }

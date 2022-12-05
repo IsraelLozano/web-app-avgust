@@ -41,6 +41,7 @@ export class HttpUtil {
         return `Access Denied: ${error.message}`;
       }
       case 422: {
+        console.log('errores', error);
         const { Message, DetailsErrors } = error.error;
         const validation: Details[] = [];
         DetailsErrors.map((resp: any) => {

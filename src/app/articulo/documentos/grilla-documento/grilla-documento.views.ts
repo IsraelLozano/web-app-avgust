@@ -21,7 +21,7 @@ export class GrillaDocumentoViews implements OnInit {
 
   @Output() onGetSeleccionado = new EventEmitter<any>();
   @Output() onDeleteSeleccionado = new EventEmitter<any>();
-  @Output() onDownload = new EventEmitter<string>();
+  @Output() onDownload = new EventEmitter<any>();
 
   displayedColumns: string[] = ['Iditem', 'tipoDoc', 'fecha', 'nombre', 'action'];
 
@@ -50,7 +50,7 @@ export class GrillaDocumentoViews implements OnInit {
     this.onDeleteSeleccionado.emit(row);
   }
 
-  dowload(fileName: string) {
+  dowload(fileName: GetDocumentoDto) {
     this.onDownload.emit(fileName);
   }
 }

@@ -33,6 +33,17 @@ export class FileService {
     });
   }
 
+  public downloadExcel(IdUsuario: number) {
+    return this.http.get(
+      `${this.urlAddress}${this.controller}/GetExporToExcelArticulos/${IdUsuario}`,
+      {
+        reportProgress: true,
+        observe: 'events',
+        responseType: 'blob',
+      },
+    );
+  }
+
   public getPhotos() {
     return this.http.get(`${this.urlAddress}${this.controller}/getPhotos`);
   }

@@ -66,7 +66,7 @@ export class VerticalAppSidebarComponent implements OnDestroy {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.fullName = 'Cesar Vasquez';
+    this.fullName = this._sessionService.user.Nombres;
     this.fotoBase64 = '';
   }
 

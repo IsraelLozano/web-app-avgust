@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { OauthService } from 'src/app/authentication/services/oauth.service';
 import { SessionService } from 'src/app/libs/services/session.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-vertical-header',
@@ -137,6 +138,8 @@ export class VerticalAppHeaderComponent implements OnInit {
   }
 
   logout() {
+    this._sessionService.destroy();
+
     this._router.navigate(['/authentication/login'], { replaceUrl: true });
     // this._authService.logout();
   }

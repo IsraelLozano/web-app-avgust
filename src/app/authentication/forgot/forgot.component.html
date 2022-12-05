@@ -5,16 +5,34 @@
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="text-center">
-            <img alt="homepage" src="assets/images/logo-minedu.png" height="50px" width="200px" />
-            <h4 class="m-t-0">Recuperar contraseña</h4>
+            <a [routerLink]="['/authentication/login']">
+              <img alt="homepage" src="assets/images/logo-avgust.jpg" height="50px" width="200px" />
+            </a>
+            <h4 class="m-t-40">Recuperar contraseña</h4>
           </div>
           <p class="text-center font-14">
-            Ingrese su correo electrónico y le enviaremos el enlace de restablecimiento de
-            contraseña.
+            Ingrese su codigo de usuario y correo electrónico y le enviaremos el enlace de
+            restablecimiento de contraseña.
           </p>
 
           <div fxLayout="column" fxLayoutAlign="space-around">
-            <div class="pb-1">
+            <div class="p-10">
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  placeholder="codigo de usuario"
+                  type="text"
+                  [formControl]="form.controls['codigo']"
+                />
+              </mat-form-field>
+              <small
+                *ngIf="
+                  form.controls['codigo'].hasError('required') && form.controls['codigo'].touched
+                "
+                class="text-danger support-text"
+                >Su codigo de usuario es obligatorio</small
+              >
+
               <mat-form-field style="width: 100%">
                 <input
                   matInput

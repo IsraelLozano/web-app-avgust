@@ -11,11 +11,26 @@
           <div fxFlex.gt-md="50" class="text-right">
             <button
               mat-raised-button
+              style="margin: 5px 40px 5px 30px; min-width: 180px"
+              type="button"
+              class="m-r-5"
               color="primary"
               [routerLink]="['/articulo/articulo/0']"
               routerLinkActive="router-link-active"
             >
+              <mat-icon class="mat-18">add</mat-icon>
               Nuevo Articulo
+            </button>
+            <button
+              mat-raised-button
+              style="margin: 5px 40px 5px 30px; min-width: 180px"
+              color="accent"
+              type="button"
+              class="m-r-5"
+              (click)="this.GetFileExcel()"
+            >
+              <mat-icon class="mat-18">file_download</mat-icon>
+              Exportar
             </button>
           </div>
         </div>

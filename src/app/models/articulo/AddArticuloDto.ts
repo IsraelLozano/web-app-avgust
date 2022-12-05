@@ -1,12 +1,12 @@
 export interface AddArticuloDto {
-  idArticulo: number;
-  idPais: number;
-  nombreComercial: string;
-  idTitularRegistro: number;
-  nroRegistro: string;
-  idTipoProducto: number;
-  idFormulador: number;
-  idGrupoQuimico: number;
+  IdArticulo: number;
+  IdPais: number;
+  NombreComercial: string;
+  IdTitularRegistro: number;
+  NroRegistro: string;
+  IdTipoProducto: number;
+  IdFormulador: number;
+  IdGrupoQuimico: number;
 }
 
 /**

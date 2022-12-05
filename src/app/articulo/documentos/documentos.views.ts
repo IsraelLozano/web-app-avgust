@@ -1,3 +1,4 @@
+import { ModalViewPdfViews } from './modal-view-pdf/modal-view-pdf.views';
 import { ModalDocumentosViews } from './modal-documentos/modal-documentos.views';
 import { GetDocumentoDto } from './../../models/articulo/IArticuloDto.enum';
 import { ModalUsosViews } from './../usos/modal-usos/modal-usos.views';
@@ -185,20 +186,26 @@ export class DocumentosViews {
       });
   }
 
-  onDownload(value: string) {
+  onDownload(value: GetDocumentoDto) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    var ext = value.NomDocumento.substr(value.NomDocumento.lastIndexOf('.') + 1);
 
-    this.fileService
-      .download(value)
-      .pipe(finalize(() => loading.close()))
-      .subscribe((event: any) => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.progress = Math.round((100 * event.loaded) / event.total);
-        else if (event.type === HttpEventType.Response) {
-          this.message = 'descarga realizada';
-          this.downloadFile(event, value);
-        }
-      });
+    if (ext === 'pdf') {
+      const dialogRef = this.dialog.open(ModalViewPdfViews, { data: value });
+      dialogRef.afterClosed().subscribe((resp) => loading.close());
+    } else {
+      this.fileService
+        .download(value.NomDocumento)
+        .pipe(finalize(() => loading.close()))
+        .subscribe((event: any) => {
+          if (event.type === HttpEventType.UploadProgress)
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          else if (event.type === HttpEventType.Response) {
+            this.message = 'descarga realizada';
+            this.downloadFile(event, value.NomDocumento);
+          }
+        });
+    }
   }
 
   private downloadFile = (data: HttpResponse<Blob> | any, fileName: string) => {

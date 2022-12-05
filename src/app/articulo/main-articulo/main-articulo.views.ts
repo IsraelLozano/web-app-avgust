@@ -1,3 +1,5 @@
+import { SessionService } from './../../libs/services/session.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -5,6 +7,7 @@ import { finalize } from 'rxjs';
 import { LoadingViews } from 'src/app/libs/components/loading/loading.views';
 import { GetArticuloDto } from 'src/app/models/articulo/IArticuloDto.enum';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { FileService } from 'src/app/services/file.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 
 @Component({
@@ -14,11 +17,16 @@ import { DialogService } from 'src/app/shared/dialog/dialog.service';
 })
 export class MainArticuloViews implements OnInit {
   listArticulos!: GetArticuloDto[];
+  message!: string;
+  progress!: number;
+
   constructor(
     private _articuloService: ArticuloService,
     private dialog: MatDialog,
     private _dialogService: DialogService,
     private _router: Router,
+    private _fileService: FileService,
+    private _sesion: SessionService,
   ) {
     this.GetArticulos();
   }
@@ -26,7 +34,7 @@ export class MainArticuloViews implements OnInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     this._articuloService
-      .GetListArticulos()
+      .GetListArticulos(this._sesion.user.IdUsuario)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.listArticulos = resp;
@@ -36,6 +44,34 @@ export class MainArticuloViews implements OnInit {
   onGetArticulo(value: any) {
     this._router.navigate(['/articulo/articulo/' + value]);
   }
+
+  GetFileExcel() {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    this._fileService
+      .downloadExcel(this._sesion.user.IdUsuario)
+      .pipe(finalize(() => loading.close()))
+      .subscribe((event: any) => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'descarga realizada';
+          this.downloadFile(event, 'articulos.xlsx');
+        }
+      });
+  }
+
+  private downloadFile = (data: HttpResponse<Blob> | any, fileName: string) => {
+    const downloadedFile = new Blob([data.body], { type: data?.body.type });
+    const a = document.createElement('a');
+    a.setAttribute('style', 'display:none;');
+    document.body.appendChild(a);
+    a.download = fileName;
+    a.href = URL.createObjectURL(downloadedFile);
+    a.target = '_blank';
+    a.click();
+    document.body.removeChild(a);
+  };
 
   ngOnInit(): void {}
 }

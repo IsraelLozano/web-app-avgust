@@ -40,45 +40,9 @@ export class ValidarIestComponent implements OnInit {
     });
   }
 
-  GetInstituciones() {
-    this._sessionService.Instituciones.map((resp) => {
-      this.instituciones.push({
-        id: resp.ID_PERSONA_INSTITUCION,
-        nombre: resp.institucion.NombreInstitucion,
-      });
-    });
-  }
+  GetInstituciones() {}
 
-  changeInstituciones(ID_PERSONA_INSTITUCION: any) {
-    this.carreras = [];
-    const listInt = this._sessionService.Instituciones.filter(
-      (p) => p.ID_PERSONA_INSTITUCION == ID_PERSONA_INSTITUCION,
-    ).map((p) => p.carreras);
+  changeInstituciones(ID_PERSONA_INSTITUCION: any) {}
 
-    listInt[0].map((p) => {
-      this.carreras.push({ id: p.ID_ESTUDIANTE_INSTITUCION, nombre: p.NombreCarrera });
-    });
-  }
-
-  onSubmit() {
-    const { idInstitucion, idCarrera } = this.form.value;
-
-    const idCarreraPorInstitucion = this._sessionService.Instituciones.filter(
-      (p) => p.ID_PERSONA_INSTITUCION == idInstitucion,
-    ).map((c) => c.carreras);
-
-    const ID_CARRERAS_POR_INSTITUCION_DETALLE = idCarreraPorInstitucion[0]
-      .filter((p) => p.ID_ESTUDIANTE_INSTITUCION == idCarrera)
-      .map((r) => r.ID_CARRERAS_POR_INSTITUCION_DETALLE);
-
-    const objInstituto: InstitucionCarrereSelec = {
-      idPersonaInstitucion: idInstitucion,
-      idEstudianteInstitucion: idCarrera,
-      ID_CARRERAS_POR_INSTITUCION_DETALLE: ID_CARRERAS_POR_INSTITUCION_DETALLE[0],
-    };
-
-    this._sessionService.createKeyPeis(JSON.stringify(objInstituto));
-
-    this.router.navigate(['/home'], { replaceUrl: true });
-  }
+  onSubmit() {}
 }

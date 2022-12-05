@@ -17,6 +17,7 @@ export const environment = {
       prematricula: 'prematricula',
       reporte: 'reporte',
       file: 'file',
+      maestra: 'maestra',
     },
   },
 };

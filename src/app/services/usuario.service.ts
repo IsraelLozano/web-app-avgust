@@ -6,6 +6,7 @@ import { SessionService } from '../libs/services/session.service';
 import { IPaisDto } from '../models/Maestras/IMaestraDto';
 import { AddOrEditUsuarioPaisDto } from '../models/seguridad/AddOrEditUsuarioPaisDto';
 import { IGetUsuarioPaisDto } from '../models/seguridad/IGetUsuarioPaisDto';
+import { ILoginDto } from '../models/seguridad/ILoginDto';
 import { AddOrEditUserDto, IUsersDto } from '../models/seguridad/IUsersDto';
 import { DialogService } from '../shared/dialog/dialog.service';
 import { GetDataUserDto } from '../shared/menu-items/GetDtoUser';
@@ -58,6 +59,24 @@ export class UsuarioService extends GenericRepositoryService {
     return this.get<IGetUsuarioPaisDto[]>(
       `${this.urlAddressSeguridad}${this.controller}/usuarioPais/${idUsuario}`,
     );
+  }
+
+  GetLoginOAUth(codigo: string, clave: string, idPais: number) {
+    return this.get<ILoginDto>(
+      `${this.urlAddressSeguridad}${this.controller}/oauth-login/${codigo}/${clave}/${idPais}`,
+    ).pipe(
+      map((resp) => {
+        const dataUser = JSON.stringify(resp);
+        this._sessionService.create(dataUser);
+        return resp;
+      }),
+    );
+  }
+
+  async GetForgotPassword(email: string, codigo: string) {
+    return await this.get<ILoginDto>(
+      `${this.urlAddressSeguridad}${this.controller}/${email}/${codigo}`,
+    ).toPromise();
   }
 
   // GetUserByUserName(): Observable<GetDataUserDto> {
