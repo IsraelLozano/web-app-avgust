@@ -52,6 +52,8 @@ export class EditArticuloViews implements OnInit {
       nroRegistro: ['', Validators.required],
       idTipoProducto: [0, [Validators.required, Validators.minLength(1)]],
       idFormulador: [0, [Validators.required, Validators.minLength(1)]],
+      IdTipoFormulacion: [0, [Validators.required, Validators.minLength(1)]],
+      Concentracion: ['', Validators.required],
     });
   }
   GetArticuloForEdit(id: number) {
@@ -124,6 +126,8 @@ export class EditArticuloViews implements OnInit {
       nroRegistro: data.NroRegistro,
       idTipoProducto: data.IdTipoProducto,
       idFormulador: data.IdFormulador,
+      IdTipoFormulacion: data.IdTipoFormulacion,
+      Concentracion: data.Concentracion,
     });
   }
 

@@ -1,13 +1,15 @@
-import { IClaseDto } from './../../models/Maestras/IMaestraDto';
+import { IClaseDto, ITipoProductoDto } from './../../models/Maestras/IMaestraDto';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, forkJoin } from 'rxjs';
 import { LoadingViews } from 'src/app/libs/components/loading/loading.views';
 import { ITipoGenerico, IPaisDto } from 'src/app/models/Maestras/IMaestraDto';
 import { MaestraService } from 'src/app/services/maestra.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
+import { IClaseTipoArticuloDto } from 'src/app/models/Maestras/IClaseTipoArticuloDto';
+import { ModalClaseViews } from 'src/app/libs/components/clase/modal-clase/modal-clase.views';
 
 @Component({
   selector: 'app-clase',
@@ -15,7 +17,8 @@ import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
   styles: [],
 })
 export class ClaseViews implements OnInit {
-  data!: ITipoGenerico[];
+  data!: IClaseTipoArticuloDto[];
+  cboTipo!: ITipoProductoDto[];
   constructor(
     private dialog: MatDialog,
     private _dialogService: DialogService,
@@ -28,23 +31,40 @@ export class ClaseViews implements OnInit {
   GetData() {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
-    this._maestraService
-      .getListClase()
+    forkJoin({
+      listaClase: this._maestraService.getListClase(),
+      cboTipoProducto: this._maestraService.getListIdTipoProducto(),
+    })
       .pipe(finalize(() => loading.close()))
-      .subscribe((resp) => {
-        this.data = resp.map((p) => {
-          return { id: p.IdClase, descripcion: p.Descripcion, estado: p.estado };
-        }) as ITipoGenerico[];
-      });
+      .subscribe(
+        ({ listaClase, cboTipoProducto }) => {
+          this.data = listaClase;
+          this.cboTipo = cboTipoProducto;
+        },
+        (err) => {
+          console.log(err);
+        },
+      );
+
+    // this._maestraService
+    //   .getListClase()
+    //   .pipe(finalize(() => loading.close()))
+    //   .subscribe((resp) => {
+    //     this.data = resp
+    //   });
   }
 
   getModal() {
-    const valores: ITipoGenerico = {
-      id: 0,
-      descripcion: '',
+    const valores: IClaseTipoArticuloDto = {
+      IdClase: 0,
+      Descripcion: '',
       estado: true,
+      IdTipoProducto: 0,
     };
-    const dialogRef = this.dialog.open(MaestroModalViews, { data: valores, width: '500px' });
+    const dialogRef = this.dialog.open(ModalClaseViews, {
+      data: { cbo: this.cboTipo, valores },
+      width: '500px',
+    });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
@@ -61,9 +81,10 @@ export class ClaseViews implements OnInit {
           .subscribe((result: boolean | undefined) => {
             const { dataReturn } = resp;
             const model: IClaseDto = {
-              IdClase: dataReturn.id,
-              Descripcion: dataReturn.descripcion,
+              IdClase: dataReturn.IdClase,
+              Descripcion: dataReturn.Descripcion,
               estado: dataReturn.estado,
+              IdTipoProducto: dataReturn.IdTipoProducto,
             };
 
             if (result) {
@@ -89,14 +110,14 @@ export class ClaseViews implements OnInit {
       }
     });
   }
-  onGetEdit(value: ITipoGenerico) {
-    const valores: ITipoGenerico = {
-      id: value.id,
-      descripcion: value.descripcion,
+  onGetEdit(value: IClaseTipoArticuloDto) {
+    const valores: IClaseTipoArticuloDto = {
+      IdClase: value.IdClase,
+      Descripcion: value.Descripcion,
       estado: value.estado,
+      IdTipoProducto: Number(value.IdTipoProductoNavigation?.IdTipoProducto1),
     };
-
-    const dialogRef = this.dialog.open(MaestroModalViews, { data: valores });
+    const dialogRef = this.dialog.open(ModalClaseViews, { data: { cbo: this.cboTipo, valores } });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
@@ -115,9 +136,10 @@ export class ClaseViews implements OnInit {
               // Grabando
               const { dataReturn } = resp;
               const model: IClaseDto = {
-                IdClase: dataReturn.id,
-                Descripcion: dataReturn.descripcion,
+                IdClase: dataReturn.IdClase,
+                Descripcion: dataReturn.Descripcion,
                 estado: dataReturn.estado,
+                IdTipoProducto: dataReturn.IdTipoProducto,
               };
 
               const loading = this.dialog.open(LoadingViews, { disableClose: true });
@@ -142,7 +164,7 @@ export class ClaseViews implements OnInit {
       }
     });
   }
-  onDelete(value: ITipoGenerico) {
+  onDelete(value: IClaseTipoArticuloDto) {
     this._dialogService
       .confirm({
         title: 'Confirmación',
@@ -159,7 +181,7 @@ export class ClaseViews implements OnInit {
           // Grabando
           const loading = this.dialog.open(LoadingViews, { disableClose: true });
           this._maestraService
-            .deleteClase(value.id)
+            .deleteClase(value.IdClase)
             .pipe(finalize(() => loading.close()))
             .subscribe((resultado) => {
               if (resultado) {

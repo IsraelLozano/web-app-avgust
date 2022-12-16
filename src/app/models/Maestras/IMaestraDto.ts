@@ -2,6 +2,7 @@ export interface ITipoGenerico {
   id: number;
   descripcion: string;
   estado: boolean;
+  codigo?: string;
 }
 
 export interface IPaisDto {
@@ -26,6 +27,7 @@ export interface IClaseDto {
   IdClase: number;
   Descripcion: string;
   estado: boolean;
+  IdTipoProducto: number;
 }
 
 export interface ICultovoDto {
@@ -67,5 +69,18 @@ export interface ITItularRegistroDto {
 export interface IToxicologiaDto {
   IdToxicologica: number;
   Descripcion: string;
+  estado: boolean;
+}
+
+export interface ITipoFormulacion {
+  IdTipoFormulacion: number;
+  CodTipoFormulacion: string;
+  NomTipoFormulacion: string;
+  estado: boolean;
+}
+
+export interface ITipoIngredienteActivo {
+  IngredenteActivo: number;
+  NomIngredienteActivo: string;
   estado: boolean;
 }

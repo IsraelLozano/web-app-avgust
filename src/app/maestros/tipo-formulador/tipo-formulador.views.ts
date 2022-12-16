@@ -1,55 +1,69 @@
-import {
-  GetArticuloForEditDto,
-  GetComposicionDto,
-  GetComposicionDtoModal,
-} from './../../models/articulo/IArticuloDto.enum';
-import { ModalComposicionViews } from './modal-composicion/modal-composicion.views';
-import { Component, Input, OnInit } from '@angular/core';
-import { GetArticuloDto } from 'src/app/models/articulo/IArticuloDto.enum';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogService } from 'src/app/shared/dialog/dialog.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ArticuloService } from 'src/app/services/articulo.service';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { LoadingViews } from 'src/app/libs/components/loading/loading.views';
-import { Router } from '@angular/router';
+import { ModalTipoFormulacionViews } from 'src/app/libs/components/modal-tipo-formulacion/modal-tipo-formulacion.views';
+import {
+  ITipoGenerico,
+  ITipoDocumentoDto,
+  ITipoFormulacion,
+} from 'src/app/models/Maestras/IMaestraDto';
+import { MaestraService } from 'src/app/services/maestra.service';
+import { DialogService } from 'src/app/shared/dialog/dialog.service';
+import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
 
 @Component({
-  selector: 'app-composicion',
-  templateUrl: './composicion.component.html',
+  selector: 'app-tipo-formulador',
+  templateUrl: './tipo-formulador.views.html',
   styles: [],
 })
-export class ComposicionComponent implements OnInit {
-  articulo!: GetArticuloDto;
-  articuloFull!: GetArticuloForEditDto;
-
+export class TipoFormuladorViews implements OnInit {
+  data!: ITipoGenerico[];
   constructor(
     private dialog: MatDialog,
     private _dialogService: DialogService,
-    private _articuloService: ArticuloService,
+    private _maestraService: MaestraService,
     private _router: Router,
   ) {}
+  ngOnInit(): void {
+    this.GetData();
+  }
+  GetData() {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
-  @Input() set data(value: GetArticuloForEditDto) {
-    this.articulo = value.articulo;
-    this.articuloFull = value;
+    this._maestraService
+      .getListTipoFormulacion()
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        this.data = resp.map((p) => {
+          return {
+            id: p.IdTipoFormulacion,
+            descripcion: p.NomTipoFormulacion,
+            estado: p.estado,
+            codigo: p.CodTipoFormulacion,
+          };
+        }) as ITipoGenerico[];
+      });
   }
 
   getModal() {
-    const valores: GetComposicionDtoModal = {
-      IdArticulo: this.articulo.IdArticulo,
-      Iditem: 0,
-      FormuladorMolecular: '',
-      IngredienteActivo: 0,
-      cboTipoIngredienteActivo: this.articuloFull.cboTipoIngredienteActivo,
+    const valores: ITipoGenerico = {
+      id: 0,
+      descripcion: '',
+      estado: true,
+      codigo: '',
     };
-    const dialogRef = this.dialog.open(ModalComposicionViews, { data: valores });
+    const dialogRef = this.dialog.open(ModalTipoFormulacionViews, {
+      data: valores,
+      width: '500px',
+    });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
           .confirm({
             title: 'Confirmación',
-            message: '¿Desea grabar la composicion?',
+            message: '¿Desea grabar la información?',
             buttonOk: {
               text: 'ACEPTAR',
             },
@@ -58,11 +72,19 @@ export class ComposicionComponent implements OnInit {
             },
           })
           .subscribe((result: boolean | undefined) => {
+            const { dataReturn } = resp;
+            const model: ITipoFormulacion = {
+              IdTipoFormulacion: dataReturn.id,
+              NomTipoFormulacion: dataReturn.descripcion,
+              estado: dataReturn.estado,
+              CodTipoFormulacion: dataReturn.codigo,
+            };
+
             if (result) {
               // Grabando
               const loading = this.dialog.open(LoadingViews, { disableClose: true });
-              this._articuloService
-                .AddOrEditComposicion(resp.dataReturn)
+              this._maestraService
+                .CreateOrUpdateTipoFormulacion(model)
                 .pipe(finalize(() => loading.close()))
                 .subscribe((resultado) => {
                   if (resultado) {
@@ -73,11 +95,7 @@ export class ComposicionComponent implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this._articuloService
-                      .GetComposicionesByArticulo(this.articulo.IdArticulo)
-                      .subscribe((resp) => {
-                        this.articulo.Composicions = resp;
-                      });
+                    this.GetData();
                   }
                 });
             }
@@ -85,14 +103,21 @@ export class ComposicionComponent implements OnInit {
       }
     });
   }
-  onGetEdit(value: GetComposicionDto) {
-    const dialogRef = this.dialog.open(ModalComposicionViews, { data: value });
+  onGetEdit(value: ITipoGenerico) {
+    const valores: ITipoGenerico = {
+      id: value.id,
+      descripcion: value.descripcion,
+      estado: true,
+      codigo: value.codigo,
+    };
+
+    const dialogRef = this.dialog.open(ModalTipoFormulacionViews, { data: valores });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
           .confirm({
             title: 'Confirmación',
-            message: '¿Desea grabar la composicion?',
+            message: '¿Desea grabar la información?',
             buttonOk: {
               text: 'ACEPTAR',
             },
@@ -103,9 +128,18 @@ export class ComposicionComponent implements OnInit {
           .subscribe((result: boolean | undefined) => {
             if (result) {
               // Grabando
+              const { dataReturn } = resp;
+              const model: ITipoFormulacion = {
+                IdTipoFormulacion: dataReturn.id,
+                NomTipoFormulacion: dataReturn.descripcion,
+                estado: dataReturn.estado,
+                CodTipoFormulacion: dataReturn.codigo,
+              };
+
               const loading = this.dialog.open(LoadingViews, { disableClose: true });
-              this._articuloService
-                .AddOrEditComposicion(resp.dataReturn)
+
+              this._maestraService
+                .CreateOrUpdateTipoFormulacion(model)
                 .pipe(finalize(() => loading.close()))
                 .subscribe((resultado) => {
                   if (resultado) {
@@ -116,11 +150,7 @@ export class ComposicionComponent implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this._articuloService
-                      .GetComposicionesByArticulo(this.articulo.IdArticulo)
-                      .subscribe((resp) => {
-                        this.articulo.Composicions = resp;
-                      });
+                    this.GetData();
                   }
                 });
             }
@@ -129,11 +159,11 @@ export class ComposicionComponent implements OnInit {
     });
   }
 
-  onDelete(value: GetComposicionDto) {
+  onDelete(value: ITipoGenerico) {
     this._dialogService
       .confirm({
         title: 'Confirmación',
-        message: `¿Desea eliminar la composicion: ${value.FormuladorMolecular}?`,
+        message: `¿Desea anular el elemento?`,
         buttonOk: {
           text: 'ACEPTAR',
         },
@@ -145,8 +175,8 @@ export class ComposicionComponent implements OnInit {
         if (result) {
           // Grabando
           const loading = this.dialog.open(LoadingViews, { disableClose: true });
-          this._articuloService
-            .DeleteComposicionById(value.IdArticulo, value.Iditem)
+          this._maestraService
+            .deleteTipoFormulacion(value.id)
             .pipe(finalize(() => loading.close()))
             .subscribe((resultado) => {
               if (resultado) {
@@ -157,16 +187,10 @@ export class ComposicionComponent implements OnInit {
                     text: 'CERRAR',
                   },
                 });
-                this._articuloService
-                  .GetComposicionesByArticulo(this.articulo.IdArticulo)
-                  .subscribe((resp) => {
-                    this.articulo.Composicions = resp;
-                  });
+                this.GetData();
               }
             });
         }
       });
   }
-
-  ngOnInit(): void {}
 }

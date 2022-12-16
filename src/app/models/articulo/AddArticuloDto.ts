@@ -7,6 +7,8 @@ export interface AddArticuloDto {
   IdTipoProducto: number;
   IdFormulador: number;
   IdGrupoQuimico: number;
+  IdTipoFormulacion: number;
+  Concentracion: string;
 }
 
 /**

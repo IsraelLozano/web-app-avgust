@@ -53,7 +53,7 @@ mat-elevation-z8
           color="info"
           (click)="dowload(element)"
         >
-          <mat-icon>download</mat-icon>
+          <mat-icon>{{ this.getExtenxion(element.NomDocumento)}}</mat-icon>
           <!-- <span class="download" *ngIf="progress > 0">
             {{progress}}%
           </span>

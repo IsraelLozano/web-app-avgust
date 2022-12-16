@@ -77,27 +77,29 @@ const MENUITEMS = [
       { state: 'list-clases', name: 'Clases', type: 'link' },
       { state: 'list-cultivo', name: 'Cultivo', type: 'link' },
       { state: 'list-formulador', name: 'Formuladores', type: 'link' },
-      { state: 'list-grupo-quimico', name: 'grupo quimico', type: 'link' },
+      { state: 'list-grupo-quimico', name: 'Grupo quimico', type: 'link' },
       { state: 'list-tipo-producto', name: 'Tipo de Productos', type: 'link' },
       { state: 'list-tipo-documentos', name: 'Documentos', type: 'link' },
       { state: 'list-titular', name: 'Titular', type: 'link' },
       { state: 'list-toxicologica', name: 'Toxicologia', type: 'link' },
+      { state: 'list-ingrediente-activo', name: 'Ingrediente Activo', type: 'link' },
+      { state: 'list-tipo-formuladores', name: 'Tipos de Formuladores', type: 'link' },
       // { state: 'matricula-ficha', name: 'Ficha Matricula', type: 'link' },
     ],
   },
-  {
-    state: 'reporte',
-    name: 'Reportes',
-    type: 'sub',
-    icon: 'insert_chart',
-    badge: [{ type: 'red', value: ':)' }],
-    children: [
-      { state: 'test', name: 'Por Formulacion', type: 'link' },
-      { state: 'test', name: 'Composición', type: 'link' },
-      { state: 'test', name: 'Plaga', type: 'link' },
-      { state: 'test', name: 'Cultivo', type: 'link' },
-    ],
-  },
+  // {
+  //   state: 'reporte',
+  //   name: 'Reportes',
+  //   type: 'sub',
+  //   icon: 'insert_chart',
+  //   badge: [{ type: 'red', value: ':)' }],
+  //   children: [
+  //     { state: 'test', name: 'Por Formulacion', type: 'link' },
+  //     { state: 'test', name: 'Composición', type: 'link' },
+  //     { state: 'test', name: 'Plaga', type: 'link' },
+  //     { state: 'test', name: 'Cultivo', type: 'link' },
+  //   ],
+  // },
 ];
 
 @Injectable()

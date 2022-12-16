@@ -20,7 +20,10 @@ const routes: Routes = [
         component: EditArticuloViews,
         data: {
           title: 'Mantenimiento de Articulos',
-          urls: [{ title: 'Lista de Articulos', url: '/list-articulo' }, { title: 'Articulos' }],
+          urls: [
+            { title: 'Lista de Articulos', url: '/articulo/list-articulo' },
+            { title: 'Articulos' },
+          ],
         },
       },
     ],

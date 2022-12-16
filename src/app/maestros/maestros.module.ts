@@ -27,6 +27,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { QuillModule } from 'ngx-quill';
 import { DemoMaterialModule } from '../demo-material-module';
 import { ComponentModule } from '../libs/components/component.module';
+import { IngredienteActivoViews } from './ingrediente-activo/ingrediente-activo.views';
+import { TipoFormuladorViews } from './tipo-formulador/tipo-formulador.views';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { ComponentModule } from '../libs/components/component.module';
     ToxicologiaViews,
     MaestroGrillaViews,
     MaestroModalViews,
+    IngredienteActivoViews,
+    TipoFormuladorViews,
   ],
   imports: [
     ComponentModule,

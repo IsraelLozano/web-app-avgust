@@ -14,24 +14,21 @@
           />
         </mat-form-field>
       </div>
-      <div fxFlex.gt-sm="60" fxFlex="100" class="p-10">
+
+      <div fxFlex.gt-sm="80" fxFlex="100" class="p-10">
         <mat-form-field>
-          <input
-            type="number"
-            matInput
-            placeholder="Ingrediente Activo"
+          <mat-select
             formControlName="ingredienteActivo"
-          />
-        </mat-form-field>
-      </div>
-      <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
-        <mat-form-field>
-          <input
-            type="text"
-            matInput
-            placeholder="Formulador Molecular"
-            formControlName="formuladorMolecular"
-          />
+            placeholder="Seleccione el Ingrediente Activo"
+            [value]="this.idArticulo?.IngredienteActivo"
+          >
+            <mat-option
+              *ngFor="let item of data?.cboTipoIngredienteActivo"
+              [value]="item.IngredenteActivo"
+            >
+              {{item.NomIngredienteActivo}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>

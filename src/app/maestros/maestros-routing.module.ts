@@ -1,3 +1,5 @@
+import { TipoFormuladorViews } from './tipo-formulador/tipo-formulador.views';
+import { IngredienteActivoViews } from './ingrediente-activo/ingrediente-activo.views';
 import { ToxicologiaViews } from './toxicologia/toxicologia.views';
 import { TitularRegistroViews } from './titular-registro/titular-registro.views';
 import { TipoDocumentoViews } from './tipo-documento/tipo-documento.views';
@@ -102,6 +104,22 @@ const routes: Routes = [
         data: {
           title: 'Lista de toxicologica',
           urls: [{ title: 'Inicio', url: '/home' }, { title: 'toxicologica' }],
+        },
+      },
+      {
+        path: 'list-ingrediente-activo',
+        component: IngredienteActivoViews,
+        data: {
+          title: 'Lista de Ingrediente Activo',
+          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Ingrediente activo' }],
+        },
+      },
+      {
+        path: 'list-tipo-formuladores',
+        component: TipoFormuladorViews,
+        data: {
+          title: 'Lista de Tipos de Formuladores',
+          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Tipos de Formuladores' }],
         },
       },
     ],

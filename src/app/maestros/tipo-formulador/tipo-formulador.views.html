@@ -5,8 +5,8 @@
         <div fxLayout="row wrap" class="align-items-center">
           <div fxFlex.gt-md="50" fxFlex.gt-lg="50" fxFlex="100">
             <!-- <mat-form-field>
-              <input matInput placeholder="Buscar Articulo" />
-            </mat-form-field> -->
+                <input matInput placeholder="Buscar Articulo" />
+              </mat-form-field> -->
           </div>
           <div fxFlex.gt-md="50" class="text-right">
             <button
@@ -32,11 +32,11 @@
     <mat-card>
       <mat-card-content>
         <mat-card-subtitle>Resultados:</mat-card-subtitle>
-        <app-grilla-clase
+        <app-grilla-formulacion
           [setListArticulo]="this.data"
           (onGetSeleccionado)="this.onGetEdit($event)"
           (onDeleteSeleccionado)="this.onDelete($event)"
-        ></app-grilla-clase>
+        ></app-grilla-formulacion>
       </mat-card-content>
     </mat-card>
   </div>

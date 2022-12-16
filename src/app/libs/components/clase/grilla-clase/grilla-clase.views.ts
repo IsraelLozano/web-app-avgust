@@ -2,24 +2,26 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { GetComposicionDto, GetArticuloDto } from 'src/app/models/articulo/IArticuloDto.enum';
+import { IClaseTipoArticuloDto } from 'src/app/models/Maestras/IClaseTipoArticuloDto';
+import { ITipoGenerico } from 'src/app/models/Maestras/IMaestraDto';
 
 @Component({
-  selector: 'app-grilla-composicion',
-  templateUrl: './grilla-composicion.views.html',
+  selector: 'app-grilla-clase',
+  templateUrl: './grilla-clase.views.html',
   styles: [],
 })
-export class GrillaComposicionViews implements OnInit {
-  lista!: MatTableDataSource<GetComposicionDto>;
+export class GrillaClaseViews implements OnInit {
+  allComplete: boolean = false;
+  lista!: MatTableDataSource<IClaseTipoArticuloDto>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @Output() onGetSeleccionado = new EventEmitter<any>();
   @Output() onDeleteSeleccionado = new EventEmitter<any>();
 
-  displayedColumns: string[] = ['Iditem', 'IngredienteActivo', 'action'];
+  displayedColumns: string[] = ['id', 'tipo', 'descripcion', 'estado', 'action'];
 
-  @Input() set setListArticulo(value: GetComposicionDto[]) {
+  @Input() set setListArticulo(value: IClaseTipoArticuloDto[]) {
     this.lista = new MatTableDataSource(value);
     this.lista.paginator = this.paginator;
     this.lista.sort = this.sort;
@@ -31,16 +33,11 @@ export class GrillaComposicionViews implements OnInit {
     // throw new Error('Method not implemented.');
   }
 
-  // ngAfterViewInit(): void {
-  //   this.cursosList.paginator = this.paginator;
-  //   this.cursosList.sort = this.sort;
-  // }
-
-  getCurso(row: GetArticuloDto) {
+  getCurso(row: IClaseTipoArticuloDto) {
     this.onGetSeleccionado.emit(row);
   }
 
-  deleteInvoice(row: GetArticuloDto) {
+  deleteInvoice(row: IClaseTipoArticuloDto) {
     this.onDeleteSeleccionado.emit(row);
   }
 }

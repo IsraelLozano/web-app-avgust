@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Ingrese Tipo de Formulacion</h2>
+
+<form class="basic-form" [formGroup]="this.form" (ngSubmit)="this.doAction()">
+  <mat-dialog-content>
+    <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+      <div fxFlex.gt-sm="20" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <input
+            type="number"
+            matInput
+            placeholder="Id"
+            formControlName="IdClase"
+            readonly="true"
+          />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <mat-select
+            formControlName="IdTipoProducto"
+            placeholder="Seleccione Tipo Producto"
+            [value]="this.data.IdTipoProducto"
+          >
+            <mat-option *ngFor="let item of cboTipoProd" [value]="item. IdTipoProducto1">
+              {{item.NomTipoProducto}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <input type="text" matInput placeholder="Descripcion" formControlName="Descripcion" />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions align="end">
+    <button type="submit" mat-button color="warn" [disabled]="!this.form.valid">Aceptar</button>
+    <button mat-button matDialogClose (click)="closeDialog()" mat-flat-button>Cancelar</button>
+  </div>
+</form>

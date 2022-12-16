@@ -18,14 +18,19 @@ import { ModalComposicionViews } from '../../composicion/modal-composicion/modal
 export class ModalCaracteristicaViews implements OnInit {
   dataRetorno!: any;
   idArticulo!: GetCaracteristicaDtoModal;
+  idTipoProducto!: number;
   public form!: FormGroup;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ModalCaracteristicaViews>,
     private dialog: MatDialog,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: GetCaracteristicaDtoModal,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    this.idArticulo = data;
+    const { idTipoProducto, valores } = data;
+    this.idTipoProducto = idTipoProducto;
+
+    //data: {: this.articulo.IdTipoProducto,  }
+    this.idArticulo = valores as GetCaracteristicaDtoModal;
     this.form = this.fb.group({
       idItem: [0],
       idAplicacion: [0, Validators.required],

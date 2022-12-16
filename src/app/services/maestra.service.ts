@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SessionService } from '../libs/services/session.service';
+import { IClaseTipoArticuloDto } from '../models/Maestras/IClaseTipoArticuloDto';
 import {
   IAplicacionDto,
   ICientificaPlagaDto,
@@ -11,6 +12,8 @@ import {
   IGrupoQuimicoDto,
   IPaisDto,
   ITipoDocumentoDto,
+  ITipoFormulacion,
+  ITipoIngredienteActivo,
   ITipoProductoDto,
   ITItularRegistroDto,
   IToxicologiaDto,
@@ -102,11 +105,13 @@ export class MaestraService extends GenericRepositoryService {
 
   /** Maestro de Clase */
   getListClase() {
-    return this.get<IClaseDto[]>(`${this.urlAddress}${this.controller}/getListClase`);
+    return this.get<IClaseTipoArticuloDto[]>(`${this.urlAddress}${this.controller}/getListClase`);
   }
 
   GetClaseById(id: number) {
-    return this.get<IClaseDto>(`${this.urlAddress}${this.controller}/GetClaseById/${id}`);
+    return this.get<IClaseTipoArticuloDto>(
+      `${this.urlAddress}${this.controller}/GetClaseById/${id}`,
+    );
   }
 
   CreateOrUpdateClase(request: IClaseDto) {
@@ -274,5 +279,53 @@ export class MaestraService extends GenericRepositoryService {
 
   deleteToxicologia(id: number) {
     return this.get<boolean>(`${this.urlAddress}${this.controller}/deleteToxicologia/${id}`);
+  }
+
+  /** Maestro de Tipo Formulacion */
+  getListTipoFormulacion() {
+    return this.get<ITipoFormulacion[]>(
+      `${this.urlAddress}${this.controller}/getListTipoFormulacion`,
+    );
+  }
+
+  GetTipoFormulacionById(id: number) {
+    return this.get<ITipoFormulacion>(
+      `${this.urlAddress}${this.controller}/GetTipoFormulacionById/${id}`,
+    );
+  }
+
+  CreateOrUpdateTipoFormulacion(request: ITipoFormulacion) {
+    return this.post<ITipoFormulacion>(
+      `${this.urlAddress}${this.controller}/CreateOrUpdateTipoFormulacion`,
+      request,
+    );
+  }
+
+  deleteTipoFormulacion(id: number) {
+    return this.get<boolean>(`${this.urlAddress}${this.controller}/deleteTipoFormulacion/${id}`);
+  }
+
+  /** Maestro de Ingrediente Activo */
+  getListTipoIngredienteActivo() {
+    return this.get<ITipoIngredienteActivo[]>(
+      `${this.urlAddress}${this.controller}/getListTipoIngredienteActivo`,
+    );
+  }
+
+  GetTipoIngredienteActivoById(id: number) {
+    return this.get<ITipoIngredienteActivo>(
+      `${this.urlAddress}${this.controller}/GetTipoIngredienteActivoById/${id}`,
+    );
+  }
+
+  CreateOrUpdateTipoIngredienteActivo(request: ITipoIngredienteActivo) {
+    return this.post<ITipoIngredienteActivo>(
+      `${this.urlAddress}${this.controller}/CreateOrUpdateTipoIngredienteActivo`,
+      request,
+    );
+  }
+
+  deleteTipoIngredienteActivo(id: number) {
+    return this.get<boolean>(`${this.urlAddress}${this.controller}/deleteIngredienteActivo/${id}`);
   }
 }

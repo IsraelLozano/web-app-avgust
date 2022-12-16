@@ -129,6 +129,34 @@
                       </mat-form-field>
                     </div>
 
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <mat-select
+                          formControlName="IdTipoFormulacion"
+                          placeholder="Seleccione el Tipo Formulador"
+                          [value]="this?.particuloFull?.articulo?.IdTipoFormulacion"
+                        >
+                          <mat-option
+                            *ngFor="let item of articuloFull?.cboTipoFormulacion"
+                            [value]="item.IdTipoFormulacion"
+                          >
+                            {{item.NomTipoFormulacion}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <input
+                          type="text"
+                          matInput
+                          placeholder="Concentracion"
+                          formControlName="Concentracion"
+                        />
+                      </mat-form-field>
+                    </div>
+
                     <!-- <div class="m-t-20">
                         <button mat-raised-button class="m-r-5" color="primary">Chat</button>
                         <button mat-raised-button color="accent">Follow</button>
@@ -167,7 +195,7 @@
             <div *ngIf="this.idSeleccionado!==0">
               <mat-tab label="Composicion">
                 <mat-card-content>
-                  <app-composicion [data]="this.articuloFull.articulo"></app-composicion>
+                  <app-composicion [data]="this.articuloFull"></app-composicion>
                 </mat-card-content>
               </mat-tab>
               <mat-tab label="Caracteristicas">

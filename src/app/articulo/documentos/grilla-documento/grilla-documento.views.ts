@@ -53,4 +53,12 @@ export class GrillaDocumentoViews implements OnInit {
   dowload(fileName: GetDocumentoDto) {
     this.onDownload.emit(fileName);
   }
+
+  getExtenxion(nameFile: string) {
+    var ext = nameFile.substr(nameFile.lastIndexOf('.') + 1);
+    if (ext === 'pdf') {
+      return 'view_compact_alt';
+    }
+    return 'download';
+  }
 }

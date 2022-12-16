@@ -44,10 +44,14 @@ export class CaracteristicaComponent {
       IdClase: 0,
       IdToxicologica: 0,
       CboApp: this.articuloFull.cboAplicaciones,
-      cboCla: this.articuloFull.cboClase,
+      cboCla: this.articuloFull.cboClase.filter(
+        (p) => p.IdTipoProducto == this.articulo.IdTipoProducto,
+      ),
       cbpToxico: this.articuloFull.cboToxicologica,
     };
-    const dialogRef = this.dialog.open(ModalCaracteristicaViews, { data: valores });
+    const dialogRef = this.dialog.open(ModalCaracteristicaViews, {
+      data: { idTipoProducto: this.articulo.IdTipoProducto, valores },
+    });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
@@ -97,11 +101,15 @@ export class CaracteristicaComponent {
       IdClase: value.IdClase,
       IdToxicologica: value.IdToxicologica,
       CboApp: this.articuloFull.cboAplicaciones,
-      cboCla: this.articuloFull.cboClase,
+      cboCla: this.articuloFull.cboClase.filter(
+        (p) => p.IdTipoProducto == this.articulo.IdTipoProducto,
+      ),
       cbpToxico: this.articuloFull.cboToxicologica,
     };
 
-    const dialogRef = this.dialog.open(ModalCaracteristicaViews, { data: valores });
+    const dialogRef = this.dialog.open(ModalCaracteristicaViews, {
+      data: { idTipoProducto: this.articulo.IdTipoProducto, valores },
+    });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
