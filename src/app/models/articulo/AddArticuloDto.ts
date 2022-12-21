@@ -9,6 +9,7 @@ export interface AddArticuloDto {
   IdGrupoQuimico: number;
   IdTipoFormulacion: number;
   Concentracion: string;
+  FlgActivo: boolean;
 }
 
 /**

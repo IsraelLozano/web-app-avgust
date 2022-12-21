@@ -9,6 +9,7 @@ import { GetArticuloDto } from 'src/app/models/articulo/IArticuloDto.enum';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { FileService } from 'src/app/services/file.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-main-articulo',
@@ -19,6 +20,7 @@ export class MainArticuloViews implements OnInit {
   listArticulos!: GetArticuloDto[];
   message!: string;
   progress!: number;
+  filtroForm!: FormGroup;
 
   constructor(
     private _articuloService: ArticuloService,
@@ -27,14 +29,15 @@ export class MainArticuloViews implements OnInit {
     private _router: Router,
     private _fileService: FileService,
     private _sesion: SessionService,
+    private _formBuilder: FormBuilder,
   ) {
     this.GetArticulos();
   }
   GetArticulos() {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-
+    const txtFiltro = this.filtroForm?.get('txtFiltro')?.value ?? '';
     this._articuloService
-      .GetListArticulos(this._sesion.user.IdUsuario)
+      .GetListArticulos(this._sesion.user.IdUsuario, txtFiltro)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.listArticulos = resp;
@@ -43,6 +46,25 @@ export class MainArticuloViews implements OnInit {
 
   onGetArticulo(value: any) {
     this._router.navigate(['/articulo/articulo/' + value]);
+  }
+
+  onDeleteArticulo(id: number) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    this._articuloService
+      .DeleteArticuloById(id)
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        if (resp) {
+          this._dialogService.info({
+            title: 'Confirmación',
+            message: 'El articulo buen anulado correctamente.',
+            button: {
+              text: 'CERRAR',
+            },
+          });
+          this.GetArticulos();
+        }
+      });
   }
 
   GetFileExcel() {
@@ -73,5 +95,16 @@ export class MainArticuloViews implements OnInit {
     document.body.removeChild(a);
   };
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.filtroForm = this._formBuilder.group({
+      txtFiltro: [''],
+      // codDisenioCurricular: ["1"],
+      // codFase: [""],
+      // codFormato: [""],
+      // codNivel: ["3"],
+      // codGrado: [""],
+      // codSeccion: [""],
+      // fechaEmision: [new Date()],
+    });
+  }
 }

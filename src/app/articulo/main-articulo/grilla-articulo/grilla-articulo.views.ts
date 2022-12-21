@@ -50,7 +50,7 @@ export class GrillaArticuloViews implements OnInit {
     this.onGetCursoSeleccionado.emit(row);
   }
 
-  deleteInvoice(row: GetArticuloDto) {
+  deleteInvoice(row: number) {
     this.onDeleteCursoSeleccionado.emit(row);
   }
 }

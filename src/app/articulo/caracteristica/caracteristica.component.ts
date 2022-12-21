@@ -37,6 +37,8 @@ export class CaracteristicaComponent {
   }
 
   getModal() {
+    console.log('articulo', this.articulo);
+    console.log('full articulo', this.articuloFull);
     const valores: GetCaracteristicaDtoModal = {
       IdArticulo: this.articulo.IdArticulo,
       IdItem: 0,

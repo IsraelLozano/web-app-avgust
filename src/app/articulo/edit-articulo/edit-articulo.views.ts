@@ -37,9 +37,7 @@ export class EditArticuloViews implements OnInit {
     private _dialogService: DialogService,
     private _router: Router,
   ) {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.idSeleccionado = id;
-    this.GetArticuloForEdit(id);
+    this.GetArticuloForEdit();
   }
   ngOnInit(): void {
     // this.idPaisSelect = this.personaEstudiante.Persona?.PAIS_NACIMIENTO;
@@ -56,7 +54,10 @@ export class EditArticuloViews implements OnInit {
       Concentracion: ['', Validators.required],
     });
   }
-  GetArticuloForEdit(id: number) {
+  GetArticuloForEdit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.idSeleccionado = id;
+
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     this._articuloService
@@ -109,6 +110,7 @@ export class EditArticuloViews implements OnInit {
                     },
                   });
                   this.articuloFull.articulo.IdArticulo = this.idSeleccionado;
+                  this.articuloFull.articulo.IdTipoProducto = resultado.IdTipoProducto;
                   this._router.navigate(['/articulo/articulo/' + this.idSeleccionado]);
                 }
               });

@@ -53,7 +53,7 @@ export class ModalCaracteristicaViews implements OnInit {
 
   doAction(): void {
     const caracteristica = this.form.value as AddCaracteristicaDto;
-    caracteristica.idArticulo = this.data.IdArticulo;
+    caracteristica.idArticulo = this.idArticulo.IdArticulo;
     caracteristica.idItem = this.data.IdItem;
 
     this.dialogRef.close({ event: 'Agregar', dataReturn: caracteristica });

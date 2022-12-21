@@ -1,41 +1,59 @@
 <div fxLayout="row wrap">
   <div fxFlex="100">
-    <mat-card>
-      <mat-card-content>
-        <div fxLayout="row wrap" class="align-items-center">
-          <div fxFlex.gt-md="50" fxFlex.gt-lg="50" fxFlex="100">
-            <mat-form-field>
-              <input matInput placeholder="Buscar Articulo" />
-            </mat-form-field>
+    <form
+      [formGroup]="filtroForm"
+      name="filtroForm"
+      (submit)="this.GetArticulos()"
+      class="basic-form"
+    >
+      <mat-card>
+        <mat-card-content>
+          <div fxLayout="row wrap" class="align-items-center">
+            <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100">
+              <mat-form-field>
+                <input matInput placeholder="Buscar Articulo" formControlName="txtFiltro" />
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" class="text-right">
+              <button
+                mat-raised-button
+                style="margin: 5px 0px 5px 30px; min-width: 180px"
+                type="submit"
+                class="m-r-5"
+                color="info"
+              >
+                <mat-icon class="mat-18">search</mat-icon>
+                Buscar Articulo
+              </button>
+
+              <button
+                mat-raised-button
+                style="margin: 5px 0px 5px 30px; min-width: 180px"
+                type="button"
+                class="m-r-5"
+                color="primary"
+                [routerLink]="['/articulo/articulo/0']"
+                routerLinkActive="router-link-active"
+              >
+                <mat-icon class="mat-18">add</mat-icon>
+                Nuevo Articulo
+              </button>
+              <button
+                mat-raised-button
+                style="margin: 5px 0px 5px 30px; min-width: 180px"
+                color="accent"
+                type="button"
+                class="m-r-5"
+                (click)="this.GetFileExcel()"
+              >
+                <mat-icon class="mat-18">file_download</mat-icon>
+                Exportar
+              </button>
+            </div>
           </div>
-          <div fxFlex.gt-md="50" class="text-right">
-            <button
-              mat-raised-button
-              style="margin: 5px 40px 5px 30px; min-width: 180px"
-              type="button"
-              class="m-r-5"
-              color="primary"
-              [routerLink]="['/articulo/articulo/0']"
-              routerLinkActive="router-link-active"
-            >
-              <mat-icon class="mat-18">add</mat-icon>
-              Nuevo Articulo
-            </button>
-            <button
-              mat-raised-button
-              style="margin: 5px 40px 5px 30px; min-width: 180px"
-              color="accent"
-              type="button"
-              class="m-r-5"
-              (click)="this.GetFileExcel()"
-            >
-              <mat-icon class="mat-18">file_download</mat-icon>
-              Exportar
-            </button>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </form>
   </div>
 </div>
 
@@ -47,6 +65,7 @@
         <app-grilla-articulo
           [setListArticulo]="this.listArticulos"
           (onGetCursoSeleccionado)="onGetArticulo($event)"
+          (onDeleteCursoSeleccionado)="onDeleteArticulo($event)"
         >
         </app-grilla-articulo>
       </mat-card-content>

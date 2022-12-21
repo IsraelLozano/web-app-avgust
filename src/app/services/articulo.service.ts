@@ -44,9 +44,9 @@ export class ArticuloService extends GenericRepositoryService {
     this.controller = articulo;
   }
 
-  GetListArticulos(idUsuario: number) {
+  GetListArticulos(idUsuario: number, filtro?: string) {
     return this.get<GetArticuloDto[]>(
-      `${this.urlAddress}${this.controller}/GetListArticulo/${idUsuario}`,
+      `${this.urlAddress}${this.controller}/GetListArticulo/${idUsuario}/${filtro}`,
     );
   }
 
@@ -61,6 +61,13 @@ export class ArticuloService extends GenericRepositoryService {
     );
   }
 
+  DeleteArticuloById(id: number) {
+    return this.get<boolean>(`${this.urlAddress}${this.controller}/deleteArticuloById/${id}`);
+  }
+
+  /**
+   * Metodos para composiciones
+   */
   AddOrEditComposicion(request: AddComposicionDto) {
     return this.post<AddComposicionDto>(
       `${this.urlAddress}${this.controller}/CreateOrUpdateComposicion`,

@@ -26,6 +26,7 @@ export interface GetArticuloDto {
   IdGrupoQuimico: number;
   IdTipoFormulacion: number;
   Concentracion: string;
+  FlgActivo: boolean;
   IdPaisNavigation: IDPaisNavigation;
   IdTipoFormulacionNavigation: IDTipoFormulacionNavigation;
   IdGrupoQuimicoNavigation: IdGrupoQuimicoNavigation;
