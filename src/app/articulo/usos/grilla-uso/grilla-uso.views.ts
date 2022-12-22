@@ -21,8 +21,8 @@ export class GrillaUsoViews implements OnInit {
 
   @Output() onGetSeleccionado = new EventEmitter<any>();
   @Output() onDeleteSeleccionado = new EventEmitter<any>();
-
-  displayedColumns: string[] = ['Iditem', 'cultivo', 'plaga', 'nombre', 'dosis', 'action'];
+  @Output() onGetEtiqueta = new EventEmitter<any>();
+  displayedColumns: string[] = ['Iditem', 'cultivo', 'plaga', 'etiqueda', 'action'];
 
   @Input() set setListArticulo(value: GetUsoDto[]) {
     this.lista = new MatTableDataSource(value);
@@ -47,5 +47,9 @@ export class GrillaUsoViews implements OnInit {
 
   deleteInvoice(row: GetUsoDto) {
     this.onDeleteSeleccionado.emit(row);
+  }
+
+  getPdf(row: GetUsoDto) {
+    this.onGetEtiqueta.emit(row);
   }
 }

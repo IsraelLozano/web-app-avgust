@@ -15,6 +15,7 @@ import {
 export class ModalComposicionViews implements OnInit {
   dataRetorno!: any;
   idArticulo!: GetComposicionDtoModal;
+
   public form!: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -27,6 +28,8 @@ export class ModalComposicionViews implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       ingredienteActivo: [0, [Validators.required, Validators.minLength(1)]],
+      idGrupoQuimico: [0, [Validators.required, Validators.minLength(1)]],
+      ContracionIA: ['', Validators.required],
       iditem: [0],
     });
 
@@ -37,6 +40,8 @@ export class ModalComposicionViews implements OnInit {
     this.form.patchValue({
       ingredienteActivo: data.IngredienteActivo,
       iditem: data.Iditem,
+      idGrupoQuimico: data.idGrupoQuimico,
+      ContracionIA: data.ContracionIA,
     });
   }
 

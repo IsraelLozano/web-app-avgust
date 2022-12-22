@@ -72,7 +72,7 @@ const MENUITEMS = [
     icon: 'home_repair_service',
     children: [
       { state: 'list-pais', name: 'Paises', type: 'link' },
-      { state: 'list-aplicacion', name: 'Aplicaciones', type: 'link' },
+      // { state: 'list-aplicacion', name: 'Aplicaciones', type: 'link' },
       { state: 'list-plagas', name: 'Plagas', type: 'link' },
       { state: 'list-clases', name: 'Clases', type: 'link' },
       { state: 'list-cultivo', name: 'Cultivo', type: 'link' },

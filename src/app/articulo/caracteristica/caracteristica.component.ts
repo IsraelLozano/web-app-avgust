@@ -37,8 +37,6 @@ export class CaracteristicaComponent {
   }
 
   getModal() {
-    console.log('articulo', this.articulo);
-    console.log('full articulo', this.articuloFull);
     const valores: GetCaracteristicaDtoModal = {
       IdArticulo: this.articulo.IdArticulo,
       IdItem: 0,
@@ -52,7 +50,7 @@ export class CaracteristicaComponent {
       cbpToxico: this.articuloFull.cboToxicologica,
     };
     const dialogRef = this.dialog.open(ModalCaracteristicaViews, {
-      data: { idTipoProducto: this.articulo.IdTipoProducto, valores },
+      data: valores,
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
@@ -99,7 +97,7 @@ export class CaracteristicaComponent {
     const valores: GetCaracteristicaDtoModal = {
       IdArticulo: value.IdArticulo,
       IdItem: value.IdItem,
-      IdAplicacion: value.IdAplicacion,
+      IdAplicacion: 0,
       IdClase: value.IdClase,
       IdToxicologica: value.IdToxicologica,
       CboApp: this.articuloFull.cboAplicaciones,
@@ -108,9 +106,8 @@ export class CaracteristicaComponent {
       ),
       cbpToxico: this.articuloFull.cboToxicologica,
     };
-
     const dialogRef = this.dialog.open(ModalCaracteristicaViews, {
-      data: { idTipoProducto: this.articulo.IdTipoProducto, valores },
+      data: valores,
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {

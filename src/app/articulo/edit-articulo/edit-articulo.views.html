@@ -65,7 +65,7 @@
                     </div>
 
                     <!-- column -->
-                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                    <!-- <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
                         <mat-select
                           formControlName="idGrupoQuimico"
@@ -80,7 +80,7 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
-                    </div>
+                    </div> -->
 
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
@@ -129,18 +129,18 @@
                       </mat-form-field>
                     </div>
 
-                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                    <div fxFlex.gt-sm="66.67" fxFlex="100" class="p-10">
                       <mat-form-field>
                         <mat-select
                           formControlName="IdTipoFormulacion"
-                          placeholder="Seleccione el Tipo Formulador"
+                          placeholder="Seleccione el Tipo Formulacion"
                           [value]="this?.particuloFull?.articulo?.IdTipoFormulacion"
                         >
                           <mat-option
                             *ngFor="let item of articuloFull?.cboTipoFormulacion"
                             [value]="item.IdTipoFormulacion"
                           >
-                            {{item.NomTipoFormulacion}}
+                            {{item.CodTipoFormulacion}} - {{item.NomTipoFormulacion}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>

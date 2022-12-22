@@ -24,6 +24,8 @@ export interface AddComposicionDto {
   iditem: number;
   ingredienteActivo: number;
   formuladorMolecular: string;
+  idGrupoQuimico: number;
+  ContracionIA: string;
 }
 
 /**

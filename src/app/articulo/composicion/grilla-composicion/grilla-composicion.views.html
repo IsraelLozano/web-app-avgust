@@ -18,6 +18,18 @@ mat-elevation-z8
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="concentracion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Concentracion del IA</th>
+      <td mat-cell *matCellDef="let element">{{ element.ContracionIA }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="grupo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Grupo Quimico</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.GrupoQuimicoNavegation?.NomGrupoQuimico }}
+      </td>
+    </ng-container>
+
     <!-- <ng-container matColumnDef="FormuladorMolecular">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Formula Molecular</th>
       <td mat-cell *matCellDef="let element">{{ element.FormuladorMolecular }}</td>
@@ -50,7 +62,7 @@ mat-elevation-z8
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No se encontraron registros</td>
+      <td class="mat-cell" colspan="5">No se encontraron registros</td>
     </tr>
   </table>
   <mat-paginator

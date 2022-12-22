@@ -1,3 +1,4 @@
+import { TiposDocumento } from './../../models/articulo/IArticuloDto.enum';
 import { ModalUsosViews } from './modal-usos/modal-usos.views';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,12 +9,14 @@ import {
   GetArticuloDto,
   GetArticuloForEditDto,
   GetCaracteristicaDto,
+  GetDocumentoDto,
   GetUsoDto,
   GetUsoDtoModal,
 } from 'src/app/models/articulo/IArticuloDto.enum';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { ModalCaracteristicaViews } from '../caracteristica/modal-caracteristica/modal-caracteristica.views';
+import { ModalViewPdfViews } from '../documentos/modal-view-pdf/modal-view-pdf.views';
 
 @Component({
   selector: 'app-usos',
@@ -34,6 +37,23 @@ export class UsosViews {
   @Input() set data(value: GetArticuloForEditDto) {
     this.articulo = value.articulo;
     this.articuloFull = value;
+  }
+
+  onGetEtiqueta(row: GetUsoDto) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const sItem = row.Dosis.split('-')[0];
+    const sNomDocumento = row.Dosis.split('-')[1];
+
+    const doc: GetDocumentoDto = {
+      IdArticulo: row.IdArticulo,
+      IdItem: Number(sItem),
+      IdTipoDocumento: 3,
+      Fecha: new Date(),
+      NomDocumento: sNomDocumento,
+    };
+
+    const dialogRef = this.dialog.open(ModalViewPdfViews, { data: doc });
+    dialogRef.afterClosed().subscribe((resp) => loading.close());
   }
 
   getModal() {
@@ -94,9 +114,9 @@ export class UsosViews {
       IdArticulo: value.IdArticulo,
       IdItem: value.IdItem,
       IdCultivo: value.IdCultivo,
-      NombreCientificoCultivo: value.NombreCientificoCultivo,
+      NombreCientificoCultivo: '',
       IdNomCientificoPlaga: value.IdNomCientificoPlaga,
-      Dosis: value.Dosis,
+      Dosis: '',
       cboPlagas: this.articuloFull.tiposPlagas,
       cboCultivos: this.articuloFull.tiposCultivos,
     };

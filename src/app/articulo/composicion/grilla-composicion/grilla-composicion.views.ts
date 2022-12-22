@@ -17,7 +17,7 @@ export class GrillaComposicionViews implements OnInit {
   @Output() onGetSeleccionado = new EventEmitter<any>();
   @Output() onDeleteSeleccionado = new EventEmitter<any>();
 
-  displayedColumns: string[] = ['Iditem', 'IngredienteActivo', 'action'];
+  displayedColumns: string[] = ['Iditem', 'IngredienteActivo', 'concentracion', 'grupo', 'action'];
 
   @Input() set setListArticulo(value: GetComposicionDto[]) {
     this.lista = new MatTableDataSource(value);

@@ -41,7 +41,10 @@ export class ComposicionComponent implements OnInit {
       Iditem: 0,
       FormuladorMolecular: '',
       IngredienteActivo: 0,
+      ContracionIA: '',
+      idGrupoQuimico: 0,
       cboTipoIngredienteActivo: this.articuloFull.cboTipoIngredienteActivo,
+      cboGrupoQuimico: this.articuloFull.cboGrupoQuimico,
     };
     const dialogRef = this.dialog.open(ModalComposicionViews, { data: valores });
     dialogRef.afterClosed().subscribe((resp) => {
@@ -86,7 +89,18 @@ export class ComposicionComponent implements OnInit {
     });
   }
   onGetEdit(value: GetComposicionDto) {
-    const dialogRef = this.dialog.open(ModalComposicionViews, { data: value });
+    const valores: GetComposicionDtoModal = {
+      IdArticulo: this.articulo.IdArticulo,
+      Iditem: value.Iditem,
+      FormuladorMolecular: '',
+      IngredienteActivo: value.IngredienteActivo,
+      ContracionIA: value.ContracionIA,
+      idGrupoQuimico: value.idGrupoQuimico,
+      cboTipoIngredienteActivo: this.articuloFull.cboTipoIngredienteActivo,
+      cboGrupoQuimico: this.articuloFull.cboGrupoQuimico,
+    };
+
+    const dialogRef = this.dialog.open(ModalComposicionViews, { data: valores });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
@@ -133,7 +147,7 @@ export class ComposicionComponent implements OnInit {
     this._dialogService
       .confirm({
         title: 'Confirmación',
-        message: `¿Desea eliminar la composicion: ${value.FormuladorMolecular}?`,
+        message: `¿Desea eliminar la composicion: ${value.Iditem}?`,
         buttonOk: {
           text: 'ACEPTAR',
         },

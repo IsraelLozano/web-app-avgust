@@ -49,8 +49,11 @@ export interface GetComposicionDto {
   IdArticulo: number;
   Iditem: number;
   IngredienteActivo: number;
+  idGrupoQuimico: number;
+  ContracionIA: string;
   FormuladorMolecular: string;
   IngredienteActivoNavigation: CboTipoIngredienteActivo;
+  GrupoQuimicoNavegation: CboGrupoQuimico;
 }
 
 export interface GetDocumentoDto {
@@ -59,7 +62,7 @@ export interface GetDocumentoDto {
   IdTipoDocumento: number;
   Fecha: Date;
   NomDocumento: string;
-  IdTipoDocumentoNavigation: TiposDocumento;
+  IdTipoDocumentoNavigation?: TiposDocumento;
 }
 
 export interface GetDocumentoDtoModal {
@@ -76,7 +79,10 @@ export interface GetComposicionDtoModal {
   Iditem: number;
   IngredienteActivo: number;
   FormuladorMolecular: string;
+  idGrupoQuimico: number;
+  ContracionIA: string;
   cboTipoIngredienteActivo: CboTipoIngredienteActivo[];
+  cboGrupoQuimico: CboGrupoQuimico[];
 }
 export interface GetUsoDto {
   IdArticulo: number;

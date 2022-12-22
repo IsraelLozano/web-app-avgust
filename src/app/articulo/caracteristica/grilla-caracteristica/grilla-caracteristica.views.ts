@@ -18,7 +18,7 @@ export class GrillaCaracteristicaViews implements OnInit {
   @Output() onGetSeleccionado = new EventEmitter<any>();
   @Output() onDeleteSeleccionado = new EventEmitter<any>();
 
-  displayedColumns: string[] = ['Iditem', 'aplicacion', 'clase', 'toxicologia', 'action'];
+  displayedColumns: string[] = ['Iditem', 'clase', 'toxicologia', 'action'];
 
   @Input() set setListArticulo(value: GetCaracteristicaDto[]) {
     this.lista = new MatTableDataSource(value);

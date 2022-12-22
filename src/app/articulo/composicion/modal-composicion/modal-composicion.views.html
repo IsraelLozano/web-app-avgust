@@ -14,8 +14,8 @@
           />
         </mat-form-field>
       </div>
-
-      <div fxFlex.gt-sm="80" fxFlex="100" class="p-10">
+      <div fxFlex.gt-sm="60" fxFlex="100" class="p-10"></div>
+      <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
         <mat-form-field>
           <mat-select
             formControlName="ingredienteActivo"
@@ -29,6 +29,30 @@
               {{item.NomIngredienteActivo}}
             </mat-option>
           </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <mat-select
+            formControlName="idGrupoQuimico"
+            placeholder="Seleccione Grupo Quimico"
+            [value]="this?.idArticulo?.IdGrupoQuimico"
+          >
+            <mat-option *ngFor="let item of data?.cboGrupoQuimico" [value]="item.IdGrupoQuimico">
+              {{item.NomGrupoQuimico}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Concentración IA"
+            formControlName="ContracionIA"
+          />
         </mat-form-field>
       </div>
     </div>

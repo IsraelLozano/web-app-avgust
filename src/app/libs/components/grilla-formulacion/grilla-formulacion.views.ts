@@ -33,6 +33,7 @@ export class GrillaFormulacionViews implements OnInit {
   }
 
   getCurso(row: ITipoGenerico) {
+    // console.log('pagina', this.paginator.pageIndex);
     this.onGetSeleccionado.emit(row);
   }
 

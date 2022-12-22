@@ -28,9 +28,9 @@ export class ModalUsosViews implements OnInit {
     this.form = this.fb.group({
       idItem: [0],
       idCultivo: [0, [Validators.required, Validators.minLength(1)]],
-      nombreCientificoCultivo: ['', Validators.required],
       idNomCientificoPlaga: [0, [Validators.required, Validators.minLength(1)]],
-      dosis: ['0', Validators.required],
+      // nombreCientificoCultivo: ['', Validators.required],
+      // dosis: ['0', Validators.required],
     });
   }
   ngOnInit(): void {
@@ -41,9 +41,9 @@ export class ModalUsosViews implements OnInit {
     this.form.patchValue({
       idItem: data.IdItem,
       idCultivo: data.IdCultivo,
-      nombreCientificoCultivo: data.NombreCientificoCultivo,
       idNomCientificoPlaga: data.IdNomCientificoPlaga,
-      dosis: data.Dosis,
+      // nombreCientificoCultivo: data.NombreCientificoCultivo,
+      // dosis: data.Dosis,
     });
   }
 

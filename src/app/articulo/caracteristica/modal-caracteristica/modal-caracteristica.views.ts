@@ -24,16 +24,13 @@ export class ModalCaracteristicaViews implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ModalCaracteristicaViews>,
     private dialog: MatDialog,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: GetCaracteristicaDtoModal,
   ) {
-    const { idTipoProducto, valores } = data;
-    this.idTipoProducto = idTipoProducto;
-
     //data: {: this.articulo.IdTipoProducto,  }
-    this.idArticulo = valores as GetCaracteristicaDtoModal;
+    this.idArticulo = data;
     this.form = this.fb.group({
       idItem: [0],
-      idAplicacion: [0, Validators.required],
+      // idAplicacion: [0, Validators.required],
       idClase: [0, [Validators.required, Validators.minLength(1)]],
       idToxicologica: [0, [Validators.required, Validators.minLength(1)]],
     });
@@ -45,7 +42,7 @@ export class ModalCaracteristicaViews implements OnInit {
   updateFormValues(data: GetCaracteristicaDtoModal) {
     this.form.patchValue({
       idItem: data.IdItem,
-      idAplicacion: data.IdAplicacion,
+      idAplicacion: 0,
       idClase: data.IdClase,
       idToxicologica: data.IdToxicologica,
     });
