@@ -1,0 +1,76 @@
+<div class="table-responsive">
+  <div class="button-row m-b-15 m-t-15">
+    <button
+      mat-raised-button
+      color="primary"
+      style="margin: 5px 0px 5px 30px; min-width: 180px"
+      type="button"
+      class="m-r-5"
+      (click)="OnExportToExcel()"
+    >
+      <mat-icon class="mat-18">exit_to_app</mat-icon>
+      Exportar
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="this.cursosList" matSort class="table ticket-list">
+    <ng-container matColumnDef="NombreComercial">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Comercial</th>
+      <td mat-cell *matCellDef="let element">{{ element.NombreComercial }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="NomTitularRegistro">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Titular Registro</th>
+      <td mat-cell *matCellDef="let element">
+        {{element?.IdTitularRegistroNavigation?.NomTitularRegistro}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Formulador">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Formulador</th>
+      <td mat-cell *matCellDef="let element">{{element?.IdFormuladorNavigation?.NomFormulador}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="IngredienteActivo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ingrediente Activo</th>
+      <td mat-cell *matCellDef="let element">
+        <ul>
+          <li *ngFor="let p of element?.Composicions">
+            {{p?.IngredienteActivoNavigation?.NomIngredienteActivo}}
+          </li>
+        </ul>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ConcentracionIA">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Concentración IA</th>
+      <td mat-cell *matCellDef="let element">
+        <ul>
+          <li *ngFor="let p of element?.Composicions">{{p?.ContracionIA}}</li>
+        </ul>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="GrupoQuimico">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Grupo Quimico</th>
+      <td mat-cell *matCellDef="let element">
+        <ul>
+          <li *ngFor="let p of element?.Composicions">
+            {{p?.GrupoQuimicoNavegation?.NomGrupoQuimico}}
+          </li>
+        </ul>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="6">No se encontraron registros</td>
+    </tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 8, 10]"
+    showFirstLastButtons
+    aria-label="Selecciona página"
+  ></mat-paginator>
+</div>

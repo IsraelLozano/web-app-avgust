@@ -10,43 +10,43 @@ import { AuthGuardService } from './libs/guards/auth-guard.service';
 export const AppRoutes: Routes = [
   {
     path: '',
+    redirectTo: '/authentication/login',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: FullComponent,
     children: [
-      {
-        path: '',
-        redirectTo: '/authentication/login',
-        pathMatch: 'full',
-      },
-      {
-        path: 'home',
-        redirectTo: '/home/portalacademico',
-        pathMatch: 'full',
-      },
+      // {
+      //   path: 'home',
+      //   redirectTo: '/home/portalacademico',
+      //   pathMatch: 'full',
+      // },
       {
         path: 'home',
         loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
-        // canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
       },
       {
         path: 'articulo',
         loadChildren: () => import('./articulo/estudiante.module').then((m) => m.EstudianteModule),
-        // canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
       },
       {
         path: 'seguridad',
         loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
-        // canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
       },
       {
         path: 'maestras',
         loadChildren: () => import('./maestros/maestros.module').then((m) => m.MaestrosModule),
-        // canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
       },
 
       {
         path: 'reporte',
         loadChildren: () => import('./reporte/reporte.module').then((m) => m.ReporteModule),
-        // canActivate: [AuthGuardService],
+        canActivate: [AuthGuardService],
       },
       { path: 'unauthorized', component: UnauthorizedViews },
     ],

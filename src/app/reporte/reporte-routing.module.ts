@@ -1,3 +1,4 @@
+import { ReporteArticuloComponent } from './reporte-articulo/reporte-articulo.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -6,19 +7,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'reporte-historial',
-        // component: ReporteHistorialViews,
+        path: 'reporte-articulos',
+        component: ReporteArticuloComponent,
         data: {
-          title: 'Historial de Notas',
-          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Historial de Notas' }],
-        },
-      },
-      {
-        path: 'boleta-notas',
-        // component: BoletaNotasViews,
-        data: {
-          title: 'Boleta de Notas',
-          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Boleta de Notas' }],
+          title: 'Reporte de articulos',
+          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Reporte' }],
         },
       },
     ],

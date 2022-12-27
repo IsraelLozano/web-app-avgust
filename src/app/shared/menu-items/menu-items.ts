@@ -87,19 +87,14 @@ const MENUITEMS = [
       // { state: 'matricula-ficha', name: 'Ficha Matricula', type: 'link' },
     ],
   },
-  // {
-  //   state: 'reporte',
-  //   name: 'Reportes',
-  //   type: 'sub',
-  //   icon: 'insert_chart',
-  //   badge: [{ type: 'red', value: ':)' }],
-  //   children: [
-  //     { state: 'test', name: 'Por Formulacion', type: 'link' },
-  //     { state: 'test', name: 'Composición', type: 'link' },
-  //     { state: 'test', name: 'Plaga', type: 'link' },
-  //     { state: 'test', name: 'Cultivo', type: 'link' },
-  //   ],
-  // },
+  {
+    state: 'reporte',
+    name: 'Reportes',
+    type: 'sub',
+    icon: 'insert_chart',
+    badge: [{ type: 'red', value: ':)' }],
+    children: [{ state: 'reporte-articulos', name: 'Reporte de articulos', type: 'link' }],
+  },
 ];
 
 @Injectable()

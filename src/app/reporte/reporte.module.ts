@@ -13,9 +13,20 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ReporteArticuloComponent } from './reporte-articulo/reporte-articulo.component';
+import { GrillaReporteFormuladoViews } from './grilla-reporte-formulado/grilla-reporte-formulado.views';
+import { GrillaReporteComposicionViews } from './grilla-reporte-composicion/grilla-reporte-composicion.views';
+import { GrillaReportePlagaViews } from './grilla-reporte-plaga/grilla-reporte-plaga.views';
+import { GrillaReporteCultivoViews } from './grilla-reporte-cultivo/grilla-reporte-cultivo.views';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ReporteArticuloComponent,
+    GrillaReporteFormuladoViews,
+    GrillaReporteComposicionViews,
+    GrillaReportePlagaViews,
+    GrillaReporteCultivoViews
+  ],
   imports: [
     ReporteRoutingModule,
     DemoMaterialModule,

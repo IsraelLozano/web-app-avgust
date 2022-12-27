@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpUtil } from './utlis-service';
@@ -28,6 +28,10 @@ export class GenericRepositoryService {
     return this.httpClient
       .request<T>('delete', url, { body: request })
       .pipe(HttpUtil.handleMap, HttpUtil.handleError);
+  }
+
+  protected getDownload<T>(url: string, request?: any): Observable<T> {
+    return this.httpClient.get<T>(url, request).pipe(HttpUtil.handleMap, HttpUtil.handleError);
   }
 
   // public getData = (route: string) => {

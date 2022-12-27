@@ -14,8 +14,13 @@ export class SessionService {
 
   get session() {
     const encrypted = sessionStorage.getItem(this.key) ?? '';
-    const objSesion = JSON.parse(this.crypto.decrypt(encrypted) as any);
-    return objSesion;
+
+    if (encrypted) {
+      const objSesion = JSON.parse(this.crypto.decrypt(encrypted) as any);
+      return objSesion;
+    }
+
+    return undefined;
   }
 
   set session(value: any) {
@@ -24,6 +29,19 @@ export class SessionService {
   }
 
   get user(): ILoginDto {
+    let camoens: ILoginDto = {
+      IdUsuario: 0,
+      ApellidoPaterno: '',
+      ApellidoMaterno: '',
+      Nombres: '',
+      Credencial: '',
+      Email: '',
+      UsuarioPais: [],
+    };
+
+    if (!this.session) {
+      return camoens;
+    }
     const data = this.session as any;
 
     const usuario: ILoginDto = {
