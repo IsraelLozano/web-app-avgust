@@ -17,11 +17,12 @@ export const AppRoutes: Routes = [
     path: '',
     component: FullComponent,
     children: [
-      // {
-      //   path: 'home',
-      //   redirectTo: '/home/portalacademico',
-      //   pathMatch: 'full',
-      // },
+      {
+        path: 'home',
+        redirectTo: '/home/portalacademico',
+        // pathMatch: 'full',
+        // canActivate: [AuthGuardService],
+      },
       {
         path: 'home',
         loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
