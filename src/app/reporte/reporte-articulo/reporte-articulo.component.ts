@@ -8,6 +8,8 @@ import { SessionService } from 'src/app/libs/services/session.service';
 import { ReporteService } from 'src/app/services/reporte.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { ITipoIngredienteActivo } from 'src/app/models/Maestras/IMaestraDto';
+import { MaestraService } from 'src/app/services/maestra.service';
 
 @Component({
   selector: 'app-reporte-articulo',
@@ -25,17 +27,39 @@ export class ReporteArticuloComponent implements OnInit {
   progress!: number;
   message!: string;
 
+  tipoSeleccionado!: number;
+  cboTipoIngredienteActivo!: ITipoIngredienteActivo[];
+  idIngredienteSeleccionado!: number;
   constructor(
     private _formBuilder: FormBuilder,
     private _sesion: SessionService,
     private dialog: MatDialog,
     private _dialogService: DialogService,
     private _reporte: ReporteService,
-  ) {}
+    private _maestraService: MaestraService,
+  ) {
+    this.GetCombo();
+  }
+
+  onChangeFiltro(value: any) {
+    this.tipoSeleccionado = value.value;
+  }
+  GetCombo() {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    this._maestraService
+      .getListTipoIngredienteActivo()
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        this.cboTipoIngredienteActivo = resp;
+      });
+  }
 
   ngOnInit(): void {
     this.filtroForm = this._formBuilder.group({
       tipoReporte: [0, [Validators.required, Validators.minLength(1)]],
+      tipoBusqueda: [0, [Validators.required, Validators.minLength(1)]],
+      txtFiltro: ['', Validators.required],
+      idTipoIngrediente: [0, [Validators.required, Validators.minLength(1)]],
     });
   }
 
@@ -45,8 +69,6 @@ export class ReporteArticuloComponent implements OnInit {
       this.dataComposicion =
       this.dataReporteCultivo =
         [];
-
-    // console.log(event.value);
   }
 
   GetArticulos() {
@@ -70,9 +92,15 @@ export class ReporteArticuloComponent implements OnInit {
     }
   }
   getCultivo(userId: number) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     this._reporte
-      .GetReporteArticulosCultivo(this._sesion.user.IdUsuario)
+      .GetReporteArticulosCultivo(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReporteCultivo = resp;
@@ -80,27 +108,41 @@ export class ReporteArticuloComponent implements OnInit {
   }
 
   getPlaga(userId: number) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     this._reporte
-      .GetReporteArticulosPlaga(this._sesion.user.IdUsuario)
+      .GetReporteArticulosPlaga(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReportePlaga = resp;
       });
   }
   getComposicion(userId: number) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     this._reporte
-      .GetReporteArticulosComposicion(this._sesion.user.IdUsuario)
+      .GetReporteArticulosComposicion(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataComposicion = resp;
       });
   }
   GetArticuloGeneral(userId: number) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     this._reporte
-      .GetReporteArticulos(this._sesion.user.IdUsuario)
+      .GetReporteArticulos(this._sesion.user.IdUsuario, tipoBusqueda, idTipoIngrediente, txtFiltro)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReporteGeneral = resp;
@@ -108,10 +150,16 @@ export class ReporteArticuloComponent implements OnInit {
   }
 
   onExportExcelCultivo(value: any) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     this._reporte
-      .downloaExcelGetReporteCultivo(this._sesion.user.IdUsuario)
+      .downloaExcelGetReporteCultivo(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
       .pipe(finalize(() => loading.close()))
       .subscribe((event: any) => {
         if (event.type === HttpEventType.UploadProgress)
@@ -125,9 +173,15 @@ export class ReporteArticuloComponent implements OnInit {
 
   onExportExcelGeneral(value: any) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
     this._reporte
-      .downloaExcelGetReporteArticulos(this._sesion.user.IdUsuario)
+      .downloaExcelGetReporteArticulos(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
       .pipe(finalize(() => loading.close()))
       .subscribe((event: any) => {
         if (event.type === HttpEventType.UploadProgress)
@@ -141,9 +195,15 @@ export class ReporteArticuloComponent implements OnInit {
 
   onExportExcelComposicion(value: any) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
     this._reporte
-      .downloaExcelGetReporteComposicion(this._sesion.user.IdUsuario)
+      .downloaExcelGetReporteComposicion(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
       .pipe(finalize(() => loading.close()))
       .subscribe((event: any) => {
         if (event.type === HttpEventType.UploadProgress)
@@ -157,9 +217,15 @@ export class ReporteArticuloComponent implements OnInit {
 
   onExportExcelPlaga(value: any) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
     this._reporte
-      .downloaExcelGetReportePlaga(this._sesion.user.IdUsuario)
+      .downloaExcelGetReportePlaga(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
       .pipe(finalize(() => loading.close()))
       .subscribe((event: any) => {
         if (event.type === HttpEventType.UploadProgress)

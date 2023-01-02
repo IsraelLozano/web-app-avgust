@@ -9,7 +9,9 @@ import { GetArticuloDto } from 'src/app/models/articulo/IArticuloDto.enum';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { FileService } from 'src/app/services/file.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MaestraService } from 'src/app/services/maestra.service';
+import { ITipoIngredienteActivo } from 'src/app/models/Maestras/IMaestraDto';
 
 @Component({
   selector: 'app-main-articulo',
@@ -21,7 +23,8 @@ export class MainArticuloViews implements OnInit {
   message!: string;
   progress!: number;
   filtroForm!: FormGroup;
-
+  tipoSeleccionado!: number;
+  cboTipoIngredienteActivo!: ITipoIngredienteActivo[];
   constructor(
     private _articuloService: ArticuloService,
     private dialog: MatDialog,
@@ -30,14 +33,34 @@ export class MainArticuloViews implements OnInit {
     private _fileService: FileService,
     private _sesion: SessionService,
     private _formBuilder: FormBuilder,
+    private _maestraService: MaestraService,
   ) {
-    this.GetArticulos();
+    this.GetCombo();
+    // this.GetArticulos();
+  }
+
+  onChangeFiltro(value: any) {
+    this.tipoSeleccionado = value.value;
+  }
+  GetCombo() {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    this._maestraService
+      .getListTipoIngredienteActivo()
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        this.cboTipoIngredienteActivo = resp;
+      });
   }
   GetArticulos() {
+    // console.log('valores', this.filtroForm.value);
+
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    const txtFiltro = this.filtroForm?.get('txtFiltro')?.value ?? '';
+    // const txtFiltro = this.filtroForm?.get('txtFiltro')?.value ?? '';
+
+    const { tipoReporte, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+
     this._articuloService
-      .GetListArticulos(this._sesion.user.IdUsuario, txtFiltro)
+      .GetListArticulos(this._sesion.user.IdUsuario, tipoReporte, idTipoIngrediente, txtFiltro)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.listArticulos = resp;
@@ -69,9 +92,9 @@ export class MainArticuloViews implements OnInit {
 
   GetFileExcel() {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-
+    const { tipoReporte, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     this._fileService
-      .downloadExcel(this._sesion.user.IdUsuario)
+      .downloadExcel(this._sesion.user.IdUsuario, tipoReporte, idTipoIngrediente, txtFiltro)
       .pipe(finalize(() => loading.close()))
       .subscribe((event: any) => {
         if (event.type === HttpEventType.UploadProgress)
@@ -97,7 +120,9 @@ export class MainArticuloViews implements OnInit {
 
   ngOnInit(): void {
     this.filtroForm = this._formBuilder.group({
-      txtFiltro: [''],
+      tipoReporte: [0, [Validators.required, Validators.minLength(1)]],
+      txtFiltro: ['', Validators.required],
+      idTipoIngrediente: [0, [Validators.required, Validators.minLength(1)]],
       // codDisenioCurricular: ["1"],
       // codFase: [""],
       // codFormato: [""],

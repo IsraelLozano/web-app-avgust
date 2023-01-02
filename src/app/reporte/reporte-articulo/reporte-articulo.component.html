@@ -10,7 +10,7 @@
         <mat-card-content>
           <div fxLayout="row wrap" class="align-items-center">
             <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100">
-              <mat-form-field>
+              <mat-form-field fxFlex="95">
                 <mat-select
                   [(ngModel)]="this.reporteSelect"
                   placeholder="Seleccione Reporte"
@@ -24,13 +24,71 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" class="text-right">
+
+            <div fxFlex.gt-md="20" fxFlex.gt-lg="100" fxFlex="100">
+              <mat-form-field fxFlex="95">
+                <mat-select
+                  formControlName="tipoBusqueda"
+                  [ngModel]="tipoSeleccionado"
+                  (selectionChange)="this.onChangeFiltro($event)"
+                  placeholder="Seleccione Tipo Filtro"
+                >
+                  <mat-option [value]="1">Por Nombre Comercial</mat-option>
+                  <mat-option [value]="2">Por Ingrediente Activo</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div
+              fxFlex.gt-md="40"
+              fxFlex.gt-lg="100"
+              fxFlex="100"
+              *ngIf="this.tipoSeleccionado === 1"
+            >
+              <mat-form-field>
+                <input
+                  matInput="matInput"
+                  placeholder="Buscar Articulo"
+                  formControlName="txtFiltro"
+                  required="required"
+                />
+              </mat-form-field>
+            </div>
+
+            <div
+              fxFlex.gt-md="40"
+              fxFlex.gt-lg="100"
+              fxFlex="100"
+              *ngIf="this.tipoSeleccionado === 2"
+            >
+              <mat-form-field>
+                <mat-select
+                  formControlName="idTipoIngrediente"
+                  [ngModel]="idIngredienteSeleccionado"
+                  placeholder="Seleccione Ingredicente A."
+                  required="required"
+                >
+                  <mat-option
+                    *ngFor="let item of cboTipoIngredienteActivo"
+                    [value]="item.IngredenteActivo"
+                  >
+                    {{ item.NomIngredienteActivo }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100" class="text-center">
               <button
-                mat-raised-button
+                mat-raised-button="mat-raised-button"
                 style="margin: 5px 0px 5px 30px; min-width: 180px"
                 type="submit"
                 class="m-r-5"
-                color="info"
+                color="primary"
+                [disabled]="
+                  !this.filtroForm.get('tipoReporte')?.value &&
+                  !this.filtroForm.get('tipoBusqueda')?.value
+                "
               >
                 <mat-icon class="mat-18">search</mat-icon>
                 Buscar Articulo
@@ -49,11 +107,11 @@
       <mat-card-content>
         <mat-card-subtitle>Lista Resultado:</mat-card-subtitle>
         <!-- <app-grilla-articulo
-          [setListArticulo]="this.listArticulos"
-          (onGetCursoSeleccionado)="onGetArticulo($event)"
-          (onDeleteCursoSeleccionado)="onDeleteArticulo($event)"
-        >
-        </app-grilla-articulo> -->
+                                                          [setListArticulo]="this.listArticulos"
+                                                          (onGetCursoSeleccionado)="onGetArticulo($event)"
+                                                          (onDeleteCursoSeleccionado)="onDeleteArticulo($event)"
+                                                        >
+                                                        </app-grilla-articulo> -->
 
         <app-grilla-reporte-formulado
           (exportToExcel)="this.onExportExcelGeneral($event)"

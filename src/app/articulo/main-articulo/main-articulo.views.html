@@ -9,26 +9,75 @@
       <mat-card>
         <mat-card-content>
           <div fxLayout="row wrap" class="align-items-center">
-            <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100">
-              <mat-form-field>
-                <input matInput placeholder="Buscar Articulo" formControlName="txtFiltro" />
+            <div fxFlex.gt-md="20" fxFlex.gt-lg="100" fxFlex="100">
+              <mat-form-field fxFlex="95">
+                <mat-select
+                  formControlName="tipoReporte"
+                  [ngModel]="tipoSeleccionado"
+                  (selectionChange)="this.onChangeFiltro($event)"
+                  placeholder="Seleccione Tipo Filtro"
+                >
+                  <mat-option [value]="1">Por Nombre Comercial</mat-option>
+                  <mat-option [value]="2">Por Ingrediente Activo</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
-            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" class="text-right">
+
+            <div
+              fxFlex.gt-md="30"
+              fxFlex.gt-lg="100"
+              fxFlex="100"
+              *ngIf="this.tipoSeleccionado===1"
+            >
+              <mat-form-field>
+                <input
+                  matInput="matInput"
+                  placeholder="Buscar Articulo"
+                  formControlName="txtFiltro"
+                  required
+                />
+              </mat-form-field>
+            </div>
+
+            <div
+              fxFlex.gt-md="30"
+              fxFlex.gt-lg="100"
+              fxFlex="100"
+              *ngIf="this.tipoSeleccionado===2"
+            >
+              <mat-form-field>
+                <mat-select
+                  formControlName="idTipoIngrediente"
+                  [ngModel]="idIngredienteSeleccionado"
+                  placeholder="Seleccione Ingredicente A."
+                  required
+                >
+                  <mat-option
+                    *ngFor="let item of cboTipoIngredienteActivo"
+                    [value]="item.IngredenteActivo"
+                  >
+                    {{item.NomIngredienteActivo}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex.gt-md="50" fxFlex.gt-lg="100" fxFlex="100">
               <button
-                mat-raised-button
-                style="margin: 5px 0px 5px 30px; min-width: 180px"
+                mat-raised-button="mat-raised-button"
+                style="margin: 5px 0px 5px 30px; min-width: 100px"
                 type="submit"
                 class="m-r-5"
                 color="info"
+                [disabled]="!this.filtroForm.get('tipoReporte')?.value"
               >
                 <mat-icon class="mat-18">search</mat-icon>
                 Buscar Articulo
               </button>
 
               <button
-                mat-raised-button
-                style="margin: 5px 0px 5px 30px; min-width: 180px"
+                mat-raised-button="mat-raised-button"
+                style="margin: 5px 0px 5px 30px; min-width: 100px"
                 type="button"
                 class="m-r-5"
                 color="primary"
@@ -39,12 +88,13 @@
                 Nuevo Articulo
               </button>
               <button
-                mat-raised-button
-                style="margin: 5px 0px 5px 30px; min-width: 180px"
+                mat-raised-button="mat-raised-button"
+                style="margin: 5px 0px 5px 30px; min-width: 160px"
                 color="accent"
                 type="button"
                 class="m-r-5"
                 (click)="this.GetFileExcel()"
+                [disabled]="!this.filtroForm.get('tipoReporte')?.value && this.listArticulos?.length !== 0"
               >
                 <mat-icon class="mat-18">file_download</mat-icon>
                 Exportar
@@ -66,8 +116,7 @@
           [setListArticulo]="this.listArticulos"
           (onGetCursoSeleccionado)="onGetArticulo($event)"
           (onDeleteCursoSeleccionado)="onDeleteArticulo($event)"
-        >
-        </app-grilla-articulo>
+        ></app-grilla-articulo>
       </mat-card-content>
     </mat-card>
   </div>

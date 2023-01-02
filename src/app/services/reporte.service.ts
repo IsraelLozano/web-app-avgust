@@ -27,76 +27,117 @@ export class ReporteService extends GenericRepositoryService {
     this.controller = reporte;
   }
 
-  GetReporteArticulos(idUsuario: number) {
+  ///api/Reporte/GetReporteArticulosGeneral/{IdUsuario}/{tipoFiltro}/{idIngredienteActivo}/{filtro}
+  GetReporteArticulos(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosGeneral/${idUsuario}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosGeneral/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
     );
   }
 
-  GetReporteArticulosComposicion(idUsuario: number) {
+  GetReporteArticulosComposicion(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosComposicion/${idUsuario}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosComposicion/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
     );
   }
 
-  GetReporteArticulosPlaga(idUsuario: number) {
+  GetReporteArticulosPlaga(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosPlaga/${idUsuario}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosPlaga/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
     );
   }
 
-  GetReporteArticulosCultivo(idUsuario: number) {
+  GetReporteArticulosCultivo(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosCultivo/${idUsuario}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosCultivo/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
     );
   }
 
   //Excel
 
-  public downloaExcelGetReporteArticulos(IdUsuario: number) {
+  public downloaExcelGetReporteArticulos(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     const param = {
       reportProgress: true,
       observe: 'events',
       responseType: 'blob',
     };
     return this.getDownload(
-      `${this.urlAddress}${this.controller}/GetReporteExcelArticuloGeneral/${IdUsuario}`,
+      `${this.urlAddress}${this.controller}/GetReporteExcelArticuloGeneral/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
       param,
     );
   }
 
-  public downloaExcelGetReporteComposicion(IdUsuario: number) {
+  public downloaExcelGetReporteComposicion(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     const param = {
       reportProgress: true,
       observe: 'events',
       responseType: 'blob',
     };
     return this.getDownload(
-      `${this.urlAddress}${this.controller}/GetExcelArticulosPorComposicion/${IdUsuario}`,
+      `${this.urlAddress}${this.controller}/GetExcelArticulosPorComposicion/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
       param,
     );
   }
 
-  public downloaExcelGetReportePlaga(IdUsuario: number) {
+  public downloaExcelGetReportePlaga(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     const param = {
       reportProgress: true,
       observe: 'events',
       responseType: 'blob',
     };
     return this.getDownload(
-      `${this.urlAddress}${this.controller}/GetExcelArticulosPorPlaga/${IdUsuario}`,
+      `${this.urlAddress}${this.controller}/GetExcelArticulosPorPlaga/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
       param,
     );
   }
 
-  public downloaExcelGetReporteCultivo(IdUsuario: number) {
+  public downloaExcelGetReporteCultivo(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
     const param = {
       reportProgress: true,
       observe: 'events',
       responseType: 'blob',
     };
     return this.getDownload(
-      `${this.urlAddress}${this.controller}/GetExcelArticulosPorCultivo/${IdUsuario}`,
+      `${this.urlAddress}${this.controller}/GetExcelArticulosPorCultivo/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
       param,
     );
   }

@@ -44,9 +44,14 @@ export class ArticuloService extends GenericRepositoryService {
     this.controller = articulo;
   }
 
-  GetListArticulos(idUsuario: number, filtro?: string) {
+  GetListArticulos(
+    idUsuario: number,
+    tipoReporte: number,
+    idTipoIngrediente: number,
+    filtro?: string,
+  ) {
     return this.get<GetArticuloDto[]>(
-      `${this.urlAddress}${this.controller}/GetListArticulo/${idUsuario}/${filtro}`,
+      `${this.urlAddress}${this.controller}/GetListArticulo/${idUsuario}/${tipoReporte}/${idTipoIngrediente}/${filtro}`,
     );
   }
 

@@ -32,10 +32,14 @@ export class FileService {
       responseType: 'blob',
     });
   }
-
-  public downloadExcel(IdUsuario: number) {
+  public downloadExcel(
+    IdUsuario: number,
+    tipoReporte: number,
+    idTipoIngrediente: number,
+    filtro?: string,
+  ) {
     return this.http.get(
-      `${this.urlAddress}${this.controller}/GetExporToExcelArticulos/${IdUsuario}`,
+      `${this.urlAddress}${this.controller}/GetExporToExcelArticulos/${IdUsuario}/${tipoReporte}/${idTipoIngrediente}/${filtro}`,
       {
         reportProgress: true,
         observe: 'events',
