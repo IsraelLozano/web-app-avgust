@@ -39,6 +39,28 @@ export class MainArticuloViews implements OnInit {
     // this.GetArticulos();
   }
 
+  ngOnInit(): void {
+    this.filtroForm = this._formBuilder.group({
+      tipoReporte: [1, [Validators.required, Validators.minLength(1)]],
+      txtFiltro: ['', Validators.required],
+      idTipoIngrediente: [0, [Validators.required, Validators.minLength(1)]],
+    });
+    this.tipoSeleccionado = 1;
+    this.GetArticulos2();
+  }
+  GetArticulos2() {
+    this.filtroForm.patchValue({ tipoReporte: 1, txtFiltro: '', idTipoIngrediente: 0 });
+
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    this._articuloService
+      .GetListArticulos(this._sesion.user.IdUsuario, 1, 0, '')
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        this.listArticulos = resp;
+      });
+  }
+
   onChangeFiltro(value: any) {
     this.tipoSeleccionado = value.value;
   }
@@ -52,11 +74,7 @@ export class MainArticuloViews implements OnInit {
       });
   }
   GetArticulos() {
-    // console.log('valores', this.filtroForm.value);
-
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    // const txtFiltro = this.filtroForm?.get('txtFiltro')?.value ?? '';
-
     const { tipoReporte, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
     this._articuloService
@@ -117,19 +135,4 @@ export class MainArticuloViews implements OnInit {
     a.click();
     document.body.removeChild(a);
   };
-
-  ngOnInit(): void {
-    this.filtroForm = this._formBuilder.group({
-      tipoReporte: [0, [Validators.required, Validators.minLength(1)]],
-      txtFiltro: ['', Validators.required],
-      idTipoIngrediente: [0, [Validators.required, Validators.minLength(1)]],
-      // codDisenioCurricular: ["1"],
-      // codFase: [""],
-      // codFormato: [""],
-      // codNivel: ["3"],
-      // codGrado: [""],
-      // codSeccion: [""],
-      // fechaEmision: [new Date()],
-    });
-  }
 }

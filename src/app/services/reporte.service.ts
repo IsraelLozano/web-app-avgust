@@ -57,7 +57,7 @@ export class ReporteService extends GenericRepositoryService {
     filtro: string,
   ) {
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosPlaga/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosPlaga/${idUsuario}/${filtro}`,
     );
   }
 
@@ -68,7 +68,7 @@ export class ReporteService extends GenericRepositoryService {
     filtro: string,
   ) {
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosCultivo/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosCultivo/${idUsuario}/${filtro}`,
     );
   }
 
@@ -120,7 +120,7 @@ export class ReporteService extends GenericRepositoryService {
       responseType: 'blob',
     };
     return this.getDownload(
-      `${this.urlAddress}${this.controller}/GetExcelArticulosPorPlaga/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
+      `${this.urlAddress}${this.controller}/GetExcelArticulosPorPlaga/${idUsuario}/${filtro}`,
       param,
     );
   }
@@ -137,7 +137,7 @@ export class ReporteService extends GenericRepositoryService {
       responseType: 'blob',
     };
     return this.getDownload(
-      `${this.urlAddress}${this.controller}/GetExcelArticulosPorCultivo/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
+      `${this.urlAddress}${this.controller}/GetExcelArticulosPorCultivo/${idUsuario}/${filtro}`,
       param,
     );
   }

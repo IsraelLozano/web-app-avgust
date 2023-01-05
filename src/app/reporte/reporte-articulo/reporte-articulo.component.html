@@ -25,7 +25,18 @@
               </mat-form-field>
             </div>
 
-            <div fxFlex.gt-md="20" fxFlex.gt-lg="100" fxFlex="100">
+            <div
+              fxFlex.gt-md="20"
+              fxFlex.gt-lg="100"
+              fxFlex="100"
+              *ngIf="
+                !(
+                  this.reporteSelect === 3 ||
+                  this.reporteSelect === 4 ||
+                  this.reporteSelect === undefined
+                )
+              "
+            >
               <mat-form-field fxFlex="95">
                 <mat-select
                   formControlName="tipoBusqueda"
@@ -43,7 +54,10 @@
               fxFlex.gt-md="40"
               fxFlex.gt-lg="100"
               fxFlex="100"
-              *ngIf="this.tipoSeleccionado === 1"
+              *ngIf="
+                this.tipoSeleccionado === 1 &&
+                !(this.reporteSelect === 3 || this.reporteSelect === 4)
+              "
             >
               <mat-form-field>
                 <input
@@ -59,7 +73,10 @@
               fxFlex.gt-md="40"
               fxFlex.gt-lg="100"
               fxFlex="100"
-              *ngIf="this.tipoSeleccionado === 2"
+              *ngIf="
+                this.tipoSeleccionado === 2 &&
+                !(this.reporteSelect === 3 || this.reporteSelect === 4)
+              "
             >
               <mat-form-field>
                 <mat-select
@@ -78,10 +95,49 @@
               </mat-form-field>
             </div>
 
+            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 3">
+              <mat-form-field>
+                <input
+                  type="text"
+                  placeholder="Ingrese Nombre Plaga"
+                  aria-label="Assignee"
+                  matInput="matInput"
+                  [formControl]="myControl2"
+                  [matAutocomplete]="autostart"
+                />
+                <mat-autocomplete #autostart="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{ option.NombreCientificoPlaga }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 4">
+              <mat-form-field>
+                <input
+                  type="text"
+                  placeholder="Ingrese Nombre Cultivo"
+                  aria-label="Assignee"
+                  matInput="matInput"
+                  [formControl]="controlCultivo"
+                  [matAutocomplete]="autostartCultivo"
+                />
+                <mat-autocomplete
+                  #autostartCultivo="matAutocomplete"
+                  [displayWith]="displayFnCultivo"
+                >
+                  <mat-option *ngFor="let option of filteredCultivo | async" [value]="option">
+                    {{ option.NombreCultivo }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
             <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100" class="text-center">
               <button
                 mat-raised-button="mat-raised-button"
-                style="margin: 5px 0px 5px 30px; min-width: 180px"
+                style="margin: 5px 0px 5px 30px; min-width: 180px;"
                 type="submit"
                 class="m-r-5"
                 color="primary"
@@ -106,12 +162,6 @@
     <mat-card>
       <mat-card-content>
         <mat-card-subtitle>Lista Resultado:</mat-card-subtitle>
-        <!-- <app-grilla-articulo
-                                                          [setListArticulo]="this.listArticulos"
-                                                          (onGetCursoSeleccionado)="onGetArticulo($event)"
-                                                          (onDeleteCursoSeleccionado)="onDeleteArticulo($event)"
-                                                        >
-                                                        </app-grilla-articulo> -->
 
         <app-grilla-reporte-formulado
           (exportToExcel)="this.onExportExcelGeneral($event)"
