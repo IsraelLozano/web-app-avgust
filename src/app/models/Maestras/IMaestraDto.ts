@@ -84,3 +84,10 @@ export interface ITipoIngredienteActivo {
   NomIngredienteActivo: string;
   estado: boolean;
 }
+
+export interface IFabricante
+{
+  IdFabricante:     number;
+  NombreFabricante: string;
+  Estado:           boolean;
+}

@@ -29,6 +29,7 @@ import { DemoMaterialModule } from '../demo-material-module';
 import { ComponentModule } from '../libs/components/component.module';
 import { IngredienteActivoViews } from './ingrediente-activo/ingrediente-activo.views';
 import { TipoFormuladorViews } from './tipo-formulador/tipo-formulador.views';
+import { FabricanteComponent } from './fabricante/fabricante.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { TipoFormuladorViews } from './tipo-formulador/tipo-formulador.views';
     MaestroModalViews,
     IngredienteActivoViews,
     TipoFormuladorViews,
+    FabricanteComponent,
   ],
   imports: [
     ComponentModule,

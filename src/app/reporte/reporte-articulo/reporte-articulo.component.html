@@ -1,189 +1,123 @@
 <div fxLayout="row wrap">
-  <div fxFlex="100">
-    <form
-      [formGroup]="filtroForm"
-      name="filtroForm"
-      (submit)="this.GetArticulos()"
-      class="basic-form"
-    >
-      <mat-card>
-        <mat-card-content>
-          <div fxLayout="row wrap" class="align-items-center">
-            <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100">
-              <mat-form-field fxFlex="95">
-                <mat-select
-                  [(ngModel)]="this.reporteSelect"
-                  placeholder="Seleccione Reporte"
-                  formControlName="tipoReporte"
-                  (selectionChange)="this.GetSelectValue($event)"
-                >
-                  <mat-option [value]="1">REPORTE DE PRODUCTOS FORMULADOS</mat-option>
-                  <mat-option [value]="2">REPORTE POR COMPOSICIÓN</mat-option>
-                  <mat-option [value]="3">REPORTE POR PLAGA</mat-option>
-                  <mat-option [value]="4">REPORTE POR CULTIVO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+    <div fxFlex="100">
+        <form [formGroup]="filtroForm" name="filtroForm" (submit)="this.GetArticulos()" class="basic-form">
+            <mat-card>
+                <mat-card-content>
+                    <div fxLayout="row wrap" class="align-items-center">
+                        <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100">
+                            <mat-form-field fxFlex="95">
+                                <mat-select [(ngModel)]="this.reporteSelect" placeholder="Seleccione Reporte" formControlName="tipoReporte" (selectionChange)="this.GetSelectValue($event)">
+                                    <mat-option [value]="1">REPORTE DE PRODUCTOS FORMULADOS</mat-option>
+                                    <mat-option [value]="2">REPORTE POR COMPOSICIÓN</mat-option>
+                                    <mat-option [value]="3">REPORTE POR PLAGA</mat-option>
+                                    <mat-option [value]="4">REPORTE POR CULTIVO</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
 
-            <div
-              fxFlex.gt-md="20"
-              fxFlex.gt-lg="100"
-              fxFlex="100"
-              *ngIf="
-                !(
-                  this.reporteSelect === 3 ||
-                  this.reporteSelect === 4 ||
-                  this.reporteSelect === undefined
-                )
-              "
-            >
-              <mat-form-field fxFlex="95">
-                <mat-select
-                  formControlName="tipoBusqueda"
-                  [ngModel]="tipoSeleccionado"
-                  (selectionChange)="this.onChangeFiltro($event)"
-                  placeholder="Seleccione Tipo Filtro"
-                >
-                  <mat-option [value]="1">Por Nombre Comercial</mat-option>
-                  <mat-option [value]="2">Por Ingrediente Activo</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
 
-            <div
-              fxFlex.gt-md="40"
-              fxFlex.gt-lg="100"
-              fxFlex="100"
-              *ngIf="
-                this.tipoSeleccionado === 1 &&
-                !(this.reporteSelect === 3 || this.reporteSelect === 4)
-              "
-            >
-              <mat-form-field>
-                <input
-                  matInput="matInput"
-                  placeholder="Buscar Articulo"
-                  formControlName="txtFiltro"
-                  required="required"
-                />
-              </mat-form-field>
-            </div>
+                        <div fxFlex.gt-md="20" fxFlex.gt-lg="100" fxFlex="100" *ngIf="
+                                                !(
+                                                  this.reporteSelect === 3 ||
+                                                  this.reporteSelect === 2 ||
+                                                  this.reporteSelect === 4 ||
+                                                  this.reporteSelect === undefined
+                                                )
+                                              ">
+                            <mat-form-field fxFlex="95">
+                                <mat-select formControlName="tipoBusqueda" [ngModel]="tipoSeleccionado" (selectionChange)="this.onChangeFiltro($event)" placeholder="Seleccione Tipo Filtro">
+                                    <mat-option [value]="1">Por Nombre Comercial</mat-option>
+                                    <mat-option [value]="2">Por Ingrediente Activo</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
 
-            <div
-              fxFlex.gt-md="40"
-              fxFlex.gt-lg="100"
-              fxFlex="100"
-              *ngIf="
-                this.tipoSeleccionado === 2 &&
-                !(this.reporteSelect === 3 || this.reporteSelect === 4)
-              "
-            >
-              <mat-form-field>
-                <mat-select
-                  formControlName="idTipoIngrediente"
-                  [ngModel]="idIngredienteSeleccionado"
-                  placeholder="Seleccione Ingredicente A."
-                  required="required"
-                >
-                  <mat-option
-                    *ngFor="let item of cboTipoIngredienteActivo"
-                    [value]="item.IngredenteActivo"
-                  >
-                    {{ item.NomIngredienteActivo }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+                        <div fxFlex.gt-md="20" fxFlex.gt-lg="100" fxFlex="100" *ngIf="
+                                                !(
+                                                  this.reporteSelect === 3 ||
+                                                  this.reporteSelect === 1 ||
+                                                  this.reporteSelect === 4 ||
+                                                  this.reporteSelect === undefined
+                                                )
+                                              ">
+                            <mat-form-field fxFlex="95">
+                                <mat-select formControlName="tipoBusqueda" [ngModel]="tipoSeleccionado" (selectionChange)="this.onChangeFiltro($event)" placeholder="Seleccione Tipo Filtro">
+                                    <mat-option [value]="2">Por Ingrediente Activo</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
 
-            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 3">
-              <mat-form-field>
-                <input
-                  type="text"
-                  placeholder="Ingrese Nombre Plaga"
-                  aria-label="Assignee"
-                  matInput="matInput"
-                  [formControl]="myControl2"
-                  [matAutocomplete]="autostart"
-                />
-                <mat-autocomplete #autostart="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{ option.NombreCientificoPlaga }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-            </div>
+                        <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100" *ngIf="
+                                                this.tipoSeleccionado === 1 &&
+                                                !(this.reporteSelect === 3 || this.reporteSelect === 4)
+                                              ">
+                            <mat-form-field>
+                                <input matInput="matInput" placeholder="Buscar Articulo" formControlName="txtFiltro"/>
+                            </mat-form-field>
+                        </div>
 
-            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 4">
-              <mat-form-field>
-                <input
-                  type="text"
-                  placeholder="Ingrese Nombre Cultivo"
-                  aria-label="Assignee"
-                  matInput="matInput"
-                  [formControl]="controlCultivo"
-                  [matAutocomplete]="autostartCultivo"
-                />
-                <mat-autocomplete
-                  #autostartCultivo="matAutocomplete"
-                  [displayWith]="displayFnCultivo"
-                >
-                  <mat-option *ngFor="let option of filteredCultivo | async" [value]="option">
-                    {{ option.NombreCultivo }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-            </div>
+                        <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100" *ngIf="
+                                                this.tipoSeleccionado === 2 &&
+                                                !(this.reporteSelect === 3 || this.reporteSelect === 4)
+                                              ">
+                            <mat-form-field>
+                                <mat-select formControlName="idTipoIngrediente" [ngModel]="idIngredienteSeleccionado" placeholder="Seleccione Ingredicente A." required="required">
+                                    <mat-option *ngFor="let item of cboTipoIngredienteActivo" [value]="item.IngredenteActivo">
+                                        {{ item.NomIngredienteActivo }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
 
-            <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100" class="text-center">
-              <button
-                mat-raised-button="mat-raised-button"
-                style="margin: 5px 0px 5px 30px; min-width: 180px;"
-                type="submit"
-                class="m-r-5"
-                color="primary"
-                [disabled]="
-                  !this.filtroForm.get('tipoReporte')?.value &&
-                  !this.filtroForm.get('tipoBusqueda')?.value
-                "
-              >
-                <mat-icon class="mat-18">search</mat-icon>
-                Buscar Articulo
-              </button>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </form>
-  </div>
+                        <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 3">
+                            <mat-form-field>
+                                <input type="text" placeholder="Ingrese Nombre Plaga" aria-label="Assignee" matInput="matInput" [formControl]="myControl2" [matAutocomplete]="autostart"/>
+                                <mat-autocomplete #autostart="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{ option.NombreCientificoPlaga }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 4">
+                            <mat-form-field>
+                                <input type="text" placeholder="Ingrese Nombre Cultivo" aria-label="Assignee" matInput="matInput" [formControl]="controlCultivo" [matAutocomplete]="autostartCultivo"/>
+                                <mat-autocomplete #autostartCultivo="matAutocomplete" [displayWith]="displayFnCultivo">
+                                    <mat-option *ngFor="let option of filteredCultivo | async" [value]="option">
+                                        {{ option.NombreCultivo }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100" class="text-center">
+                            <button mat-raised-button="mat-raised-button" style="margin: 5px 0px 5px 30px; min-width: 180px;" type="submit" class="m-r-5" color="primary" [disabled]="
+                                                      !this.filtroForm.get('tipoReporte')?.value &&
+                                                      !this.filtroForm.get('tipoBusqueda')?.value
+                                                    ">
+                                <mat-icon class="mat-18">search</mat-icon>
+                                Buscar Articulo
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </form>
+    </div>
 </div>
 
 <div fxLayout="row wrap">
-  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-    <mat-card>
-      <mat-card-content>
-        <mat-card-subtitle>Lista Resultado:</mat-card-subtitle>
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-subtitle>Lista Resultado:</mat-card-subtitle>
 
-        <app-grilla-reporte-formulado
-          (exportToExcel)="this.onExportExcelGeneral($event)"
-          [setListArticulo]="this.dataReporteGeneral"
-          *ngIf="this.reporteSelect === 1 && this.dataReporteGeneral.length > 0"
-        ></app-grilla-reporte-formulado>
-        <app-grilla-reporte-composicion
-          (exportToExcel)="this.onExportExcelComposicion($event)"
-          [setListArticulo]="this.dataComposicion"
-          *ngIf="this.reporteSelect === 2 && this.dataComposicion.length > 0"
-        ></app-grilla-reporte-composicion>
-        <app-grilla-reporte-plaga
-          (exportToExcel)="this.onExportExcelPlaga($event)"
-          [setListArticulo]="this.dataReportePlaga"
-          *ngIf="this.reporteSelect === 3 && this.dataReportePlaga.length > 0"
-        ></app-grilla-reporte-plaga>
-        <app-grilla-reporte-cultivo
-          (exportToExcel)="this.onExportExcelCultivo($event)"
-          [setListArticulo]="this.dataReporteCultivo"
-          *ngIf="this.reporteSelect === 4 && this.dataReporteCultivo.length > 0"
-        ></app-grilla-reporte-cultivo>
-      </mat-card-content>
-    </mat-card>
-  </div>
+                <app-grilla-reporte-formulado (exportToExcel)="this.onExportExcelGeneral($event)" [setListArticulo]="this.dataReporteGeneral" *ngIf="this.reporteSelect === 1 && this.dataReporteGeneral.length > 0"></app-grilla-reporte-formulado>
+                <app-grilla-reporte-composicion (exportToExcel)="this.onExportExcelComposicion($event)" [setListArticulo]="this.dataComposicion" *ngIf="this.reporteSelect === 2 && this.dataComposicion.length > 0"></app-grilla-reporte-composicion>
+                <app-grilla-reporte-plaga (exportToExcel)="this.onExportExcelPlaga($event)" [setListArticulo]="this.dataReportePlaga" *ngIf="this.reporteSelect === 3 && this.dataReportePlaga.length > 0"></app-grilla-reporte-plaga>
+                <app-grilla-reporte-cultivo (exportToExcel)="this.onExportExcelCultivo($event)" [setListArticulo]="this.dataReporteCultivo" *ngIf="this.reporteSelect === 4 && this.dataReporteCultivo.length > 0"></app-grilla-reporte-cultivo>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>

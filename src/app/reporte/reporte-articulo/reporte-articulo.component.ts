@@ -116,7 +116,7 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     this.filtroForm = this._formBuilder.group({
       tipoReporte: [0, [Validators.required, Validators.minLength(1)]],
       tipoBusqueda: [0, [Validators.required, Validators.minLength(1)]],
-      txtFiltro: ['', Validators.required],
+      txtFiltro: [''],
       idTipoIngrediente: [0, [Validators.required, Validators.minLength(1)]],
       idPlaga: [''],
     });

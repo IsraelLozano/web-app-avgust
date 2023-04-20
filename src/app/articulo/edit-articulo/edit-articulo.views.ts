@@ -49,7 +49,7 @@ export class EditArticuloViews implements OnInit {
       // idGrupoQuimico: [0, [Validators.required, Validators.minLength(1)]],
       nroRegistro: ['', Validators.required],
       idTipoProducto: [0, [Validators.required, Validators.minLength(1)]],
-      idFormulador: [0, [Validators.required, Validators.minLength(1)]],
+      // idFormulador: [0, [Validators.required, Validators.minLength(1)]],
       IdTipoFormulacion: [0, [Validators.required, Validators.minLength(1)]],
       Concentracion: ['', Validators.required],
     });

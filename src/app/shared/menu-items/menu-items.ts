@@ -56,12 +56,12 @@ const MENUITEMS = [
   },
   {
     state: 'articulo',
-    name: 'Articulos',
+    name: 'Productos',
     type: 'sub',
     icon: 'insert_drive_file',
     badge: [{ type: 'warning', value: '=>' }],
     children: [
-      { state: 'list-articulo', name: 'Registro Articulos', type: 'link' },
+      { state: 'list-articulo', name: 'Registro Productos', type: 'link' },
       // { state: 'matricula-ficha', name: 'Ficha Matricula', type: 'link' },
     ],
   },
@@ -77,6 +77,7 @@ const MENUITEMS = [
       { state: 'list-clases', name: 'Clases', type: 'link' },
       { state: 'list-cultivo', name: 'Cultivo', type: 'link' },
       { state: 'list-formulador', name: 'Formuladores', type: 'link' },
+      { state: 'list-fabricante', name: 'Fabricantes', type: 'link' },
       { state: 'list-grupo-quimico', name: 'Grupo quimico', type: 'link' },
       { state: 'list-tipo-producto', name: 'Tipo de Productos', type: 'link' },
       { state: 'list-tipo-documentos', name: 'Documentos', type: 'link' },

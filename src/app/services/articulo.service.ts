@@ -1,3 +1,4 @@
+import { AddProductoFormuladorDto } from './../models/articulo/AddProductoFormuladorDto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -21,6 +22,7 @@ import { GetPdfDto } from '../models/reporte/IReporte';
 import { DialogService } from '../shared/dialog/dialog.service';
 import { GetDataUserDto } from '../shared/menu-items/GetDtoUser';
 import { GenericRepositoryService } from './generic-repository.service';
+import { AddProductoFabricanteDto } from '../models/articulo/AddProductoFabricanteDto';
 
 @Injectable({
   providedIn: 'root',
@@ -153,10 +155,29 @@ export class ArticuloService extends GenericRepositoryService {
   GetUsoByArticulo(idArticulo: number) {
     return this.get<GetUsoDto[]>(`${this.urlAddress}${this.controller}/${idArticulo}/usos`);
   }
-
+  /**
+   * @description
+   * @author Israel Daniel Lozano del Castillo
+   * @date 28/02/2023
+   * @param {number} idArticulo
+   * @param {number} item
+   * @return {*}
+   * @memberof ArticuloService
+   */
   DeleteUsoById(idArticulo: number, item: number) {
     return this.get<boolean>(
       `${this.urlAddress}${this.controller}/deleteUso/${idArticulo}/${item}`,
     );
   }
+
+
+  CreateOrUpdateProductoFormulador (request: AddProductoFormuladorDto[])
+  {
+    return this.post<any>(`${this.urlAddress}${this.controller}/CreateOrUpdateProductoFormulador`, request);
+  }
+  CreateOrUpdateProductoFabricante (request: AddProductoFabricanteDto[])
+  {
+    return this.post<any>(`${this.urlAddress}${this.controller}/CreateOrUpdateProductoFabricante`, request);
+  }
+
 }

@@ -31,7 +31,11 @@ import { ModalUsosViews } from './usos/modal-usos/modal-usos.views';
 import { UploadViews } from './documentos/upload/upload.views';
 import { ModalViewPdfViews } from './documentos/modal-view-pdf/modal-view-pdf.views';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'; // <-- Import PdfJsViewerModule module
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { FabricanteComponent } from './fabricante/fabricante.component';
+import { FormuladorComponent } from './formulador/formulador.component';
+import { GrillaSeleccionadoComponent } from './formulador/grilla-seleccionado/grilla-seleccionado.component';
+import { GrillaFabricanteComponent } from './fabricante/grilla-fabricante/grilla-fabricante.component'; // <-- Import PdfJsViewerModule module
 @NgModule({
   declarations: [
     MainArticuloViews,
@@ -51,6 +55,10 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'; // <-- Import PdfJsViewerM
     ModalUsosViews,
     UploadViews,
     ModalViewPdfViews,
+    FabricanteComponent,
+    FormuladorComponent,
+    GrillaSeleccionadoComponent,
+    GrillaFabricanteComponent,
   ],
   imports: [
     ComponentModule,

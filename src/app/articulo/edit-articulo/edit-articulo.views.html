@@ -2,7 +2,7 @@
   <div fxFlex.gt-sm="100" fxFlex="100">
     <mat-card>
       <mat-card-content>
-        <mat-card-title>Registro de articulos</mat-card-title>
+        <mat-card-title>Registro de Productos</mat-card-title>
         <!-- <mat-card-subtitle
           >use this class <code>.row</code> to the fxLayout="row" and <code>p-10</code> to the
           fxFlex div</mat-card-subtitle
@@ -13,7 +13,7 @@
         <!-- <form class="basic-form" [formGroup]="this.form" (ngSubmit)="this.send()"> -->
         <div *ngIf="this.articuloFull">
           <mat-tab-group>
-            <mat-tab label="Articulo">
+            <mat-tab label="Producto">
               <mat-card-content>
                 <form class="basic-form" [formGroup]="this.form" (ngSubmit)="this.send()">
                   <div fxLayout="row wrap" fxFlexAlign="center" class="row">
@@ -64,23 +64,6 @@
                       </mat-form-field>
                     </div>
 
-                    <!-- column -->
-                    <!-- <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
-                      <mat-form-field>
-                        <mat-select
-                          formControlName="idGrupoQuimico"
-                          placeholder="Seleccione Grupo Quimico"
-                          [value]="this?.particuloFull?.articulo?.IdGrupoQuimico"
-                        >
-                          <mat-option
-                            *ngFor="let item of articuloFull?.cboGrupoQuimico"
-                            [value]="item.IdGrupoQuimico"
-                          >
-                            {{item.NomGrupoQuimico}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </div> -->
 
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
@@ -111,23 +94,17 @@
                       </mat-form-field>
                     </div>
 
-                    <!--column-->
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
-                        <mat-select
-                          formControlName="idFormulador"
-                          placeholder="Seleccione Formulador"
-                          [value]="this?.particuloFull?.articulo?.IdFormulador"
-                        >
-                          <mat-option
-                            *ngFor="let item of articuloFull?.formuladores"
-                            [value]="item.IdFormulador"
-                          >
-                            {{item.NomFormulador}}
-                          </mat-option>
-                        </mat-select>
+                        <input
+                          type="text"
+                          matInput
+                          placeholder="Concentracion"
+                          formControlName="Concentracion"
+                        />
                       </mat-form-field>
                     </div>
+
 
                     <div fxFlex.gt-sm="66.67" fxFlex="100" class="p-10">
                       <mat-form-field>
@@ -143,17 +120,6 @@
                             {{item.CodTipoFormulacion}} - {{item.NomTipoFormulacion}}
                           </mat-option>
                         </mat-select>
-                      </mat-form-field>
-                    </div>
-
-                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
-                      <mat-form-field>
-                        <input
-                          type="text"
-                          matInput
-                          placeholder="Concentracion"
-                          formControlName="Concentracion"
-                        />
                       </mat-form-field>
                     </div>
 
@@ -193,6 +159,17 @@
             </mat-tab>
 
             <div *ngIf="this.idSeleccionado!==0">
+              <mat-tab label="Formuladores">
+                <mat-card-content>
+                  <app-formulador [data]="this.articuloFull"></app-formulador>
+                </mat-card-content>
+              </mat-tab>
+              <mat-tab label="Fabricantes">
+                <mat-card-content>
+                  <app-fabricante [data]="this.articuloFull"></app-fabricante>
+                </mat-card-content>
+              </mat-tab>
+
               <mat-tab label="Composicion">
                 <mat-card-content>
                   <app-composicion [data]="this.articuloFull"></app-composicion>

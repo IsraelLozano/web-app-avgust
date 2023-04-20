@@ -1,0 +1,33 @@
+<div class="table-responsive mat-elevation-z8 m-t-10">
+  <table mat-table [dataSource]="this.lista" class="table ticket-list">
+    <ng-container matColumnDef="idFormulador">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element" class="text-center">{{ element.IdFabricante }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="formulador">
+      <th mat-header-cell *matHeaderCellDef>Fabricantes Seleccionados</th>
+      <td mat-cell *matCellDef="let element">{{ element.NombreFabricante }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element" class="text-center">
+        <button
+          mat-icon-button
+          matTooltip="Clic aquí para anular"
+          color="warn"
+          (click)="deleteInvoice(element)"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="3">No se encontraron registros</td>
+    </tr>
+  </table>
+</div>

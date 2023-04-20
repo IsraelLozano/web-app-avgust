@@ -11,18 +11,18 @@ const routes: Routes = [
         path: 'list-articulo',
         component: MainArticuloViews,
         data: {
-          title: 'Lista de Articulos',
-          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Articulos' }],
+          title: 'Lista de Productos',
+          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Productos' }],
         },
       },
       {
         path: 'articulo/:id',
         component: EditArticuloViews,
         data: {
-          title: 'Mantenimiento de Articulos',
+          title: 'Mantenimiento de Productos',
           urls: [
             { title: 'Lista de Articulos', url: '/articulo/list-articulo' },
-            { title: 'Articulos' },
+            { title: 'Productos' },
           ],
         },
       },

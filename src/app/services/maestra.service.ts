@@ -8,6 +8,7 @@ import {
   ICientificaPlagaDto,
   IClaseDto,
   ICultovoDto,
+  IFabricante,
   IFormuladorDto,
   IGrupoQuimicoDto,
   IPaisDto,
@@ -328,4 +329,32 @@ export class MaestraService extends GenericRepositoryService {
   deleteTipoIngredienteActivo(id: number) {
     return this.get<boolean>(`${this.urlAddress}${this.controller}/deleteIngredienteActivo/${id}`);
   }
+
+
+
+  /** Maestro de Fabricante */
+  getListFabricante() {
+    return this.get<IFabricante[]>(
+      `${this.urlAddress}${this.controller}/getListFabricante`,
+    );
+  }
+
+  GetFabricanteById(id: number) {
+    return this.get<IFabricante>(
+      `${this.urlAddress}${this.controller}/GetFabricanteById/${id}`,
+    );
+  }
+
+  CreateOrUpdateFabricante(request: IFabricante) {
+    return this.post<IFabricante>(
+      `${this.urlAddress}${this.controller}/CreateOrUpdateFabricante`,
+      request,
+    );
+  }
+
+  deleteFabricante(id: number) {
+    return this.get<boolean>(`${this.urlAddress}${this.controller}/deleteFabricante/${id}`);
+  }
+
+
 }

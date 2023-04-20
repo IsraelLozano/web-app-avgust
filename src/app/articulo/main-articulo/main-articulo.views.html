@@ -24,7 +24,7 @@
             </div>
 
             <div
-              fxFlex.gt-md="30"
+              fxFlex.gt-md="20"
               fxFlex.gt-lg="100"
               fxFlex="100"
               *ngIf="this.tipoSeleccionado===1"
@@ -32,15 +32,15 @@
               <mat-form-field>
                 <input
                   matInput="matInput"
-                  placeholder="Buscar Articulo"
+                  placeholder="Buscar Producto"
                   formControlName="txtFiltro"
-                  required
+                  required="required"
                 />
               </mat-form-field>
             </div>
 
             <div
-              fxFlex.gt-md="30"
+              fxFlex.gt-md="20"
               fxFlex.gt-lg="100"
               fxFlex="100"
               *ngIf="this.tipoSeleccionado===2"
@@ -50,7 +50,7 @@
                   formControlName="idTipoIngrediente"
                   [ngModel]="idIngredienteSeleccionado"
                   placeholder="Seleccione Ingredicente A."
-                  required
+                  required="required"
                 >
                   <mat-option
                     *ngFor="let item of cboTipoIngredienteActivo"
@@ -62,22 +62,22 @@
               </mat-form-field>
             </div>
 
-            <div fxFlex.gt-md="50" fxFlex.gt-lg="100" fxFlex="100">
+            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100">
               <button
                 mat-raised-button="mat-raised-button"
-                style="margin: 5px 0px 5px 30px; min-width: 100px"
+                style="margin: 5px 0px 5px 15px; min-width: 100px;"
                 type="submit"
                 class="m-r-5"
                 color="info"
                 [disabled]="!this.filtroForm.get('tipoReporte')?.value"
               >
                 <mat-icon class="mat-18">search</mat-icon>
-                Buscar Articulo
+                Buscar Producto
               </button>
 
               <button
                 mat-raised-button="mat-raised-button"
-                style="margin: 5px 0px 5px 30px; min-width: 100px"
+                style="margin: 5px 0px 5px 15px; min-width: 100px;"
                 type="button"
                 class="m-r-5"
                 color="primary"
@@ -85,11 +85,11 @@
                 routerLinkActive="router-link-active"
               >
                 <mat-icon class="mat-18">add</mat-icon>
-                Nuevo Articulo
+                Nuevo Producto
               </button>
               <button
                 mat-raised-button="mat-raised-button"
-                style="margin: 5px 0px 5px 30px; min-width: 160px"
+                style="margin: 5px 0px 5px 15px; min-width: 160px;"
                 color="accent"
                 type="button"
                 class="m-r-5"
@@ -98,6 +98,17 @@
               >
                 <mat-icon class="mat-18">file_download</mat-icon>
                 Exportar
+              </button>
+              <button
+                mat-raised-button="mat-raised-button"
+                style="margin: 5px 0px 5px 15px; min-width: 100px;"
+                color="accent"
+                type="button"
+                class="m-r-5"
+                [disabled]="!this.filtroForm.get('tipoReporte')?.value"
+              >
+                <mat-icon class="mat-18">picture_as_pdf</mat-icon>
+                Imprimir PDF
               </button>
             </div>
           </div>
@@ -111,7 +122,7 @@
   <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
       <mat-card-content>
-        <mat-card-subtitle>Lista de articulos:</mat-card-subtitle>
+        <mat-card-subtitle>Lista de producto:</mat-card-subtitle>
         <app-grilla-articulo
           [setListArticulo]="this.listArticulos"
           (onGetCursoSeleccionado)="onGetArticulo($event)"

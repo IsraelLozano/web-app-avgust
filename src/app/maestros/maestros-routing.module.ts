@@ -1,3 +1,4 @@
+import { FabricanteComponent } from './fabricante/fabricante.component';
 import { TipoFormuladorViews } from './tipo-formulador/tipo-formulador.views';
 import { IngredienteActivoViews } from './ingrediente-activo/ingrediente-activo.views';
 import { ToxicologiaViews } from './toxicologia/toxicologia.views';
@@ -122,6 +123,15 @@ const routes: Routes = [
           urls: [{ title: 'Inicio', url: '/home' }, { title: 'Tipos de Formuladores' }],
         },
       },
+      {
+        path: 'list-fabricante',
+        component: FabricanteComponent,
+        data: {
+          title: 'Lista de Fabricantes',
+          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Fabricantes' }],
+        },
+      },
+
     ],
   },
 ];

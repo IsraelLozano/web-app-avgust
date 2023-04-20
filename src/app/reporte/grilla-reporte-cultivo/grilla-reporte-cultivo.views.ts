@@ -13,7 +13,15 @@ export class GrillaReporteCultivoViews implements OnInit {
   allComplete: boolean = false;
   cursosList!: MatTableDataSource<IReporteGeneralDto>;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  _paginator!: MatPaginator;
+
+  @ViewChild(MatPaginator,  {static: false}) set matPaginator(paginator: MatPaginator) {
+    this._paginator = paginator;
+
+    if (this.cursosList) {
+        this.cursosList.paginator = paginator;
+    }
+ }
 
   @Output() exportToExcel = new EventEmitter<any>();
 
@@ -28,7 +36,7 @@ export class GrillaReporteCultivoViews implements OnInit {
 
   @Input() set setListArticulo(value: IReporteGeneralDto[]) {
     this.cursosList = new MatTableDataSource(value);
-    this.cursosList.paginator = this.paginator;
+    // this.cursosList.paginator = this.paginator;
     this.cursosList.sort = this.sort;
   }
 

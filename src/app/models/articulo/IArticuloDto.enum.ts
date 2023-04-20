@@ -13,6 +13,7 @@ export interface GetArticuloForEditDto {
   cboGrupoQuimico: CboGrupoQuimico[];
   cboTipoFormulacion: CboTipoFormulacion[];
   cboTipoIngredienteActivo: CboTipoIngredienteActivo[];
+  cboFabricante: CboFabricante[]
 }
 
 export interface GetArticuloDto {
@@ -37,6 +38,36 @@ export interface GetArticuloDto {
   Documentos: GetDocumentoDto[];
   Usos: GetUsoDto[];
   Caracteristicas: GetCaracteristicaDto[];
+  ProductoFabricantes:         ProductoFabricante[];
+	ProductoFormuladors:         ProductoFormulador[];
+}
+
+export interface CboFabricante{
+  IdFabricante:number,
+  NombreFabricante: string,
+  Estado: boolean
+
+}
+export interface ProductoFormulador {
+	IdProducto:             number;
+	IdFormuladorNavigation: Formuladore;
+}
+
+export interface Formuladore {
+	IdFormulador:  number;
+	NomFormulador: string;
+	estado:        boolean;
+}
+
+export interface ProductoFabricante {
+	IdArticulo:             number;
+	IdFabricanteNavigation: IDFabricanteNavigation;
+}
+
+export interface IDFabricanteNavigation {
+	IdFabricante:     number;
+	NombreFabricante: string;
+	Estado:           boolean;
 }
 
 export interface IDTipoFormulacionNavigation {

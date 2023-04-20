@@ -14,6 +14,17 @@
   </div>
 
   <table mat-table [dataSource]="this.cursosList" matSort class="table ticket-list">
+    <ng-container matColumnDef="IngredienteActivo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ingrediente Activo</th>
+      <td mat-cell *matCellDef="let element">
+        <ul>
+          <li *ngFor="let p of element?.Composicions">
+            {{p?.IngredienteActivoNavigation?.NomIngredienteActivo}}
+          </li>
+        </ul>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="NombreComercial">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Comercial</th>
       <td mat-cell *matCellDef="let element">{{ element.NombreComercial }}</td>
@@ -31,16 +42,7 @@
       <td mat-cell *matCellDef="let element">{{element?.IdFormuladorNavigation?.NomFormulador}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="IngredienteActivo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ingrediente Activo</th>
-      <td mat-cell *matCellDef="let element">
-        <ul>
-          <li *ngFor="let p of element?.Composicions">
-            {{p?.IngredienteActivoNavigation?.NomIngredienteActivo}}
-          </li>
-        </ul>
-      </td>
-    </ng-container>
+
 
     <ng-container matColumnDef="ConcentracionIA">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Concentración IA</th>

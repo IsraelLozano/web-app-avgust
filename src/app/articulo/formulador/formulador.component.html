@@ -1,0 +1,64 @@
+<form class="basic-form" [formGroup]="this.form" (ngSubmit)="this.getModal()">
+  <div fxLayout="row wrap" class="align-items-center">
+    <div fxFlex.gt-sm="80" fxFlex="100" class="p-10">
+      <mat-form-field>
+        <mat-select
+          formControlName="idFormulador"
+          placeholder="Seleccione Formulador"
+          [ngModel]="this?.formuladorSeleccionado"
+        >
+          <mat-option *ngFor="let item of articuloFull?.formuladores" [value]="item.IdFormulador">
+            {{ item.NomFormulador }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex.gt-md="20" class="text-right">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="m-r-5"
+        style="margin: 5px 40px 5px 30px; min-width: 160px;"
+        [disabled]="!this.form.valid"
+      >
+        <mat-icon class="mat-18">add</mat-icon>
+        Agregar
+      </button>
+    </div>
+  </div>
+</form>
+
+
+<app-grilla-seleccionado [setListaFormuladores]="this.listProductoFormulador" (onDeleteSeleccionado)="delete($event)"> </app-grilla-seleccionado>
+
+<div fxLayout="row wrap" class="text-center">
+  <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+    <button
+    mat-raised-button="mat-raised-button"
+    style="margin: 20px 0px 5px 15px; min-width: 160px;"
+    type="submit"
+    class="m-r-5"
+    color="primary"
+    (click)="this.save()"
+  >
+    <mat-icon class="mat-18">save</mat-icon>
+    Grabar
+  </button>
+
+  </div>
+</div>
+
+<!-- <mat-select
+      formControlName="idTitularRegistro"
+      placeholder="Seleccione el Titular"
+      [value]="this?.particuloFull?.articulo?.IdTitularRegistro"
+    >
+      <mat-option
+        *ngFor="let item of articuloFull?.titulares"
+        [value]="item.IdTitularRegistro"
+      >
+        {{item.NomTitularRegistro}}
+      </mat-option>
+    </mat-select> -->
