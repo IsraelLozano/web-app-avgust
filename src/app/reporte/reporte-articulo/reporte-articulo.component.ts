@@ -1,3 +1,4 @@
+import { ModalReportePdfComponent } from './modal-reporte-pdf/modal-reporte-pdf.component';
 import { IReporteGeneralDto } from './../../models/reporte/IReporte';
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import {
@@ -329,6 +330,102 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
         }
       });
   }
+
+  /*
+   *   BEGIN ==> REPORTES EN PDF
+   */
+
+  getModalPDFGeneral(value: any) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+
+    this._reporte
+      .GetProductosFormuladosPdfAsync(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        const dialogRef = this.dialog.open(ModalReportePdfComponent, {
+          data: resp,
+          width: '1000px',
+        });
+        dialogRef.afterClosed().subscribe((test) => {
+          console.log(test);
+        });
+      });
+  }
+  getModalPDFComposicion(value: any) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+
+    this._reporte
+      .GetArticulosPorComposicionPdfAsync(
+        this._sesion.user.IdUsuario,
+        tipoBusqueda,
+        idTipoIngrediente,
+        txtFiltro,
+      )
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        const dialogRef = this.dialog.open(ModalReportePdfComponent, {
+          data: resp,
+          width: '1000px',
+        });
+        dialogRef.afterClosed().subscribe((test) => {
+          console.log(test);
+        });
+      });
+  }
+
+  getModalPDFPlaga(value: any) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const filtro2 = this.myControl2.value;
+
+    this._reporte
+      .GetArticulosPorPlagaPdfAsync(
+        this._sesion.user.IdUsuario,
+        filtro2.NombreCientificoPlaga
+      )
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        const dialogRef = this.dialog.open(ModalReportePdfComponent, {
+          data: resp,
+          width: '1000px',
+        });
+        dialogRef.afterClosed().subscribe((test) => {
+          console.log(test);
+        });
+      });
+  }
+
+  getModalPDFCultivo(value: any) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const filtro2 = this.controlCultivo.value;
+
+    this._reporte
+      .GetArticulosPorCultivoPdfAsync(
+        this._sesion.user.IdUsuario,
+        filtro2.NombreCultivo,
+      )
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        const dialogRef = this.dialog.open(ModalReportePdfComponent, {
+          data: resp,
+          width: '1000px',
+        });
+        dialogRef.afterClosed().subscribe((test) => {
+          console.log(test);
+        });
+      });
+  }
+
+
+  /*
+   *   END ==> REPORTES EN PDF
+   */
 
   private downloadFile = (data: HttpResponse<Blob> | any, fileName: string) => {
     const downloadedFile = new Blob([data.body], { type: data?.body.type });

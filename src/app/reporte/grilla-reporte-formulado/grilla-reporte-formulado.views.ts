@@ -59,4 +59,10 @@ export class GrillaReporteFormuladoViews implements OnInit {
   OnExportToExcel() {
     this.exportToExcel.emit(1);
   }
+
+  @Output() exportToPdf = new EventEmitter<any>();
+  getRepoteModal()
+  {
+    this.exportToPdf.emit(1)
+  }
 }

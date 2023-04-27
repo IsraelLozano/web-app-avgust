@@ -26,10 +26,10 @@ export class GrillaReporteComposicionViews implements OnInit {
   @Output() exportToExcel = new EventEmitter<any>();
 
   displayedColumns: string[] = [
+    'IngredienteActivo',
     'NombreComercial',
     'NomTitularRegistro',
     'Formulador',
-    'IngredienteActivo',
     'ConcentracionIA',
     'GrupoQuimico',
   ];
@@ -49,4 +49,10 @@ export class GrillaReporteComposicionViews implements OnInit {
   OnExportToExcel() {
     this.exportToExcel.emit(2);
   }
+  @Output() exportToPdf = new EventEmitter<any>();
+  getRepoteModal()
+  {
+    this.exportToPdf.emit(1)
+  }
+
 }

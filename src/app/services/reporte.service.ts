@@ -2,10 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SessionService } from '../libs/services/session.service';
-import { IReporteGeneralDto } from '../models/reporte/IReporte';
+import { GetPdfDto, IReporteGeneralDto } from '../models/reporte/IReporte';
 import { DialogService } from '../shared/dialog/dialog.service';
 import { GenericRepositoryService } from './generic-repository.service';
-
+/**
+ * @description
+ * @author Israel Daniel Lozano del Castillo
+ * @date 27/04/2023
+ * @export
+ * @class ReporteService
+ * @extends {GenericRepositoryService}
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -141,4 +148,53 @@ export class ReporteService extends GenericRepositoryService {
       param,
     );
   }
+
+  /*
+   *----BEGIN REPORTES EN PDF
+   */
+
+   GetProductosFormuladosPdfAsync(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
+    return this.get<GetPdfDto>(
+      `${this.urlAddress}${this.controller}/GetProductosFormuladosPdfAsync/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
+    );
+  }
+
+  GetArticulosPorComposicionPdfAsync(
+    idUsuario: number,
+    tipoFiltro: number,
+    idIngredienteActivo: number,
+    filtro: string,
+  ) {
+    return this.get<GetPdfDto>(
+      `${this.urlAddress}${this.controller}/GetArticulosPorComposicionPdfAsync/${idUsuario}/${tipoFiltro}/${idIngredienteActivo}/${filtro}`,
+    );
+  }
+
+  GetArticulosPorPlagaPdfAsync(
+    idUsuario: number,
+    filtro: string,
+  ) {
+    return this.get<GetPdfDto>(
+      `${this.urlAddress}${this.controller}/GetArticulosPorPlagaPdfAsync/${idUsuario}/${filtro}`,
+    );
+  }
+
+  GetArticulosPorCultivoPdfAsync(
+    idUsuario: number,
+    filtro: string,
+  ) {
+    return this.get<GetPdfDto>(
+      `${this.urlAddress}${this.controller}/GetArticulosPorCultivoPdfAsync/${idUsuario}/${filtro}`,
+    );
+  }
+
+
+  /*
+   *----END REPORTES EN PDF
+   */
 }

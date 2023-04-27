@@ -18,33 +18,40 @@ import { GrillaReporteFormuladoViews } from './grilla-reporte-formulado/grilla-r
 import { GrillaReporteComposicionViews } from './grilla-reporte-composicion/grilla-reporte-composicion.views';
 import { GrillaReportePlagaViews } from './grilla-reporte-plaga/grilla-reporte-plaga.views';
 import { GrillaReporteCultivoViews } from './grilla-reporte-cultivo/grilla-reporte-cultivo.views';
+import { ModalReportePdfComponent } from './reporte-articulo/modal-reporte-pdf/modal-reporte-pdf.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { ComponentModule } from "../libs/components/component.module";
 
 @NgModule({
-  declarations: [
-    ReporteArticuloComponent,
-    GrillaReporteFormuladoViews,
-    GrillaReporteComposicionViews,
-    GrillaReportePlagaViews,
-    GrillaReporteCultivoViews
-  ],
-  imports: [
-    ReporteRoutingModule,
-    DemoMaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
-
-    FlexLayoutModule,
-    QuillModule.forRoot(),
-    NgApexchartsModule,
-    PerfectScrollbarModule,
-    Ng2SearchPipeModule,
-    DragDropModule,
-    NgxPaginationModule,
-    CommonModule,
-  ],
+    declarations: [
+        ReporteArticuloComponent,
+        GrillaReporteFormuladoViews,
+        GrillaReporteComposicionViews,
+        GrillaReportePlagaViews,
+        GrillaReporteCultivoViews,
+        ModalReportePdfComponent
+    ],
+    imports: [
+        ReporteRoutingModule,
+        DemoMaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+        }),
+        FlexLayoutModule,
+        QuillModule.forRoot(),
+        NgApexchartsModule,
+        PerfectScrollbarModule,
+        Ng2SearchPipeModule,
+        DragDropModule,
+        NgxPaginationModule,
+        PdfViewerModule,
+        PdfJsViewerModule,
+        CommonModule,
+        ComponentModule
+    ]
 })
 export class ReporteModule {}

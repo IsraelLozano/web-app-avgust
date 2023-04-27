@@ -90,20 +90,34 @@ export class MainArticuloViews implements OnInit {
   }
 
   onDeleteArticulo(id: number) {
-    const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    this._articuloService
-      .DeleteArticuloById(id)
-      .pipe(finalize(() => loading.close()))
-      .subscribe((resp) => {
-        if (resp) {
-          this._dialogService.info({
-            title: 'Confirmación',
-            message: 'El articulo buen anulado correctamente.',
-            button: {
-              text: 'CERRAR',
-            },
-          });
-          this.GetArticulos();
+    this._dialogService
+      .confirm({
+        message: '¿Desea anular el producto seleccionado?',
+        buttonOk: {
+          text: 'ACEPTAR',
+        },
+        buttonCancel: {
+          text: 'CANCELAR',
+        },
+      })
+      .subscribe((result: boolean | undefined) => {
+        if (result) {
+          const loading = this.dialog.open(LoadingViews, { disableClose: true });
+          this._articuloService
+            .DeleteArticuloById(id)
+            .pipe(finalize(() => loading.close()))
+            .subscribe((resp) => {
+              if (resp) {
+                this._dialogService.info({
+                  title: 'Confirmación',
+                  message: 'El producto fue anulado correctamente.',
+                  button: {
+                    text: 'CERRAR',
+                  },
+                });
+                this.GetArticulos();
+              }
+            });
         }
       });
   }
