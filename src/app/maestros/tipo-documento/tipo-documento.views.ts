@@ -29,7 +29,7 @@ export class TipoDocumentoViews implements OnInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     this._maestraService
-      .getListTipoDocumento()
+      .getListTipoDocumento('')
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.data = resp.map((p) => {

@@ -81,9 +81,9 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Cientifico - Plaga */
-  getListCientificoPlaga() {
+  getListCientificoPlaga(filter: string) {
     return this.get<ICientificaPlagaDto[]>(
-      `${this.urlAddress}${this.controller}/getListCientificoPlaga`,
+      `${this.urlAddress}${this.controller}/getListCientificoPlaga/${filter}`,
     );
   }
 
@@ -105,8 +105,8 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Clase */
-  getListClase() {
-    return this.get<IClaseTipoArticuloDto[]>(`${this.urlAddress}${this.controller}/getListClase`);
+  getListClase(filter: string) {
+    return this.get<IClaseTipoArticuloDto[]>(`${this.urlAddress}${this.controller}/getListClase/${filter}`);
   }
 
   GetClaseById(id: number) {
@@ -127,8 +127,8 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Cultivo */
-  getListCultivo() {
-    return this.get<ICultovoDto[]>(`${this.urlAddress}${this.controller}/getListCultivo`);
+  getListCultivo(filter: string) {
+    return this.get<ICultovoDto[]>(`${this.urlAddress}${this.controller}/getListCultivo/${filter}`);
   }
 
   GetCultivoById(id: number) {
@@ -147,8 +147,8 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Formulador */
-  getListFormulador() {
-    return this.get<IFormuladorDto[]>(`${this.urlAddress}${this.controller}/getListFormulador`);
+  getListFormulador(filter: string) {
+    return this.get<IFormuladorDto[]>(`${this.urlAddress}${this.controller}/getListFormulador/${filter}`);
   }
 
   GetFormuladorById(id: number) {
@@ -167,8 +167,8 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de GrupoQuimico */
-  getListGrupoQuimico() {
-    return this.get<IGrupoQuimicoDto[]>(`${this.urlAddress}${this.controller}/getListGrupoQuimico`);
+  getListGrupoQuimico(filter: string) {
+    return this.get<IGrupoQuimicoDto[]>(`${this.urlAddress}${this.controller}/getListGrupoQuimico/${filter}`);
   }
 
   GetGrupoQuimicoById(id: number) {
@@ -189,9 +189,9 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Id Tipo Produycto */
-  getListIdTipoProducto() {
+  getListIdTipoProducto(filter: string) {
     return this.get<ITipoProductoDto[]>(
-      `${this.urlAddress}${this.controller}/getListIdTipoProducto`,
+      `${this.urlAddress}${this.controller}/getListIdTipoProducto/${filter}`,
     );
   }
 
@@ -213,9 +213,9 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Id Tipo Documento */
-  getListTipoDocumento() {
+  getListTipoDocumento(filter: string) {
     return this.get<ITipoDocumentoDto[]>(
-      `${this.urlAddress}${this.controller}/getListTipoDocumento`,
+      `${this.urlAddress}${this.controller}/getListTipoDocumento/${filter}`,
     );
   }
 
@@ -237,9 +237,9 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Titular registros */
-  getListTitularRegistro() {
+  getListTitularRegistro(filter: string) {
     return this.get<ITItularRegistroDto[]>(
-      `${this.urlAddress}${this.controller}/getListTitularRegistro`,
+      `${this.urlAddress}${this.controller}/getListTitularRegistro/${filter}`,
     );
   }
 
@@ -261,8 +261,8 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Toxicologia */
-  getListToxicologica() {
-    return this.get<IToxicologiaDto[]>(`${this.urlAddress}${this.controller}/getListToxicologica`);
+  getListToxicologica(filter: string) {
+    return this.get<IToxicologiaDto[]>(`${this.urlAddress}${this.controller}/getListToxicologica/${filter}`);
   }
 
   GetToxicologicaById(id: number) {
@@ -283,9 +283,9 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Tipo Formulacion */
-  getListTipoFormulacion() {
+  getListTipoFormulacion(filter: string) {
     return this.get<ITipoFormulacion[]>(
-      `${this.urlAddress}${this.controller}/getListTipoFormulacion`,
+      `${this.urlAddress}${this.controller}/getListTipoFormulacion/${filter}`,
     );
   }
 
@@ -307,9 +307,9 @@ export class MaestraService extends GenericRepositoryService {
   }
 
   /** Maestro de Ingrediente Activo */
-  getListTipoIngredienteActivo() {
+  getListTipoIngredienteActivo(filter: string) {
     return this.get<ITipoIngredienteActivo[]>(
-      `${this.urlAddress}${this.controller}/getListTipoIngredienteActivo`,
+      `${this.urlAddress}${this.controller}/getListTipoIngredienteActivo/${filter}`,
     );
   }
 
@@ -333,9 +333,9 @@ export class MaestraService extends GenericRepositoryService {
 
 
   /** Maestro de Fabricante */
-  getListFabricante() {
+  getListFabricante(filter: string) {
     return this.get<IFabricante[]>(
-      `${this.urlAddress}${this.controller}/getListFabricante`,
+      `${this.urlAddress}${this.controller}/getListFabricante/${filter}`,
     );
   }
 

@@ -21,6 +21,8 @@ import {
   ITipoIngredienteActivo,
 } from 'src/app/models/Maestras/IMaestraDto';
 import { MaestraService } from 'src/app/services/maestra.service';
+import { GerReportFabricanteDto } from 'src/app/models/reporte/ger-report-fabricante-dto';
+import { GetArticulosFormuladorAll } from 'src/app/models/reporte/get-articulos-formulador-all';
 
 @Component({
   selector: 'app-reporte-articulo',
@@ -44,6 +46,8 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   cboTipoIngredienteActivo!: ITipoIngredienteActivo[];
   cboPlagas!: ICientificaPlagaDto[];
   cboCultivo!: ICultovoDto[];
+  dataReporteFabricante: GerReportFabricanteDto[] = [];
+  dataReporteFormuladorAll: GetArticulosFormuladorAll[] = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -67,9 +71,9 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     forkJoin({
-      listIngrediente: this._maestraService.getListTipoIngredienteActivo(),
-      listPlagas: this._maestraService.getListCientificoPlaga(),
-      listCultivo: this._maestraService.getListCultivo(),
+      listIngrediente: this._maestraService.getListTipoIngredienteActivo(''),
+      listPlagas: this._maestraService.getListCientificoPlaga(''),
+      listCultivo: this._maestraService.getListCultivo(''),
     })
       .pipe(finalize(() => loading.close()))
       .subscribe(
@@ -154,6 +158,7 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
       this.dataReportePlaga =
       this.dataComposicion =
       this.dataReporteCultivo =
+      this.dataReporteFabricante =
         [];
 
     this.myControl2.setValue('');
@@ -175,11 +180,41 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
       case 4:
         this.getCultivo(userId);
         break;
+      case 5:
+        this.getFabricante(userId);
+        break;
+      case 6:
+        this.getFormulador(userId);
+        break;
 
       default:
         break;
     }
   }
+  getFormulador(userId: number) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    this._reporte
+      .GetArticulosFormuladorAll(this._sesion.user.IdUsuario, tipoBusqueda)
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        this.dataReporteFormuladorAll = resp;
+      });
+
+  }
+  getFabricante(userId: number) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    this._reporte
+      .GetArticulosFabricante(this._sesion.user.IdUsuario, tipoBusqueda)
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        this.dataReporteFabricante = resp;
+      });
+  }
+
   getCultivo(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
@@ -261,6 +296,46 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
         else if (event.type === HttpEventType.Response) {
           this.message = 'descarga realizada';
           this.downloadFile(event, 'onExportExcelCultivo.xlsx');
+        }
+      });
+  }
+  onExportExcelfabricante(value: any) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const filtro2 = this.controlCultivo.value;
+
+    this._reporte
+      .GetExcelGetArticulosFabricante(
+        this._sesion.user.IdUsuario,
+        'a',
+      )
+      .pipe(finalize(() => loading.close()))
+      .subscribe((event: any) => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'descarga realizada';
+          this.downloadFile(event, 'GetExcelGetArticulosFabricante.xlsx');
+        }
+      });
+  }
+  onExportExcelFormuladorAll(value: any) {
+    const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const filtro2 = this.controlCultivo.value;
+
+    this._reporte
+      .GetExcelGetArticulosFormuladorAll(
+        this._sesion.user.IdUsuario,
+        'a',
+      )
+      .pipe(finalize(() => loading.close()))
+      .subscribe((event: any) => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'descarga realizada';
+          this.downloadFile(event, 'GetExcelGetArticulosFormuladorAll.xlsx');
         }
       });
   }
@@ -385,10 +460,7 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const filtro2 = this.myControl2.value;
 
     this._reporte
-      .GetArticulosPorPlagaPdfAsync(
-        this._sesion.user.IdUsuario,
-        filtro2.NombreCientificoPlaga
-      )
+      .GetArticulosPorPlagaPdfAsync(this._sesion.user.IdUsuario, filtro2.NombreCientificoPlaga)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         const dialogRef = this.dialog.open(ModalReportePdfComponent, {
@@ -406,10 +478,7 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const filtro2 = this.controlCultivo.value;
 
     this._reporte
-      .GetArticulosPorCultivoPdfAsync(
-        this._sesion.user.IdUsuario,
-        filtro2.NombreCultivo,
-      )
+      .GetArticulosPorCultivoPdfAsync(this._sesion.user.IdUsuario, filtro2.NombreCultivo)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         const dialogRef = this.dialog.open(ModalReportePdfComponent, {
@@ -421,7 +490,40 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
         });
       });
   }
+  getModalPDFfabricante(value: any) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const filtro2 = 'a';
 
+    this._reporte
+      .GetArticulosFabricantePdfAsync(this._sesion.user.IdUsuario, filtro2)
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        const dialogRef = this.dialog.open(ModalReportePdfComponent, {
+          data: resp,
+          width: '1000px',
+        });
+        dialogRef.afterClosed().subscribe((test) => {
+          console.log(test);
+        });
+      });
+  }
+  getModalPDFFormuladorAll(value: any) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const filtro2 = 'a';
+
+    this._reporte
+      .GetArticulosFormuladorAllPdfAsync(this._sesion.user.IdUsuario, filtro2)
+      .pipe(finalize(() => loading.close()))
+      .subscribe((resp) => {
+        const dialogRef = this.dialog.open(ModalReportePdfComponent, {
+          data: resp,
+          width: '1000px',
+        });
+        dialogRef.afterClosed().subscribe((test) => {
+          console.log(test);
+        });
+      });
+  }
 
   /*
    *   END ==> REPORTES EN PDF

@@ -12,6 +12,7 @@ import {
 import { MaestraService } from 'src/app/services/maestra.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-tipo-formulador',
@@ -20,20 +21,33 @@ import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
 })
 export class TipoFormuladorViews implements OnInit {
   data!: ITipoGenerico[];
+  filtroForm!: FormGroup;
+
   constructor(
     private dialog: MatDialog,
     private _dialogService: DialogService,
     private _maestraService: MaestraService,
-    private _router: Router,
+    private _router: Router, private _formBuilder: FormBuilder,
   ) {}
   ngOnInit(): void {
-    this.GetData();
+
+  this.filtroForm = this._formBuilder.group({
+    filtro: [''],
+  });
+
+
+    this.GetData('');
   }
-  GetData() {
+  send() {
+    const { filtro } = this.filtroForm.value;
+    this.GetData(filtro);
+  }
+
+  GetData(filter: string) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     this._maestraService
-      .getListTipoFormulacion()
+      .getListTipoFormulacion(filter)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.data = resp.map((p) => {
@@ -95,7 +109,7 @@ export class TipoFormuladorViews implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -150,7 +164,7 @@ export class TipoFormuladorViews implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -187,7 +201,7 @@ export class TipoFormuladorViews implements OnInit {
                     text: 'CERRAR',
                   },
                 });
-                this.GetData();
+                this.GetData('');
               }
             });
         }

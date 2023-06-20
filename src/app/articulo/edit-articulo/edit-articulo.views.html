@@ -20,15 +20,9 @@
                     <!-- column -->
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
-                        <mat-select
-                          formControlName="idPais"
-                          placeholder="Seleccione Pais"
-                          [value]="this?.particuloFull?.articulo?.IdPais"
-                        >
-                          <mat-option
-                            *ngFor="let item of articuloFull?.paises"
-                            [value]="item.IdPais"
-                          >
+                        <mat-select formControlName="idPais" placeholder="Seleccione Pais"
+                          [value]="this?.particuloFull?.articulo?.IdPais">
+                          <mat-option *ngFor="let item of articuloFull?.paises" [value]="item.IdPais">
                             {{item.NomPais}}
                           </mat-option>
                         </mat-select>
@@ -37,27 +31,16 @@
                     <!-- column -->
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
-                        <input
-                          type="text"
-                          matInput
-                          placeholder="Nombre Comercial"
-                          formControlName="nombreComercial"
-                        />
+                        <input type="text" matInput placeholder="Nombre Comercial" formControlName="nombreComercial" />
                       </mat-form-field>
                     </div>
 
                     <!-- column -->
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
-                        <mat-select
-                          formControlName="idTitularRegistro"
-                          placeholder="Seleccione el Titular"
-                          [value]="this?.particuloFull?.articulo?.IdTitularRegistro"
-                        >
-                          <mat-option
-                            *ngFor="let item of articuloFull?.titulares"
-                            [value]="item.IdTitularRegistro"
-                          >
+                        <mat-select formControlName="idTitularRegistro" placeholder="Seleccione el Titular"
+                          [value]="this?.particuloFull?.articulo?.IdTitularRegistro">
+                          <mat-option *ngFor="let item of articuloFull?.titulares" [value]="item.IdTitularRegistro">
                             {{item.NomTitularRegistro}}
                           </mat-option>
                         </mat-select>
@@ -67,56 +50,35 @@
 
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
-                        <input
-                          type="text"
-                          matInput
-                          placeholder="Nro Registro"
-                          formControlName="nroRegistro"
-                        />
+                        <input type="text" matInput placeholder="Nro Registro" formControlName="nroRegistro" />
                       </mat-form-field>
                     </div>
 
                     <!-- column -->
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
-                        <mat-select
-                          formControlName="idTipoProducto"
-                          placeholder="Seleccione Tipo Producto"
-                          [value]="this?.particuloFull?.articulo?.IdTipoProducto"
-                        >
-                          <mat-option
-                            *ngFor="let item of articuloFull?.tiposProductos"
-                            [value]="item.IdTipoProducto1"
-                          >
+                        <mat-select formControlName="idTipoProducto" placeholder="Seleccione Tipo Producto"
+                          [value]="this?.particuloFull?.articulo?.IdTipoProducto">
+                          <mat-option *ngFor="let item of articuloFull?.tiposProductos" [value]="item.IdTipoProducto1">
                             {{item.NomTipoProducto}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>
+<!--
+                    <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
+                      <mat-form-field>
+                        <input type="text" matInput placeholder="Concentracion" formControlName="Concentracion" />
+                      </mat-form-field>
+                    </div> -->
+
 
                     <div fxFlex.gt-sm="33.33" fxFlex="100" class="p-10">
                       <mat-form-field>
-                        <input
-                          type="text"
-                          matInput
-                          placeholder="Concentracion"
-                          formControlName="Concentracion"
-                        />
-                      </mat-form-field>
-                    </div>
-
-
-                    <div fxFlex.gt-sm="66.67" fxFlex="100" class="p-10">
-                      <mat-form-field>
-                        <mat-select
-                          formControlName="IdTipoFormulacion"
-                          placeholder="Seleccione el Tipo Formulacion"
-                          [value]="this?.particuloFull?.articulo?.IdTipoFormulacion"
-                        >
-                          <mat-option
-                            *ngFor="let item of articuloFull?.cboTipoFormulacion"
-                            [value]="item.IdTipoFormulacion"
-                          >
+                        <mat-select formControlName="IdTipoFormulacion" placeholder="Seleccione el Tipo Formulacion"
+                          [value]="this?.particuloFull?.articulo?.IdTipoFormulacion">
+                          <mat-option *ngFor="let item of articuloFull?.cboTipoFormulacion"
+                            [value]="item.IdTipoFormulacion">
                             {{item.CodTipoFormulacion}} - {{item.NomTipoFormulacion}}
                           </mat-option>
                         </mat-select>
@@ -130,26 +92,14 @@
                   </div>
 
                   <div align="center">
-                    <button
-                      mat-raised-button
-                      style="margin: 5px 40px 5px 30px; min-width: 205px"
-                      color="accent"
-                      type="button"
-                      class="m-r-5"
-                      [routerLink]="['/articulo/list-articulo']"
-                    >
+                    <button mat-raised-button style="margin: 5px 40px 5px 30px; min-width: 205px" color="accent"
+                      type="button" class="m-r-5" [routerLink]="['/articulo/list-articulo']">
                       <mat-icon class="mat-18">arrow_back</mat-icon>
                       Regresar
                     </button>
 
-                    <button
-                      mat-raised-button
-                      color="primary"
-                      type="submit"
-                      class="m-r-5"
-                      style="margin: 5px 40px 5px 30px; min-width: 205px"
-                      [disabled]="!this.form.valid"
-                    >
+                    <button mat-raised-button color="primary" type="submit" class="m-r-5"
+                      style="margin: 5px 40px 5px 30px; min-width: 205px" [disabled]="!this.form.valid">
                       <mat-icon class="mat-18">save</mat-icon>
                       Grabar
                     </button>

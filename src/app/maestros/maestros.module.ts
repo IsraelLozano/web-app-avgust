@@ -30,6 +30,8 @@ import { ComponentModule } from '../libs/components/component.module';
 import { IngredienteActivoViews } from './ingrediente-activo/ingrediente-activo.views';
 import { TipoFormuladorViews } from './tipo-formulador/tipo-formulador.views';
 import { FabricanteComponent } from './fabricante/fabricante.component';
+import { ModalCultivoComponent } from './cultivo/modal-cultivo/modal-cultivo.component';
+import { GrillaCultivoComponent } from './cultivo/grilla-cultivo/grilla-cultivo.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { FabricanteComponent } from './fabricante/fabricante.component';
     IngredienteActivoViews,
     TipoFormuladorViews,
     FabricanteComponent,
+    ModalCultivoComponent,
+    GrillaCultivoComponent,
   ],
   imports: [
     ComponentModule,

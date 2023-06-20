@@ -33,6 +33,7 @@ export interface IClaseDto {
 export interface ICultovoDto {
   IdCultivo: number;
   NombreCultivo: string;
+  NombreComun: string;
   estado: boolean;
 }
 

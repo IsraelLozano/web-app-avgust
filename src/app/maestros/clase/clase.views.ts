@@ -10,6 +10,7 @@ import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
 import { IClaseTipoArticuloDto } from 'src/app/models/Maestras/IClaseTipoArticuloDto';
 import { ModalClaseViews } from 'src/app/libs/components/clase/modal-clase/modal-clase.views';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-clase',
@@ -19,21 +20,33 @@ import { ModalClaseViews } from 'src/app/libs/components/clase/modal-clase/modal
 export class ClaseViews implements OnInit {
   data!: IClaseTipoArticuloDto[];
   cboTipo!: ITipoProductoDto[];
+
+  filtroForm!: FormGroup;
   constructor(
     private dialog: MatDialog,
     private _dialogService: DialogService,
     private _maestraService: MaestraService,
     private _router: Router,
+    private _formBuilder: FormBuilder,
   ) {}
   ngOnInit(): void {
-    this.GetData();
+    this.filtroForm = this._formBuilder.group({
+      filtro: [''],
+    });
+
+    this.GetData('');
   }
-  GetData() {
+  send() {
+    const { filtro } = this.filtroForm.value;
+    this.GetData(filtro);
+  }
+
+  GetData(filter: string) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     forkJoin({
-      listaClase: this._maestraService.getListClase(),
-      cboTipoProducto: this._maestraService.getListIdTipoProducto(),
+      listaClase: this._maestraService.getListClase(filter),
+      cboTipoProducto: this._maestraService.getListIdTipoProducto(''),
     })
       .pipe(finalize(() => loading.close()))
       .subscribe(
@@ -102,7 +115,7 @@ export class ClaseViews implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -156,7 +169,7 @@ export class ClaseViews implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -192,7 +205,7 @@ export class ClaseViews implements OnInit {
                     text: 'CERRAR',
                   },
                 });
-                this.GetData();
+                this.GetData('');
               }
             });
         }

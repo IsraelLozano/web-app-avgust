@@ -67,7 +67,7 @@ export class MainArticuloViews implements OnInit {
   GetCombo() {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     this._maestraService
-      .getListTipoIngredienteActivo()
+      .getListTipoIngredienteActivo('')
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.cboTipoIngredienteActivo = resp;

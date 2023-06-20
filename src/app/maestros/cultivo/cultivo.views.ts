@@ -7,6 +7,8 @@ import { ITipoGenerico, IPaisDto, ICultovoDto } from 'src/app/models/Maestras/IM
 import { MaestraService } from 'src/app/services/maestra.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
+import { ModalCultivoComponent } from './modal-cultivo/modal-cultivo.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-cultivo',
@@ -14,36 +16,50 @@ import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
   styles: [],
 })
 export class CultivoViews implements OnInit {
-  data!: ITipoGenerico[];
+  filtroForm!: FormGroup;
+  data!: ICultovoDto[];
+
   constructor(
     private dialog: MatDialog,
     private _dialogService: DialogService,
     private _maestraService: MaestraService,
     private _router: Router,
+    private _formBuilder: FormBuilder,
+
   ) {}
   ngOnInit(): void {
-    this.GetData();
+    this.filtroForm = this._formBuilder.group({
+      filtro: [''],
+    });
+
+    this.GetData('');
   }
-  GetData() {
+  send() {
+    const { filtro } = this.filtroForm.value;
+    this.GetData(filtro);
+  }
+
+
+  GetData(filter: string) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     this._maestraService
-      .getListCultivo()
+      .getListCultivo(filter)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
-        this.data = resp.map((p) => {
-          return { id: p.IdCultivo, descripcion: p.NombreCultivo, estado: p.estado };
-        }) as ITipoGenerico[];
+        this.data = resp;
+
       });
   }
 
   getModal() {
-    const valores: ITipoGenerico = {
-      id: 0,
-      descripcion: '',
-      estado: true,
+    const valores: ICultovoDto = {
+      IdCultivo: 0,
+      NombreCultivo: '',
+      NombreComun: '',
+      estado: false
     };
-    const dialogRef = this.dialog.open(MaestroModalViews, { data: valores, width: '500px' });
+    const dialogRef = this.dialog.open(ModalCultivoComponent, { data: valores, width: '500px' });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
@@ -60,8 +76,9 @@ export class CultivoViews implements OnInit {
           .subscribe((result: boolean | undefined) => {
             const { dataReturn } = resp;
             const model: ICultovoDto = {
-              IdCultivo: dataReturn.id,
-              NombreCultivo: dataReturn.descripcion,
+              IdCultivo: dataReturn.IdCultivo,
+              NombreCultivo: dataReturn.NombreCultivo,
+              NombreComun: dataReturn.NombreComun,
               estado: dataReturn.estado,
             };
 
@@ -80,7 +97,7 @@ export class CultivoViews implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -88,14 +105,8 @@ export class CultivoViews implements OnInit {
       }
     });
   }
-  onGetEdit(value: ITipoGenerico) {
-    const valores: ITipoGenerico = {
-      id: value.id,
-      descripcion: value.descripcion,
-      estado: value.estado,
-    };
-
-    const dialogRef = this.dialog.open(MaestroModalViews, { data: valores });
+  onGetEdit(value: ICultovoDto) {
+    const dialogRef = this.dialog.open(ModalCultivoComponent, { data: value });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp?.event == 'Agregar') {
         this._dialogService
@@ -112,17 +123,9 @@ export class CultivoViews implements OnInit {
           .subscribe((result: boolean | undefined) => {
             if (result) {
               // Grabando
-              const { dataReturn } = resp;
-              const model: ICultovoDto = {
-                IdCultivo: dataReturn.id,
-                NombreCultivo: dataReturn.descripcion,
-                estado: dataReturn.estado,
-              };
-
               const loading = this.dialog.open(LoadingViews, { disableClose: true });
-
               this._maestraService
-                .CreateOrUpdateCultivo(model)
+                .CreateOrUpdateCultivo(resp.dataReturn)
                 .pipe(finalize(() => loading.close()))
                 .subscribe((resultado) => {
                   if (resultado) {
@@ -133,7 +136,7 @@ export class CultivoViews implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -141,7 +144,7 @@ export class CultivoViews implements OnInit {
       }
     });
   }
-  onDelete(value: ITipoGenerico) {
+  onDelete(value: ICultovoDto) {
     this._dialogService
       .confirm({
         title: 'Confirmación',
@@ -158,7 +161,7 @@ export class CultivoViews implements OnInit {
           // Grabando
           const loading = this.dialog.open(LoadingViews, { disableClose: true });
           this._maestraService
-            .deleteCultivo(value.id)
+            .deleteCultivo(value.IdCultivo)
             .pipe(finalize(() => loading.close()))
             .subscribe((resultado) => {
               if (resultado) {
@@ -169,7 +172,7 @@ export class CultivoViews implements OnInit {
                     text: 'CERRAR',
                   },
                 });
-                this.GetData();
+                this.GetData('');
               }
             });
         }

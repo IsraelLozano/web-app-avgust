@@ -5,6 +5,8 @@ import { SessionService } from '../libs/services/session.service';
 import { GetPdfDto, IReporteGeneralDto } from '../models/reporte/IReporte';
 import { DialogService } from '../shared/dialog/dialog.service';
 import { GenericRepositoryService } from './generic-repository.service';
+import { GerReportFabricanteDto } from '../models/reporte/ger-report-fabricante-dto';
+import { GetArticulosFormuladorAll } from '../models/reporte/get-articulos-formulador-all';
 /**
  * @description
  * @author Israel Daniel Lozano del Castillo
@@ -13,9 +15,7 @@ import { GenericRepositoryService } from './generic-repository.service';
  * @class ReporteService
  * @extends {GenericRepositoryService}
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ReporteService extends GenericRepositoryService {
   private urlAddress?: string;
   private controller: string = '';
@@ -34,7 +34,7 @@ export class ReporteService extends GenericRepositoryService {
     this.controller = reporte;
   }
 
-  ///api/Reporte/GetReporteArticulosGeneral/{IdUsuario}/{tipoFiltro}/{idIngredienteActivo}/{filtro}
+  // /api/Reporte/GetReporteArticulosGeneral/{IdUsuario}/{tipoFiltro}/{idIngredienteActivo}/{filtro}
   GetReporteArticulos(
     idUsuario: number,
     tipoFiltro: number,
@@ -79,7 +79,19 @@ export class ReporteService extends GenericRepositoryService {
     );
   }
 
-  //Excel
+  GetArticulosFabricante(idUsuario: number, filtro: string) {
+    return this.get<GerReportFabricanteDto[]>(
+      `${this.urlAddress}${this.controller}/GetArticulosFabricante/${idUsuario}/${filtro}`,
+    );
+  }
+
+  GetArticulosFormuladorAll(idUsuario: number, filtro: string) {
+    return this.get<GetArticulosFormuladorAll[]>(
+      `${this.urlAddress}${this.controller}/GetArticulosFormuladorAll/${idUsuario}/${filtro}`,
+    );
+  }
+
+  // ExcelGerReportFabricanteDto
 
   public downloaExcelGetReporteArticulos(
     idUsuario: number,
@@ -149,11 +161,40 @@ export class ReporteService extends GenericRepositoryService {
     );
   }
 
+  public GetExcelGetArticulosFabricante(
+    idUsuario: number,
+    filtro: string,
+  ) {
+    const param = {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'blob',
+    };
+    return this.getDownload(
+      `${this.urlAddress}${this.controller}/GetExcelGetArticulosFabricante/${idUsuario}/${filtro}`,
+      param,
+    );
+  }
+  public GetExcelGetArticulosFormuladorAll(
+    idUsuario: number,
+    filtro: string,
+  ) {
+    const param = {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'blob',
+    };
+    return this.getDownload(
+      `${this.urlAddress}${this.controller}/GetExcelGetArticulosFormuladorAll/${idUsuario}/${filtro}`,
+      param,
+    );
+  }
+
   /*
    *----BEGIN REPORTES EN PDF
    */
 
-   GetProductosFormuladosPdfAsync(
+  GetProductosFormuladosPdfAsync(
     idUsuario: number,
     tipoFiltro: number,
     idIngredienteActivo: number,
@@ -175,24 +216,29 @@ export class ReporteService extends GenericRepositoryService {
     );
   }
 
-  GetArticulosPorPlagaPdfAsync(
-    idUsuario: number,
-    filtro: string,
-  ) {
+  GetArticulosPorPlagaPdfAsync(idUsuario: number, filtro: string) {
     return this.get<GetPdfDto>(
       `${this.urlAddress}${this.controller}/GetArticulosPorPlagaPdfAsync/${idUsuario}/${filtro}`,
     );
   }
 
-  GetArticulosPorCultivoPdfAsync(
-    idUsuario: number,
-    filtro: string,
-  ) {
+  GetArticulosPorCultivoPdfAsync(idUsuario: number, filtro: string) {
     return this.get<GetPdfDto>(
       `${this.urlAddress}${this.controller}/GetArticulosPorCultivoPdfAsync/${idUsuario}/${filtro}`,
     );
   }
 
+
+  GetArticulosFabricantePdfAsync(idUsuario: number, filtro: string) {
+    return this.get<GetPdfDto>(
+      `${this.urlAddress}${this.controller}/GetArticulosFabricantePdfAsync/${idUsuario}/${filtro}`,
+    );
+  }
+  GetArticulosFormuladorAllPdfAsync(idUsuario: number, filtro: string) {
+    return this.get<GetPdfDto>(
+      `${this.urlAddress}${this.controller}/GetArticulosFormuladorAllPdfAsync/${idUsuario}/${filtro}`,
+    );
+  }
 
   /*
    *----END REPORTES EN PDF

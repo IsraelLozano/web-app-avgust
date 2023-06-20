@@ -1,30 +1,47 @@
 <div fxLayout="row wrap">
-  <div fxFlex="100">
+  <form [formGroup]="filtroForm" name="filtroForm" (submit)="send()" class="basic-form">
     <mat-card>
-      <mat-card-content>
-        <div fxLayout="row wrap" class="align-items-center">
-          <div fxFlex.gt-md="50" fxFlex.gt-lg="50" fxFlex="100">
-            <!-- <mat-form-field>
-              <input matInput placeholder="Buscar Articulo" />
-            </mat-form-field> -->
-          </div>
-          <div fxFlex.gt-md="50" class="text-right">
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              class="m-r-5"
-              style="margin: 5px 40px 5px 30px; min-width: 110px"
-              (click)="this.getModal()"
-            >
-              <mat-icon class="mat-18">add</mat-icon>
-              Nuevo item
-            </button>
-          </div>
-        </div>
-      </mat-card-content>
+    <mat-card-content>
+      <div fxLayout="row wrap" class="align-items-center">
+      <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100">
+        <mat-form-field>
+        <input
+          matInput="matInput"
+          placeholder="Ingrese filtro de busqueda"
+          formControlName="filtro"
+        />
+        </mat-form-field>
+      </div>
+
+
+      <div fxFlex.gt-md="40" fxFlex.gt-lg="100" fxFlex="100">
+        <button
+        mat-raised-button="mat-raised-button"
+        style="margin: 5px 0px 5px 15px; min-width: 140px;"
+        type="submit"
+        class="m-r-5"
+        color="accent"
+        >
+        <mat-icon class="mat-18">search</mat-icon>
+        Buscar
+        </button>
+        <button
+        mat-raised-button="mat-raised-button"
+        style="margin: 5px 0px 5px 15px; min-width: 140px;"
+        type="button"
+        class="m-r-5"
+        color="primary"
+        (click)="this.getModal()"
+      >
+        <mat-icon class="mat-18">add</mat-icon>
+        Nuevo
+      </button>
+      </div>
+      </div>
+    </mat-card-content>
     </mat-card>
-  </div>
+  </form>
+
 </div>
 
 <div fxLayout="row wrap">

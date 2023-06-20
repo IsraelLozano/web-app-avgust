@@ -51,7 +51,7 @@ export class EditArticuloViews implements OnInit {
       idTipoProducto: [0, [Validators.required, Validators.minLength(1)]],
       // idFormulador: [0, [Validators.required, Validators.minLength(1)]],
       IdTipoFormulacion: [0, [Validators.required, Validators.minLength(1)]],
-      Concentracion: ['', Validators.required],
+      // Concentracion: ['', Validators.required],
     });
   }
   GetArticuloForEdit() {
@@ -129,7 +129,7 @@ export class EditArticuloViews implements OnInit {
       idTipoProducto: data.IdTipoProducto,
       idFormulador: data.IdFormulador,
       IdTipoFormulacion: data.IdTipoFormulacion,
-      Concentracion: data.Concentracion,
+      // Concentracion: data.Concentracion,
     });
   }
 

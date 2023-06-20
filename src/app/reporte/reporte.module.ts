@@ -1,3 +1,4 @@
+import { GrillaReporteFormuladorComponent } from './grilla-reporte-formulador/grilla-reporte-formulador.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { ModalReportePdfComponent } from './reporte-articulo/modal-reporte-pdf/m
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ComponentModule } from "../libs/components/component.module";
+import { GrillaReporteFabricanteComponent } from './grilla-reporte-fabricante/grilla-reporte-fabricante.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +32,9 @@ import { ComponentModule } from "../libs/components/component.module";
         GrillaReporteComposicionViews,
         GrillaReportePlagaViews,
         GrillaReporteCultivoViews,
-        ModalReportePdfComponent
+        ModalReportePdfComponent,
+        GrillaReporteFabricanteComponent,
+        GrillaReporteFormuladorComponent
     ],
     imports: [
         ReporteRoutingModule,

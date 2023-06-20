@@ -7,6 +7,7 @@ import { ITipoGenerico, IFabricante } from 'src/app/models/Maestras/IMaestraDto'
 import { MaestraService } from 'src/app/services/maestra.service';
 import { DialogService } from 'src/app/shared/dialog/dialog.service';
 import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-fabricante',
@@ -15,22 +16,30 @@ import { MaestroModalViews } from '../maestro-modal/maestro-modal.views';
   ]
 })
 export class FabricanteComponent implements OnInit {
-
+  filtroForm!: FormGroup;
   data!: ITipoGenerico[];
   constructor(
     private dialog: MatDialog,
     private _dialogService: DialogService,
     private _maestraService: MaestraService,
     private _router: Router,
+    private _formBuilder: FormBuilder,
+
   ) {}
   ngOnInit(): void {
-    this.GetData();
+    this.filtroForm = this._formBuilder.group({
+      filtro: [''],
+    });
+
+
+    this.GetData('');
+
   }
-  GetData() {
+  GetData(filter: string) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
     this._maestraService
-      .getListFabricante()
+      .getListFabricante(filter)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.data = resp.map((p) => {
@@ -38,6 +47,13 @@ export class FabricanteComponent implements OnInit {
         }) as ITipoGenerico[];
       });
   }
+
+
+  send() {
+    const { filtro } = this.filtroForm.value;
+    this.GetData(filtro);
+  }
+
 
   getModal() {
     const valores: ITipoGenerico = {
@@ -82,7 +98,7 @@ export class FabricanteComponent implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -135,7 +151,7 @@ export class FabricanteComponent implements OnInit {
                         text: 'CERRAR',
                       },
                     });
-                    this.GetData();
+                    this.GetData('');
                   }
                 });
             }
@@ -172,7 +188,7 @@ export class FabricanteComponent implements OnInit {
                     text: 'CERRAR',
                   },
                 });
-                this.GetData();
+                this.GetData('');
               }
             });
         }
