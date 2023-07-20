@@ -119,8 +119,8 @@ const routes: Routes = [
         path: 'list-tipo-formuladores',
         component: TipoFormuladorViews,
         data: {
-          title: 'Lista de Tipos de Formuladores',
-          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Tipos de Formuladores' }],
+          title: 'Tipos de Formulaciones',
+          urls: [{ title: 'Inicio', url: '/home' }, { title: 'Tipos de Formulaciones' }],
         },
       },
       {
