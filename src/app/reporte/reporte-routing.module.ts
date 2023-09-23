@@ -10,7 +10,7 @@ const routes: Routes = [
         path: 'reporte-articulos',
         component: ReporteArticuloComponent,
         data: {
-          title: 'Reporte de articulos',
+          title: 'Reporte de Producto',
           urls: [{ title: 'Inicio', url: '/home' }, { title: 'Reporte' }],
         },
       },

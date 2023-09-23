@@ -81,7 +81,7 @@ const MENUITEMS = [
       { state: 'list-grupo-quimico', name: 'Grupo quimico', type: 'link' },
       { state: 'list-tipo-producto', name: 'Tipo de Productos', type: 'link' },
       { state: 'list-tipo-documentos', name: 'Documentos', type: 'link' },
-      { state: 'list-titular', name: 'Titular', type: 'link' },
+      { state: 'list-titular', name: 'Titular de Registro', type: 'link' },
       { state: 'list-toxicologica', name: 'Toxicologia', type: 'link' },
       { state: 'list-ingrediente-activo', name: 'Ingrediente Activo', type: 'link' },
       { state: 'list-tipo-formuladores', name: 'Tipos de Formuladores', type: 'link' },
@@ -94,7 +94,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'insert_chart',
     badge: [{ type: 'red', value: ':)' }],
-    children: [{ state: 'reporte-articulos', name: 'Reporte de articulos', type: 'link' }],
+    children: [{ state: 'reporte-articulos', name: 'Reporte de Producto', type: 'link' }],
   },
 ];
 

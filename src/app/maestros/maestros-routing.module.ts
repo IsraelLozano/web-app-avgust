@@ -95,7 +95,7 @@ const routes: Routes = [
         path: 'list-titular',
         component: TitularRegistroViews,
         data: {
-          title: 'Lista de Titular',
+          title: 'Lista de Titular de Registro',
           urls: [{ title: 'Inicio', url: '/home' }, { title: 'Titular' }],
         },
       },

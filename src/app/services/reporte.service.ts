@@ -63,8 +63,10 @@ export class ReporteService extends GenericRepositoryService {
     idIngredienteActivo: number,
     filtro: string,
   ) {
+    const busqueda = typeof  filtro === 'undefined' ?  '' : filtro;
+
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosPlaga/${idUsuario}/${filtro}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosPlaga/${idUsuario}/${busqueda}`,
     );
   }
 
@@ -74,8 +76,9 @@ export class ReporteService extends GenericRepositoryService {
     idIngredienteActivo: number,
     filtro: string,
   ) {
+    const busqueda = typeof  filtro === 'undefined' ?  '' : filtro;
     return this.get<IReporteGeneralDto[]>(
-      `${this.urlAddress}${this.controller}/GetReporteArticulosCultivo/${idUsuario}/${filtro}`,
+      `${this.urlAddress}${this.controller}/GetReporteArticulosCultivo/${idUsuario}/${busqueda}`,
     );
   }
 

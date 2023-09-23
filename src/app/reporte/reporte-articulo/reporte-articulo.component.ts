@@ -163,6 +163,9 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
 
     this.myControl2.setValue('');
     this.controlCultivo.setValue('');
+
+    this.GetArticulos();
+
   }
 
   GetArticulos() {
@@ -194,9 +197,9 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   getFormulador(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-
+    const busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
     this._reporte
-      .GetArticulosFormuladorAll(this._sesion.user.IdUsuario, tipoBusqueda)
+      .GetArticulosFormuladorAll(this._sesion.user.IdUsuario, busqueda)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReporteFormuladorAll = resp;
@@ -206,9 +209,9 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   getFabricante(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-
+    const busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
     this._reporte
-      .GetArticulosFabricante(this._sesion.user.IdUsuario, tipoBusqueda)
+      .GetArticulosFabricante(this._sesion.user.IdUsuario, busqueda)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReporteFabricante = resp;
@@ -219,11 +222,13 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
+    const busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+
     const filtro2 = this.controlCultivo.value;
     this._reporte
       .GetReporteArticulosCultivo(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        busqueda,
         idTipoIngrediente,
         filtro2.NombreCultivo,
       )
@@ -237,11 +242,13 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
+    const busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+
     const filtro2 = this.myControl2.value;
     this._reporte
       .GetReporteArticulosPlaga(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        busqueda,
         idTipoIngrediente,
         filtro2.NombreCientificoPlaga,
       )
@@ -252,11 +259,14 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   }
   getComposicion(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+
+    // console.log(tipoBusqueda)
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
+    const busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
     this._reporte
       .GetReporteArticulosComposicion(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        busqueda,
         idTipoIngrediente,
         txtFiltro,
       )
@@ -268,9 +278,10 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   GetArticuloGeneral(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
+    const Busqueda = tipoBusqueda ?? 0;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     this._reporte
-      .GetReporteArticulos(this._sesion.user.IdUsuario, tipoBusqueda, idTipoIngrediente, txtFiltro)
+      .GetReporteArticulos(this._sesion.user.IdUsuario, Busqueda, idTipoIngrediente, txtFiltro)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReporteGeneral = resp;
