@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IReporteGeneralDto } from 'src/app/models/reporte/IReporte';
+import { GetReportsUsosCultivosAllDto } from 'src/app/models/reporte/GetReportsUsosCultivosAllDto';
 
 @Component({
   selector: 'app-grilla-reporte-cultivo',
@@ -11,7 +11,7 @@ import { IReporteGeneralDto } from 'src/app/models/reporte/IReporte';
 })
 export class GrillaReporteCultivoViews implements OnInit {
   allComplete: boolean = false;
-  cursosList!: MatTableDataSource<IReporteGeneralDto>;
+  cursosList!: MatTableDataSource<GetReportsUsosCultivosAllDto>;
   @ViewChild(MatSort) sort!: MatSort;
   _paginator!: MatPaginator;
 
@@ -34,7 +34,7 @@ export class GrillaReporteCultivoViews implements OnInit {
     'Dosis',
   ];
 
-  @Input() set setListArticulo(value: IReporteGeneralDto[]) {
+  @Input() set setListArticulo(value: GetReportsUsosCultivosAllDto[]) {
     this.cursosList = new MatTableDataSource(value);
     // this.cursosList.paginator = this.paginator;
     this.cursosList.sort = this.sort;
@@ -55,4 +55,12 @@ export class GrillaReporteCultivoViews implements OnInit {
   {
     this.exportToPdf.emit(1)
   }
+
+
+  @Output() onGetEtiqueta = new EventEmitter<any>();
+
+  getPdf(row: GetReportsUsosCultivosAllDto) {
+    this.onGetEtiqueta.emit(row);
+  }
+
 }

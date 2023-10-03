@@ -35,7 +35,6 @@ export class ModalReportePdfComponent implements OnInit {
 
       const file = new Blob([byteArray], { type: 'application/pdf' });
       const fileURL = window.URL.createObjectURL(file);
-      console.log('fuck', fileURL);
       this.pdfSrc = fileURL;
     } catch (error) {
       console.log(error);

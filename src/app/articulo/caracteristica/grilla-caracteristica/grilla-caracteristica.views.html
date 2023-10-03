@@ -8,7 +8,7 @@ mat-elevation-z8
   <table mat-table [dataSource]="this.lista" matSort class="table ticket-list">
     <ng-container matColumnDef="Iditem">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let element">{{ element.IdItem }}</td>
+      <td mat-cell *matCellDef="let element" class="font-12">{{ element.IdItem }}</td>
     </ng-container>
 
     <!-- <ng-container matColumnDef="aplicacion">
@@ -18,12 +18,12 @@ mat-elevation-z8
 
     <ng-container matColumnDef="clase">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Clase</th>
-      <td mat-cell *matCellDef="let element">{{ element.IdClaseNavigation.Descripcion }}</td>
+      <td mat-cell *matCellDef="let element" class="font-12">{{ element.IdClaseNavigation.Descripcion }}</td>
     </ng-container>
 
     <ng-container matColumnDef="toxicologia">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Toxicologia</th>
-      <td mat-cell *matCellDef="let element">{{ element.IdToxicologicaNavigation. Descripcion}}</td>
+      <td mat-cell *matCellDef="let element" class="font-12">{{ element.IdToxicologicaNavigation. Descripcion}}</td>
     </ng-container>
 
     <ng-container matColumnDef="action">

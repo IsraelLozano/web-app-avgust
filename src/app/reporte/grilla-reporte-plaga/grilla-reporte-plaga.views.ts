@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { GetReportsUsoPlagasAllDto } from 'src/app/models/reporte/GetReportsUsoPlagasAllDto';
 import { IReporteGeneralDto } from 'src/app/models/reporte/IReporte';
 
 @Component({
@@ -11,7 +12,7 @@ import { IReporteGeneralDto } from 'src/app/models/reporte/IReporte';
 })
 export class GrillaReportePlagaViews implements OnInit {
   allComplete: boolean = false;
-  cursosList!: MatTableDataSource<IReporteGeneralDto>;
+  cursosList!: MatTableDataSource<GetReportsUsoPlagasAllDto>;
   @ViewChild(MatSort) sort!: MatSort;
   _paginator!: MatPaginator;
 
@@ -34,7 +35,7 @@ export class GrillaReportePlagaViews implements OnInit {
     'Dosis',
   ];
 
-  @Input() set setListArticulo(value: IReporteGeneralDto[]) {
+  @Input() set setListArticulo(value: GetReportsUsoPlagasAllDto[]) {
     this.cursosList = new MatTableDataSource(value);
     // this.cursosList.paginator = this.paginator;
     this.cursosList.sort = this.sort;
@@ -55,5 +56,13 @@ export class GrillaReportePlagaViews implements OnInit {
   {
     this.exportToPdf.emit(1)
   }
+
+  @Output() onGetEtiqueta = new EventEmitter<any>();
+
+  getPdf(row: GetReportsUsoPlagasAllDto) {
+    this.onGetEtiqueta.emit(row);
+  }
+
+
 
 }

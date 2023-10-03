@@ -18,11 +18,20 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
   ICientificaPlagaDto,
   ICultovoDto,
+  IFabricante,
+  IFormuladorDto,
   ITipoIngredienteActivo,
 } from 'src/app/models/Maestras/IMaestraDto';
 import { MaestraService } from 'src/app/services/maestra.service';
 import { GerReportFabricanteDto } from 'src/app/models/reporte/ger-report-fabricante-dto';
 import { GetArticulosFormuladorAll } from 'src/app/models/reporte/get-articulos-formulador-all';
+import { GetReporteArticuloComposicionDto } from 'src/app/models/reporte/GetReporteArticuloComposicionDto';
+import { GetReportsUsoPlagasAllDto } from 'src/app/models/reporte/GetReportsUsoPlagasAllDto';
+import { GetReportsUsosCultivosAllDto } from 'src/app/models/reporte/GetReportsUsosCultivosAllDto';
+import { GetReportsFabricanteProductoAllDto } from 'src/app/models/reporte/GetReportsFabricanteProductoAllDto';
+import { GetReportsFormuladorProductoAllDto } from 'src/app/models/reporte/GetReportsFormuladorProductoAllDto';
+import { GetDocumentoDto } from 'src/app/models/articulo/IArticuloDto.enum';
+import { ModalViewPdfViews } from 'src/app/articulo/documentos/modal-view-pdf/modal-view-pdf.views';
 
 @Component({
   selector: 'app-reporte-articulo',
@@ -33,9 +42,11 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   filtroForm!: FormGroup;
   reporteSelect!: number;
   dataReporteGeneral!: IReporteGeneralDto[];
-  dataReportePlaga!: IReporteGeneralDto[];
-  dataComposicion!: IReporteGeneralDto[];
-  dataReporteCultivo!: IReporteGeneralDto[];
+  dataReportePlaga!: GetReportsUsoPlagasAllDto[];
+  dataComposicion!: GetReporteArticuloComposicionDto[];
+  dataReporteCultivo!: GetReportsUsosCultivosAllDto[];
+  dataReporteFabricante: GetReportsFabricanteProductoAllDto[] = [];
+  dataReporteFormuladorAll: GetReportsFormuladorProductoAllDto[] = [];
 
   progress!: number;
   message!: string;
@@ -46,8 +57,8 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   cboTipoIngredienteActivo!: ITipoIngredienteActivo[];
   cboPlagas!: ICientificaPlagaDto[];
   cboCultivo!: ICultovoDto[];
-  dataReporteFabricante: GerReportFabricanteDto[] = [];
-  dataReporteFormuladorAll: GetArticulosFormuladorAll[] = [];
+  cboFormuladores: IFormuladorDto[] = [];
+  cboFabricantes: IFabricante[]= [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -67,6 +78,10 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   onChangeFiltro(value: any) {
     this.tipoSeleccionado = value.value;
   }
+  getLimpiarBusqueda()
+  {
+
+  }
   GetCombo() {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
 
@@ -74,12 +89,17 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
       listIngrediente: this._maestraService.getListTipoIngredienteActivo(''),
       listPlagas: this._maestraService.getListCientificoPlaga(''),
       listCultivo: this._maestraService.getListCultivo(''),
+      listFormulados: this._maestraService.getListFormulador(''),
+      listFabricantes: this._maestraService.getListFabricante('')
     })
       .pipe(finalize(() => loading.close()))
       .subscribe(
-        ({ listIngrediente, listPlagas, listCultivo }) => {
+        ({ listIngrediente, listPlagas, listCultivo, listFormulados, listFabricantes }) => {
           this.cboTipoIngredienteActivo = listIngrediente;
-          (this.cboPlagas = listPlagas), (this.cboCultivo = listCultivo);
+          this.cboPlagas = listPlagas;
+          this.cboCultivo = listCultivo;
+          this.cboFormuladores= listFormulados;
+          this.cboFabricantes = listFabricantes
         },
         (err) => {
           console.log(err);
@@ -109,6 +129,20 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
       option.NombreCultivo.toLowerCase().includes(filterValue),
     );
   }
+  private _filterFormulados(name: string) {
+    const filterValue = name.toLowerCase();
+    // debugger;
+    return this.cboFormuladores.filter((option) =>
+      option.NomFormulador.toLowerCase().includes(filterValue),
+    );
+  }
+  private _filterFabricantes(name: string) {
+    const filterValue = name.toLowerCase();
+    // debugger;
+    return this.cboFabricantes.filter((option) =>
+      option.NombreFabricante.toLowerCase().includes(filterValue),
+    );
+  }
 
   //Autocomplete
   myControl2 = new FormControl<string | any>('');
@@ -116,6 +150,15 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
 
   controlCultivo = new FormControl<string | any>('');
   filteredCultivo: Observable<any[]> | undefined;
+
+  controlFormulados= new FormControl<string | any>('');
+  filteredFormulados: Observable<any[]> | undefined;
+
+
+  controlFabricantes= new FormControl<string | any>('');
+  filteredFabricantes: Observable<any[]> | undefined;
+
+
 
   ngOnInit(): void {
     this.filtroForm = this._formBuilder.group({
@@ -143,6 +186,22 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
         return name ? this._filterCultivo(name as string) : this.cboCultivo.slice();
       }),
     );
+    this.filteredFormulados = this.controlFormulados.valueChanges.pipe(
+      startWith(''),
+      // map((value) => this._filter(value)),
+      map((value) => {
+        const name = typeof value === 'string' ? value : value?.NomFormulador;
+        return name ? this._filterFormulados(name as string) : this.cboFormuladores.slice();
+      }),
+    );
+    this.filteredFabricantes = this.controlFabricantes.valueChanges.pipe(
+      startWith(''),
+      // map((value) => this._filter(value)),
+      map((value) => {
+        const name = typeof value === 'string' ? value : value?.NombreFabricante;
+        return name ? this._filterFabricantes(name as string) : this.cboFabricantes.slice();
+      }),
+    );
   }
 
   displayFn(user?: ICientificaPlagaDto): string | undefined {
@@ -152,17 +211,35 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   displayFnCultivo(user?: ICultovoDto): string | undefined {
     return user ? user.NombreCultivo : undefined;
   }
+  displayFnFormulado(user?: IFormuladorDto): string | undefined {
+    return user ? user.NomFormulador : undefined;
+  }
+  displayFnFabricantes(user?: IFabricante): string | undefined {
+    return user ? user.NombreFabricante : undefined;
+  }
 
   GetSelectValue(event: any) {
+
+    this.filtroForm.patchValue({
+      tipoBusqueda: 0,
+      txtFiltro: '',
+      idTipoIngrediente:0,
+      idPlaga: 0
+    });
+
+    this.tipoSeleccionado = 0;
+
     this.dataReporteGeneral =
       this.dataReportePlaga =
       this.dataComposicion =
       this.dataReporteCultivo =
-      this.dataReporteFabricante =
-        [];
+      this.dataReporteFormuladorAll =
+      this.dataReporteFabricante = [];
 
     this.myControl2.setValue('');
     this.controlCultivo.setValue('');
+    this.controlFabricantes.setValue('');
+    this.controlFormulados.setValue('');
 
     this.GetArticulos();
 
@@ -171,35 +248,25 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   GetArticulos() {
     const userId = this._sesion.user.IdUsuario;
     switch (this.reporteSelect) {
-      case 1:
-        this.GetArticuloGeneral(userId);
-        break;
-      case 2:
-        this.getComposicion(userId);
-        break;
-      case 3:
-        this.getPlaga(userId);
-        break;
-      case 4:
-        this.getCultivo(userId);
-        break;
-      case 5:
-        this.getFabricante(userId);
-        break;
-      case 6:
-        this.getFormulador(userId);
-        break;
+      case 1:        this.GetArticuloGeneral(userId);        break;
+      case 2:        this.getComposicion(userId);        break;
+      case 3:        this.getPlaga(userId);        break;
+      case 4:        this.getCultivo(userId);        break;
+      case 5:        this.getFabricante(userId);        break;
+      case 6:        this.getFormulador(userId);        break;
 
-      default:
-        break;
+      default:        break;
     }
   }
   getFormulador(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    const busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+
+
+    const filtro2 = this.controlFormulados.value;
+
     this._reporte
-      .GetArticulosFormuladorAll(this._sesion.user.IdUsuario, busqueda)
+      .GetArticulosFormuladorAll(this._sesion.user.IdUsuario, filtro2.NomFormulador)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReporteFormuladorAll = resp;
@@ -209,9 +276,12 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   getFabricante(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    const busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+    const busqueda = typeof  txtFiltro === 'undefined' ?  '' : txtFiltro;
+
+    const filtro2 = this.controlFabricantes.value;
+
     this._reporte
-      .GetArticulosFabricante(this._sesion.user.IdUsuario, busqueda)
+      .GetArticulosFabricante(this._sesion.user.IdUsuario, filtro2.NombreFabricante)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         this.dataReporteFabricante = resp;
@@ -278,7 +348,7 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   GetArticuloGeneral(userId: number) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
-    const Busqueda = tipoBusqueda ?? 0;
+    const Busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     this._reporte
       .GetReporteArticulos(this._sesion.user.IdUsuario, Busqueda, idTipoIngrediente, txtFiltro)
@@ -293,10 +363,12 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     const filtro2 = this.controlCultivo.value;
 
+    const Busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+
     this._reporte
       .downloaExcelGetReporteCultivo(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        Busqueda,
         idTipoIngrediente,
         filtro2.NombreCultivo,
       )
@@ -313,12 +385,12 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   onExportExcelfabricante(value: any) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    const filtro2 = this.controlCultivo.value;
+    const filtro2 = this.controlFabricantes.value;
 
     this._reporte
       .GetExcelGetArticulosFabricante(
         this._sesion.user.IdUsuario,
-        'a',
+        filtro2.NombreFabricante,
       )
       .pipe(finalize(() => loading.close()))
       .subscribe((event: any) => {
@@ -333,12 +405,12 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   onExportExcelFormuladorAll(value: any) {
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    const filtro2 = this.controlCultivo.value;
+    const filtro2 = this.controlFormulados.value;
 
     this._reporte
       .GetExcelGetArticulosFormuladorAll(
         this._sesion.user.IdUsuario,
-        'a',
+        filtro2.NomFormulador,
       )
       .pipe(finalize(() => loading.close()))
       .subscribe((event: any) => {
@@ -355,10 +427,11 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
+    const Busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
     this._reporte
       .downloaExcelGetReporteArticulos(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        Busqueda,
         idTipoIngrediente,
         txtFiltro,
       )
@@ -377,10 +450,12 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
+    const Busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+
     this._reporte
       .downloaExcelGetReporteComposicion(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        Busqueda,
         idTipoIngrediente,
         txtFiltro,
       )
@@ -398,11 +473,13 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   onExportExcelPlaga(value: any) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
+
+    const Busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
     const filtro2 = this.myControl2.value;
     this._reporte
       .downloaExcelGetReportePlaga(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        Busqueda,
         idTipoIngrediente,
         filtro2.NombreCientificoPlaga,
       )
@@ -425,10 +502,12 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
+    const Busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+
     this._reporte
       .GetProductosFormuladosPdfAsync(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        Busqueda,
         idTipoIngrediente,
         txtFiltro,
       )
@@ -447,10 +526,12 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     const { tipoBusqueda, txtFiltro, idTipoIngrediente } = this.filtroForm.value;
 
+    const Busqueda = typeof  tipoBusqueda === 'undefined' ?  0 : tipoBusqueda;
+
     this._reporte
       .GetArticulosPorComposicionPdfAsync(
         this._sesion.user.IdUsuario,
-        tipoBusqueda,
+        Busqueda,
         idTipoIngrediente,
         txtFiltro,
       )
@@ -469,6 +550,7 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   getModalPDFPlaga(value: any) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
     const filtro2 = this.myControl2.value;
+
 
     this._reporte
       .GetArticulosPorPlagaPdfAsync(this._sesion.user.IdUsuario, filtro2.NombreCientificoPlaga)
@@ -503,10 +585,10 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   }
   getModalPDFfabricante(value: any) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    const filtro2 = 'a';
+    const filtro2 = this.controlFabricantes.value;
 
     this._reporte
-      .GetArticulosFabricantePdfAsync(this._sesion.user.IdUsuario, filtro2)
+      .GetArticulosFabricantePdfAsync(this._sesion.user.IdUsuario, filtro2.NombreFabricante)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         const dialogRef = this.dialog.open(ModalReportePdfComponent, {
@@ -520,10 +602,10 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   }
   getModalPDFFormuladorAll(value: any) {
     const loading = this.dialog.open(LoadingViews, { disableClose: true });
-    const filtro2 = 'a';
+    const filtro2 = this.controlFormulados.value;
 
     this._reporte
-      .GetArticulosFormuladorAllPdfAsync(this._sesion.user.IdUsuario, filtro2)
+      .GetArticulosFormuladorAllPdfAsync(this._sesion.user.IdUsuario, filtro2.NomFormulador)
       .pipe(finalize(() => loading.close()))
       .subscribe((resp) => {
         const dialogRef = this.dialog.open(ModalReportePdfComponent, {
@@ -539,6 +621,36 @@ export class ReporteArticuloComponent implements OnInit, AfterContentInit {
   /*
    *   END ==> REPORTES EN PDF
    */
+
+  onGetEtiqueta(row: GetReportsUsosCultivosAllDto) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    const doc: GetDocumentoDto = {
+      IdArticulo: row.IdArticulo,
+      IdItem: row.IdItem,
+      IdTipoDocumento: 3,
+      Fecha: new Date(),
+      NomDocumento: '',
+    };
+
+    const dialogRef = this.dialog.open(ModalViewPdfViews, { data: doc });
+    dialogRef.afterClosed().subscribe((resp) => loading.close());
+  }
+  onGetEtiquetaPlagas(row: GetReportsUsoPlagasAllDto) {
+    const loading = this.dialog.open(LoadingViews, { disableClose: true });
+
+    const doc: GetDocumentoDto = {
+      IdArticulo: row.IdArticulo,
+      IdItem: row.IdItem,
+      IdTipoDocumento: 3,
+      Fecha: new Date(),
+      NomDocumento: '',
+    };
+
+    const dialogRef = this.dialog.open(ModalViewPdfViews, { data: doc });
+    dialogRef.afterClosed().subscribe((resp) => loading.close());
+  }
+
 
   private downloadFile = (data: HttpResponse<Blob> | any, fileName: string) => {
     const downloadedFile = new Blob([data.body], { type: data?.body.type });

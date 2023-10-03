@@ -89,6 +89,28 @@
                 </mat-autocomplete>
               </mat-form-field>
             </div>
+            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 6">
+              <mat-form-field>
+                <input type="text" placeholder="Ingrese Formulador" aria-label="Assignee" matInput="matInput"
+                  [formControl]="controlFormulados" [matAutocomplete]="autostart" />
+                <mat-autocomplete #autostart="matAutocomplete" [displayWith]="displayFnFormulado">
+                  <mat-option *ngFor="let option of filteredFormulados | async" [value]="option">
+                    {{ option.NomFormulador }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 5">
+              <mat-form-field>
+                <input type="text" placeholder="Ingrese Fabricante" aria-label="Assignee" matInput="matInput"
+                  [formControl]="controlFabricantes" [matAutocomplete]="autostart" />
+                <mat-autocomplete #autostart="matAutocomplete" [displayWith]="displayFnFabricantes">
+                  <mat-option *ngFor="let option of filteredFabricantes | async" [value]="option">
+                    {{ option.NombreFabricante }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
 
             <div fxFlex.gt-md="60" fxFlex.gt-lg="100" fxFlex="100" *ngIf="this.reporteSelect === 4">
               <mat-form-field>
@@ -111,6 +133,13 @@
                 <mat-icon class="mat-18">search</mat-icon>
                 Buscar Articulo
               </button>
+              <!-- <button mat-raised-button="mat-raised-button" style="margin: 5px 0px 5px 30px; min-width: 180px;"
+                type="button" class="m-r-5" color="primary"
+                (click)="getLimpiarBusqueda()"
+                >
+                <mat-icon class="mat-18">cleaning_services</mat-icon>
+                Limpiar Busqueda
+              </button> -->
             </div>
           </div>
         </mat-card-content>
@@ -137,11 +166,14 @@
 
         <app-grilla-reporte-plaga (exportToExcel)="this.onExportExcelPlaga($event)"
           (exportToPdf)="this.getModalPDFPlaga($event)" [setListArticulo]="this.dataReportePlaga"
+          (onGetEtiqueta)="this.onGetEtiquetaPlagas($event)"
+
           *ngIf="this.reporteSelect === 3 && this.dataReportePlaga.length > 0">
         </app-grilla-reporte-plaga>
 
         <app-grilla-reporte-cultivo (exportToExcel)="this.onExportExcelCultivo($event)"
           (exportToPdf)="this.getModalPDFCultivo($event)" [setListArticulo]="this.dataReporteCultivo"
+         (onGetEtiqueta)="this.onGetEtiqueta($event)"
           *ngIf="this.reporteSelect === 4 && this.dataReporteCultivo.length > 0">
         </app-grilla-reporte-cultivo>
 

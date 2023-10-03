@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { GerReportFabricanteDto } from 'src/app/models/reporte/ger-report-fabricante-dto';
+import { GetReportsFabricanteProductoAllDto } from 'src/app/models/reporte/GetReportsFabricanteProductoAllDto';
 
 @Component({
   selector: 'app-grilla-reporte-fabricante',
@@ -13,7 +13,7 @@ import { GerReportFabricanteDto } from 'src/app/models/reporte/ger-report-fabric
 export class GrillaReporteFabricanteComponent implements OnInit {
 
   allComplete: boolean = false;
-  cursosList!: MatTableDataSource<GerReportFabricanteDto>;
+  cursosList!: MatTableDataSource<GetReportsFabricanteProductoAllDto>;
   @ViewChild(MatSort) sort!: MatSort;
   _paginator!: MatPaginator;
 
@@ -34,7 +34,7 @@ export class GrillaReporteFabricanteComponent implements OnInit {
     'Ingrediante',
   ];
 
-  @Input() set setListArticulo(value: GerReportFabricanteDto[]) {
+  @Input() set setListArticulo(value: GetReportsFabricanteProductoAllDto[]) {
     this.cursosList = new MatTableDataSource(value);
     // this.cursosList.paginator = this.paginator;
     this.cursosList.sort = this.sort;

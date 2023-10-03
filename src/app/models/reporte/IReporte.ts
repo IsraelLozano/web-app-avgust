@@ -28,6 +28,32 @@ export interface IReporteGeneralDto {
   Documentos: Documento[];
   Usos: Uso[];
   Caracteristicas: Caracteristica[];
+  ProductoFabricantes:         ProductoFabricante[];
+  ProductoFormuladors:         ProductoFormulador[];
+}
+
+
+export interface ProductoFormulador {
+  IdProducto:             number;
+  IdFormuladorNavigation: IDFormuladorNavigation;
+}
+
+export interface IDFormuladorNavigation {
+  IdFormulador:  number;
+  NomFormulador: string;
+  estado:        boolean;
+}
+
+
+export interface ProductoFabricante {
+  IdArticulo:             number;
+  IdFabricanteNavigation: IDFabricanteNavigation;
+}
+
+export interface IDFabricanteNavigation {
+  IdFabricante:     number;
+  NombreFabricante: string;
+  Estado:           boolean;
 }
 
 export interface Caracteristica {

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { GetReporteArticuloComposicionDto } from 'src/app/models/reporte/GetReporteArticuloComposicionDto';
 import { IReporteGeneralDto } from 'src/app/models/reporte/IReporte';
 
 @Component({
@@ -11,7 +12,7 @@ import { IReporteGeneralDto } from 'src/app/models/reporte/IReporte';
 })
 export class GrillaReporteComposicionViews implements OnInit {
   allComplete: boolean = false;
-  cursosList!: MatTableDataSource<IReporteGeneralDto>;
+  cursosList!: MatTableDataSource<GetReporteArticuloComposicionDto>;
   @ViewChild(MatSort) sort!: MatSort;
   _paginator!: MatPaginator;
 
@@ -34,7 +35,7 @@ export class GrillaReporteComposicionViews implements OnInit {
     'GrupoQuimico',
   ];
 
-  @Input() set setListArticulo(value: IReporteGeneralDto[]) {
+  @Input() set setListArticulo(value: GetReporteArticuloComposicionDto[]) {
     this.cursosList = new MatTableDataSource(value);
     // this.cursosList.paginator = this.paginator;
     this.cursosList.sort = this.sort;

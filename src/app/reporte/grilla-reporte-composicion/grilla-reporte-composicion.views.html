@@ -32,50 +32,42 @@
     <ng-container matColumnDef="IngredienteActivo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Ingrediente Activo</th>
       <td mat-cell *matCellDef="let element" class="font-12">
-        <ul>
-          <li *ngFor="let p of element?.Composicions">
-            {{p?.IngredienteActivoNavigation?.NomIngredienteActivo}}
-          </li>
-        </ul>
+            {{element?.IngredienteActivoNavigation?.NomIngredienteActivo}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="NombreComercial">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Comercial</th>
-      <td mat-cell *matCellDef="let element" class="font-12">{{ element.NombreComercial }}</td>
+      <td mat-cell *matCellDef="let element" class="font-12">{{ element?.IdArticuloNavigation.NombreComercial }}</td>
     </ng-container>
 
     <ng-container matColumnDef="NomTitularRegistro">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Titular Registro</th>
       <td mat-cell *matCellDef="let element" class="font-12">
-        {{element?.IdTitularRegistroNavigation?.NomTitularRegistro}}
+        {{element?.IdArticuloNavigation?.IdTitularRegistroNavigation?.NomTitularRegistro}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="Formulador">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Formulador</th>
-      <td mat-cell *matCellDef="let element" class="font-12">{{element?.IdFormuladorNavigation?.NomFormulador}}</td>
+      <td mat-cell *matCellDef="let element" class="font-12">
+        <ul>
+          <li *ngFor="let p of element?.listFormuladores">{{p}}</li>
+        </ul>
+      </td>
     </ng-container>
-
-
 
     <ng-container matColumnDef="ConcentracionIA">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Concentración IA</th>
       <td mat-cell *matCellDef="let element" class="font-12">
-        <ul>
-          <li *ngFor="let p of element?.Composicions">{{p?.ContracionIA}}</li>
-        </ul>
+       {{element.ContracionIA}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="GrupoQuimico">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Grupo Quimico</th>
       <td mat-cell *matCellDef="let element" class="font-12">
-        <ul>
-          <li *ngFor="let p of element?.Composicions">
-            {{p?.GrupoQuimicoNavegation?.NomGrupoQuimico}}
-          </li>
-        </ul>
+            {{element?.GrupoQuimicoNavegation?.NomGrupoQuimico}}
       </td>
     </ng-container>
 
